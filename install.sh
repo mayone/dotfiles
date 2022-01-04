@@ -38,6 +38,14 @@ install_homebrew() {
 }
 
 install_languages() {
+  # Install GCC
+  if check_os $OS_LINUX; then
+    sudo apt update
+    if ! check_cmd gcc || ! check_cmd make; then
+      sudo apt install build-essential
+    fi
+  fi
+
   if check_os $OS_MAC; then
     brew install go
     brew install node yarn
@@ -49,7 +57,7 @@ install_languages() {
     if check_os $OS_MAC; then
       brew install --cask adoptopenjdk
     elif check_os $OS_LINUX; then
-      sudo apt-get install default-jdk
+      sudo apt install default-jdk
     fi
   fi
 
@@ -137,15 +145,19 @@ setup_git() {
   git config --global alias.br branch
   git config --global alias.com commit
   git config --global alias.st status
-  git config --global credential.helper osxkeychain
+  if check_os $OS_MAC; then
+    git config --global credential.helper osxkeychain
+  elif check_os $OS_LINUX; then
+    git config --global credential.helper cache
+  fi
 
   # if [ -z "$(git config --global --get user.email)" ]; then
-  # 	echo "Git user.name:"
-  # 	read -r user_name
-  # 	echo "Git user.email:"
-  # 	read -r user_email
-  # 	git config --global user.name "$user_name"
-  # 	git config --global user.email "$user_email"
+  #   echo "Git user.name:"
+  #   read -r user_name
+  #   echo "Git user.email:"
+  #   read -r user_email
+  #   git config --global user.name "$user_name"
+  #   git config --global user.email "$user_email"
   # fi
 }
 
