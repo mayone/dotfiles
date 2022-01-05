@@ -34,6 +34,8 @@ install_homebrew() {
   if ! check_cmd brew; then
     info "Install Homebrew"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
 }
 
@@ -133,6 +135,7 @@ install_tools() {
   if check_os $OS_MAC; then
     brew install kubectx hub shfmt
     brew install tmux wget ffmpeg
+    brew install --cask rectangle discord
   fi
   # Copy tmux settings
   info "Copy .tmux.conf file"
