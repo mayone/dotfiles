@@ -26,7 +26,7 @@ alias l='ls -CF'    l.='ls -d .*'   la='ls -A'  ll='ls -alF'
 alias df='df -h'    du='du -h'      cp='cp -v'  mv='mv -v'
 
 # Git
-if [[ -x "$(command -v hub >/dev/null 2>&1)" ]]; then
+if command -v hub >/dev/null 2>&1; then
     alias git=hub
 fi
 alias glog_branches="git log --color=always --oneline --decorate --graph --branches"
