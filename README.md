@@ -1,35 +1,41 @@
 # dotfiles
-- dotfiles for macOS
-	- Shell: iTerm + zsh + Zinit + Powerlevel10k
-	- Editor: Vim, VSCode
+- Shell: Zsh + Zinit + Powerlevel10k
+- Terminal: iTerm (for macOS) + tmux
+- Editor: Vim, VSCode
 
 ---
 
-## Installation
+## Install
 ```console
 ./install.sh
 ```
 
 ### Post Install Setup
 
-#### iTerm2 use `zsh`
-- If `zsh` is installed by Homebrew, set Custom Shell to `/usr/local/zsh` on startup in iTerm2 settings
-
 #### zsh use `p10k` theme
 - Open iTerm2 and type `p10k configure` to
-	- Download `MesloLGS NF`
-	- Configure prompt style
+	1. Download `MesloLGS NF`
+	2. Configure prompt style
 
 ### Optional Post Install Steps
 
 #### iTerm2
+- If `zsh` is installed by Homebrew
+	- Set Custom Shell to `/opt/homebrew/bin/zsh` on startup in iTerm2 settings
 - Use different [iTerm2-Color-Schemes](https://github.com/mbadolato/iTerm2-Color-Schemes)
 	- Clone the repo, double-click the scheme to import
 - [Option + Left/Right Arrow Keys to move cursor by word](http://tgmerritt.github.io/jekyll/update/2015/06/23/option-arrow-in-iterm2.html)
-	- Go to: `Preferences → Profiles → Keys`
-		- Keyboard Shortcut: `⌥← (Option+Left Arrow)`, `⌥→ (Option+Right Arrow)`
+	- Go to: `Preferences → Profiles → Keys → Key Mappings`
+		- Keyboard Shortcut:
+			- `⌥← (Option+Left Arrow)`
+			- `⌥→ (Option+Right Arrow)`
 		- Action: `Send Escape Sequence`
-		- ESC+: `b` for backward, `f` for forward
+		- ESC+:
+			- `b` for backward
+			- `f` for forward
+- Configure Status Bar
+	- Go to: `Preferences → Profiles → Session`
+		- Enable status bar and configure
 
 #### VSCode
 - [VSCode - Launching from the command line](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line) to add `code` command to terminals
@@ -65,7 +71,7 @@
 ## References
 - [Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
 - [Nerd Fonts - Homebrew Fonts](https://github.com/ryanoasis/nerd-fonts#option-4-homebrew-fonts)
-- [Zinit](https://github.com/zdharma/zinit)
+- [Zinit](https://github.com/zdharma-continuum/zinit)
 - [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
 - [How to Install GCC (build-essential) on Ubuntu 20.04](https://linuxize.com/post/how-to-install-gcc-on-ubuntu-20-04/)
 
@@ -74,8 +80,8 @@
 
 #### zsh
 - [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins)
-- [Zinit wiki](http://zdharma.org/zinit/wiki/)
-- [zdharma/zinit-configs/zshrc.zsh](https://github.com/zdharma/zinit-configs/blob/master/psprint/zshrc.zsh)
+- [Zinit wiki](https://zdharma-continuum.github.io/zinit/wiki/)
+- [zdharma/zinit-configs/zshrc.zsh](https://github.com/zdharma-continuum/zinit-configs/blob/master/psprint/zshrc.zsh)
 - [dgo-/dotfiles/zsh/zshrc](https://github.com/dgo-/dotfiles/blob/master/zsh/zshrc)
 
 #### vim
