@@ -65,9 +65,9 @@
 ## References
 - [Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
 - [Nerd Fonts - Homebrew Fonts](https://github.com/ryanoasis/nerd-fonts#option-4-homebrew-fonts)
-- [Characters per line (CPL)](https://en.wikipedia.org/wiki/Characters_per_line)
 - [Zinit](https://github.com/zdharma/zinit)
 - [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
+- [How to Install GCC (build-essential) on Ubuntu 20.04](https://linuxize.com/post/how-to-install-gcc-on-ubuntu-20-04/)
 
 #### dotfiles
 - [dt665m/dotfiles](https://github.com/dt665m/dotfiles)
@@ -82,3 +82,7 @@
 - [lwhsu/rc/.vimrc](https://github.com/lwhsu/rc/blob/master/.vimrc)
 - [amix/vimrc](https://github.com/amix/vimrc)
 - [pellaeon/Dotfiles/vimrc](https://github.com/pellaeon/Dotfiles/blob/master/vimrc)
+- [Characters per line (CPL)](https://en.wikipedia.org/wiki/Characters_per_line)
+
+#### tmux
+- [gpakosz/.tmux](https://github.com/gpakosz/.tmux)

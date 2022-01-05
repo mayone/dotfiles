@@ -132,18 +132,26 @@ set lazyredraw
 " Set backspace
 set backspace=indent,eol,start
 
+" Set '\p' as paste toggle
+set pastetoggle=<leader>p
+
 " Show matching brackets
 set showmatch
 
 " Ruler
 set colorcolumn=80
 highlight ColorColumn ctermbg=darkGrey
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"match OverLength /\%81v.\+/
 
 " Status line
 set laststatus=2
 
 " Mouse
-set mouse=a
+"set mouse=a
+
+" Jump to the last position when reopening a file
+au BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Search
