@@ -10,10 +10,10 @@ main() {
   install_homebrew
   install_languages
 
-  install_terminal
   install_shell
-  install_vim
+  install_terminal
   install_editor
+
   install_tools
 
   setup_git
@@ -48,19 +48,17 @@ install_languages() {
     fi
   fi
 
+  # Install OpenJDK
+  info "Install OpenJDK"
   if check_os $OS_MAC; then
-    brew install go
-    brew install node yarn
+    brew install --cask temurin
+  elif check_os $OS_LINUX; then
+    sudo apt install default-jdk
   fi
 
-  # Install OpenJDK
-  if ! check_cmd java; then
-    info "Install OpenJDK"
-    if check_os $OS_MAC; then
-      brew install --cask adoptopenjdk
-    elif check_os $OS_LINUX; then
-      sudo apt install default-jdk
-    fi
+  # Install Go
+  if check_os $OS_MAC; then
+    brew install go
   fi
 
   # Install Rust
@@ -77,16 +75,15 @@ install_languages() {
     #rustup target add aarch64-apple-ios x86_64-apple-ios
     #rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
   fi
-}
 
-install_terminal() {
+  # Install Node.js
   if check_os $OS_MAC; then
-    brew install --cask iterm2
+    brew install node yarn
   fi
 }
 
 install_shell() {
-  # Install zsh
+  # Install Zsh
   if ! check_cmd zsh; then
     info "Install Zsh"
     if check_os $OS_MAC; then
@@ -99,7 +96,7 @@ install_shell() {
     chsh -s "$(which zsh)"
   fi
 
-  # Merge zshrc contents if one already exists, otherwise just copy it over
+  # Copy zshrc
   if check_exist ~/.zshrc; then
     :
     # info "Merging .zshrc files"
@@ -117,29 +114,46 @@ install_shell() {
   # fi
 }
 
-install_vim() {
-  info "Copy .vimrc file"
-  cp vim/.vimrc ~/.vimrc
+install_terminal() {
+  # Install iTerm2
+  if check_os $OS_MAC; then
+    brew install --cask iterm2
+  fi
+
+  # Install tmux
+  if check_os $OS_MAC; then
+    brew install tmux
+  elif check_os $OS_LINUX; then
+    sudo apt install tmux
+  fi
+
+  # Copy tmux settings
+  info "Copy .tmux.conf file"
+  cp tmux/.tmux.conf ~/.tmux.conf
 }
 
 install_editor() {
+  # Install VS Code
   if check_os $OS_MAC; then
     brew install --cask visual-studio-code
     # Copy vscode settings
     mkdir -p ~/Library/Application\ Support/Code/User
     cp vscode/* ~/Library/Application\ Support/Code/User/
   fi
+
+  # Copy vim settings
+  info "Copy .vimrc file"
+  cp vim/.vimrc ~/.vimrc
 }
 
 install_tools() {
   if check_os $OS_MAC; then
     brew install kubectx hub shfmt
-    brew install tmux wget ffmpeg
+    brew install wget ffmpeg
     brew install --cask rectangle discord
+    brew install --cask docker
+    brew install --cask google-chrome
   fi
-  # Copy tmux settings
-  info "Copy .tmux.conf file"
-  cp tmux/.tmux.conf ~/.tmux.conf
 }
 
 setup_git() {
