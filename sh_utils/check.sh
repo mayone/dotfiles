@@ -3,19 +3,20 @@
 # Check and return true/false.
 
 # Variables
-UNAME_S=$(uname -s)
+declare -r TRUE=0
+declare -r FALSE=1
 
-SUCCESS=0
-FAILURE=1
+UNAME_S=$(uname -s)
 
 OS_MAC="Darwin"
 OS_LINUX="Linux"
+OS_WINDOWS="CYGWIN*|MINGW32*|MSYS*|MINGW*"
 
 check_os() {
-  if [ "$UNAME_S" = "$1" ]; then
-    return $SUCCESS
+  if [[ "$UNAME_S" =~ "$1" ]]; then
+    return $TRUE
   else
-    return $FAILURE
+    return $FALSE
   fi
 }
 

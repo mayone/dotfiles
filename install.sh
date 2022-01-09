@@ -2,7 +2,9 @@
 #
 # Install dotfiles.
 
-DIR_PATH=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+# Use ${BASH_SOURCE[0]} if script is not executed by source, else use $0
+SOURCE="${BASH_SOURCE[0]:-$0}"
+DIR_PATH="$( cd -- "$( dirname -- "$SOURCE" )" >/dev/null 2>&1 && pwd -P )"
 
 source $DIR_PATH/sh_utils/utils.sh
 
@@ -150,7 +152,11 @@ install_tools() {
   if check_os $OS_MAC; then
     brew install kubectx hub shfmt
     brew install wget ffmpeg
-    brew install --cask rectangle discord
+
+    # Window management
+    brew install --cask rectangle
+
+    brew install --cask discord
     brew install --cask docker
     brew install --cask google-chrome
   fi

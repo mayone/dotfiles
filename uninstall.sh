@@ -2,7 +2,9 @@
 #
 # Uninstall.
 
-DIR_PATH=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+# Use ${BASH_SOURCE[0]} if script is not executed by source, else use $0
+SOURCE="${BASH_SOURCE[0]:-$0}"
+DIR_PATH="$( cd -- "$( dirname -- "$SOURCE" )" >/dev/null 2>&1 && pwd -P )"
 
 source $DIR_PATH/sh_utils/utils.sh
 
@@ -27,10 +29,10 @@ uninstall_shell() {
 
 uninstall_languages() {
   if check_os $OS_MAC; then
+    brew remove --cask temurin
+
     brew remove go
     brew remove node yarn
-
-    brew remove --cask adoptopenjdk
   fi
 
   rustup self uninstall
