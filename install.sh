@@ -9,7 +9,7 @@ DIR_PATH="$( cd -- "$( dirname -- "$SOURCE" )" >/dev/null 2>&1 && pwd -P )"
 source $DIR_PATH/sh_utils/utils.sh
 
 main() {
-  install_homebrew
+  install_pkgmanager
   install_languages
 
   install_shell
@@ -21,31 +21,29 @@ main() {
   setup_git
 }
 
-install_clt() {
-  # Install Command Line Developer Tools for Xcode
-  if check_cmd xcode-select; then
-    xcode-select --install
-  fi
-}
-
-install_homebrew() {
-  if ! check_os $OS_MAC; then
-    return
-  fi
-
-  if ! check_cmd brew; then
-    info "Install Homebrew"
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+install_pkgmanager() {
+  if check_os $OS_MAC; then
+    if ! check_cmd brew; then
+      info "Install Homebrew"
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+  elif check_os $OS_LINUX; then
+    sudo apt update
   fi
 }
 
 install_languages() {
   # Install GCC
-  if check_os $OS_LINUX; then
-    sudo apt update
-    if ! check_cmd gcc || ! check_cmd make; then
+  if ! check_cmd gcc || ! check_cmd make; then
+    if check_os $OS_MAC; then
+      # Install Command Line Developer Tools for Xcode
+      if check_cmd xcode-select; then
+        xcode-select --install
+      fi
+    elif check_os $OS_LINUX; then
+      # Install build-essential meta-packages
       sudo apt install build-essential
     fi
   fi
