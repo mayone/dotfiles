@@ -154,6 +154,7 @@ install_tools() {
     # Window management
     brew install --cask rectangle
 
+    brew install --cask notion
     brew install --cask discord
     brew install --cask docker
     brew install --cask google-chrome
