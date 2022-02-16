@@ -10,7 +10,12 @@ source $DIR_PATH/sh_utils/utils.sh
 
 main() {
   install_pkgmanager
-  install_languages
+
+  install_essentials
+
+  if ! check_set $NO_DEV; then
+    install_languages
+  fi
 
   install_shell
   install_terminal
@@ -34,7 +39,7 @@ install_pkgmanager() {
   fi
 }
 
-install_languages() {
+install_essentials() {
   # Install GCC
   if ! check_cmd gcc || ! check_cmd make; then
     if check_os $OS_MAC; then
@@ -47,7 +52,9 @@ install_languages() {
       sudo apt install build-essential
     fi
   fi
+}
 
+install_languages() {
   # Install OpenJDK
   info "Install OpenJDK"
   if check_os $OS_MAC; then
@@ -148,15 +155,19 @@ install_editor() {
 
 install_tools() {
   if check_os $OS_MAC; then
-    brew install kubectx hub shfmt
+    brew install hub shfmt
     brew install wget ffmpeg
+
+    if ! check_set $NO_DEV; then
+      brew install kubectx
+      brew install --cask docker
+    fi
 
     # Window management
     brew install --cask rectangle
 
     brew install --cask notion
     brew install --cask discord
-    brew install --cask docker
     brew install --cask google-chrome
   fi
 }

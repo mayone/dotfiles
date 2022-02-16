@@ -10,6 +10,11 @@
 ./install.sh
 ```
 
+### Install (excluding devtools)
+```console
+NO_DEV=1 ./install.sh
+```
+
 <details>
 <summary>Post Install Setup</summary>
 

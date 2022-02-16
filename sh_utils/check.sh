@@ -20,6 +20,21 @@ check_os() {
   fi
 }
 
+#######################################
+# Check is a variable set or not.
+# Arguments:
+#   Variable to check.
+# Returns:
+#   0 if is set, 1 if unset.
+#######################################
+check_set() {
+  if [[ ! -z "$1" ]]; then
+    return $TRUE
+  else
+    return $FALSE
+  fi
+}
+
 check_cmd() {
   command -v "$1" >/dev/null 2>&1
 }
