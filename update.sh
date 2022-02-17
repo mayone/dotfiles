@@ -12,31 +12,50 @@ source $DIR_PATH/sh_utils/utils.sh
 ZINIT_HOME="$HOME/.zinit"
 
 main() {
+  update_pkgmanager
+
   update_rust
-  update_homebrew
+  # update_pip
   update_zinit
+}
+
+update_pkgmanager() {
+  info "Update packages"
+  if check_os $OS_MAC; then
+    if ! check_cmd brew; then
+      info "No brew for update"
+      return
+    fi
+
+    # Update Homebrew
+    brew update
+    # Update packages
+    brew upgrade
+  elif check_os $OS_LINUX; then
+    sudo apt update
+    # Update packages
+    sudo apt upgrade
+  fi
 }
 
 update_rust() {
   if ! check_cmd rustup; then
     info "No rust for update"
+    return
   fi
 
   info "Update rust"
   rustup update
 }
 
-update_homebrew() {
-  if ! check_cmd brew; then
-    info "No brew for update"
+update_pip() {
+  if ! check_cmd pip3; then
+    info "No pip3 for update"
     return
   fi
 
-  info "Update homebrew"
-  # Update Homebrew
-  brew update
-  # Update packages
-  brew upgrade
+  info "Update pip3"
+  pip3 install --upgrade pip
 }
 
 update_zinit() {
