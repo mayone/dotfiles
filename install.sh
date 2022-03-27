@@ -74,13 +74,15 @@ install_languages() {
     curl https://sh.rustup.rs -sSf | sh -s -- -y
     source ~/.cargo/env
     rustup default stable
+    # rustup toolchain install nightly
 
     # lints
     rustup component add clippy
 
     # Cross-compilation
-    #rustup target add aarch64-apple-ios x86_64-apple-ios
-    #rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
+    # rustup target add aarch64-apple-ios x86_64-apple-ios aarch64-apple-darwin
+    # rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
+    # rustup target add wasm32-unknown-unknown
   fi
 
   # Install Node.js
@@ -166,6 +168,7 @@ install_tools() {
     # Window management
     brew install --cask rectangle
 
+    brew install --cask vlc
     brew install --cask notion
     brew install --cask discord
     brew install --cask google-chrome
