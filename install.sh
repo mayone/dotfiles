@@ -88,6 +88,7 @@ install_languages() {
   # Install Node.js
   if check_os $OS_MAC; then
     brew install node yarn
+    brew install nvm
   fi
 }
 
