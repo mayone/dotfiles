@@ -13,13 +13,14 @@ main() {
   uninstall_shell
 
   uninstall_languages
-  uninstall_homebrew
+  uninstall_pkgmanager
 }
 
 uninstall_tools() {
   if check_os $OS_MAC; then
-    brew remove kubectx hub shfmt
+    brew remove hub shfmt
     brew remove tmux wget ffmpeg
+    brew remove kubectx
   fi
 }
 
@@ -38,13 +39,11 @@ uninstall_languages() {
   rustup self uninstall
 }
 
-uninstall_homebrew() {
-  if ! check_os $OS_MAC; then
-    return
-  fi
-
-  if check_cmd brew; then
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+uninstall_pkgmanager() {
+  if check_os $OS_MAC; then
+    if check_cmd brew; then
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+    fi
   fi
 }
 
