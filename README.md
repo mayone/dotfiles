@@ -51,14 +51,10 @@ NO_DEV=1 ./install.sh
 
 </details>
 
----
-
 ## Update
 ```console
 ./update.sh
 ```
-
----
 
 ## Uninstall
 ```console
@@ -72,7 +68,7 @@ NO_DEV=1 ./install.sh
 #### Cannot choose prompt style in `p10k configure`
 - Make sure Terminal
 	- Use Powerline glyphs
-	- Use `xterm-256color` 
+	- Use `xterm-256color`
 
 #### Powerline Font not installed after `p10k configure`
 - Manually install [MesloLGS NF](https://github.com/romkatv/powerlevel10k#manual-font-installation) and set Terminal font
