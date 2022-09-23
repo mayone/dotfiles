@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Collection of common functions.
+# Index file.
 
 # Use ${BASH_SOURCE[0]} if script is not executed by source, else use $0
 SOURCE="${BASH_SOURCE[0]:-$0}"
