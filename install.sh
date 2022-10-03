@@ -164,6 +164,7 @@ install_tools() {
     if ! check_set $NO_DEV; then
       brew install kubectx
       brew install --cask docker
+      brew install --cask postman
     fi
 
     # Window management
