@@ -14,6 +14,8 @@ ZINIT_HOME="$HOME/.zinit"
 main() {
   update_pkgmanager
 
+  update_gcloud_cli
+
   update_rust
   # update_pip
   update_zinit
@@ -36,6 +38,16 @@ update_pkgmanager() {
     # Update packages
     sudo apt upgrade
   fi
+}
+
+update_gcloud_cli() {
+  if ! check_cmd gcloud; then
+    info "No gcloud for update"
+    return
+  fi
+
+  info "Update gcloud components"
+  gcloud components update
 }
 
 update_rust() {

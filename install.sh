@@ -165,10 +165,16 @@ install_tools() {
       brew install kubectx
       brew install --cask docker
       brew install --cask postman
+      brew install --cask google-cloud-sdk
+      gcloud components install gke-gcloud-auth-plugin
     fi
 
     # Window management
     brew install --cask rectangle
+
+    # Keyboard configurator
+    # https://usevia.app/
+    brew install --cask via
 
     brew install --cask vlc
     brew install --cask notion
