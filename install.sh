@@ -162,9 +162,12 @@ install_tools() {
     brew install wget ffmpeg
 
     if ! check_set $NO_DEV; then
+      brew install --cask postman
+
+      # DevOps
+      # kubectx + kubens
       brew install kubectx
       brew install --cask docker
-      brew install --cask postman
       brew install --cask google-cloud-sdk
       gcloud components install gke-gcloud-auth-plugin
     fi
