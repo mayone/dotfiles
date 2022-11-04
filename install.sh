@@ -106,6 +106,9 @@ install_shell() {
     chsh -s "$(which zsh)"
   fi
 
+  # Command replacement
+  brew install bat exa
+
   # Copy zshrc
   if check_exist ~/.zshrc; then
     :

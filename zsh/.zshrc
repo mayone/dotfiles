@@ -27,7 +27,17 @@ fi
 # Aliases
 #
 
-alias l='ls -CF'    l.='ls -d .*'   la='ls -A'  ll='ls -alF'
+if command -v bat >/dev/null 2>&1; then
+    alias cat='bat --paging=never'
+fi
+
+if command -v exa >/dev/null 2>&1; then
+    alias l='exa'       l.='exa -d .*'  la='exa -a' ll='exa -laah'
+    alias ls='exa -F'
+else
+    alias l='ls -CF'    l.='ls -d .*'   la='ls -A'  ll='ls -alF'
+fi
+
 alias df='df -h'    du='du -h'      cp='cp -v'  mv='mv -v'
 
 # Git
