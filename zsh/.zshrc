@@ -20,7 +20,7 @@ export NVM_DIR="$HOME/.nvm"
 #
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 #
@@ -28,21 +28,21 @@ fi
 #
 
 if command -v bat >/dev/null 2>&1; then
-    alias cat='bat --paging=never'
+  alias cat='bat --paging=never'
 fi
 
 if command -v exa >/dev/null 2>&1; then
-    alias l='exa'       l.='exa -d .*'  la='exa -a' ll='exa -laah'
-    alias ls='exa -F'
+  alias l='exa'     l.='exa -d .*'  la='exa -a' ll='exa -laah'
+  alias ls='exa -F'
 else
-    alias l='ls -CF'    l.='ls -d .*'   la='ls -A'  ll='ls -alF'
+  alias l='ls -CF'  l.='ls -d .*'   la='ls -A'  ll='ls -alF'
 fi
 
-alias df='df -h'    du='du -h'      cp='cp -v'  mv='mv -v'
+alias df='df -h'  du='du -h'      cp='cp -v'  mv='mv -v'
 
 # Git
 if command -v hub >/dev/null 2>&1; then
-    alias git=hub
+  alias git=hub
 fi
 alias glog_branches="git log --color=always --oneline --decorate --graph --branches"
 
@@ -52,11 +52,11 @@ alias glog_branches="git log --color=always --oneline --decorate --graph --branc
 
 # Zinit
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+  print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+  command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+  command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zinit/bin" && \
+    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+    print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
 source "$HOME/.zinit/bin/zinit.zsh"
@@ -65,10 +65,10 @@ autoload -Uz _zinit
 
 # Zinit annexes
 zinit light-mode for \
-    zdharma-continuum/zinit-annex-rust \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-bin-gem-node
+  zdharma-continuum/zinit-annex-rust \
+  zdharma-continuum/zinit-annex-as-monitor \
+  zdharma-continuum/zinit-annex-patch-dl \
+  zdharma-continuum/zinit-annex-bin-gem-node
 
 #
 # Load plugins
@@ -76,18 +76,18 @@ zinit light-mode for \
 
 # Fast-syntax-highlighting & autosuggestions
 zinit wait lucid for \
-    atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay" \
-        zdharma-continuum/fast-syntax-highlighting \
-    atload"!_zsh_autosuggest_start" \
-        zsh-users/zsh-autosuggestions \
-    blockf \
-        zsh-users/zsh-completions
+  atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
+  atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions \
+  blockf \
+    zsh-users/zsh-completions
 
 zinit wait lucid for \
-    zdharma-continuum/zsh-unique-id \
-    OMZ::lib/git.zsh \
-    atload"unalias grv g" \
-    OMZ::plugins/git/git.plugin.zsh
+  zdharma-continuum/zsh-unique-id \
+  OMZ::lib/git.zsh \
+  atload"unalias grv g" \
+  OMZ::plugins/git/git.plugin.zsh
 
 # Powerlevel10k
 zinit ice depth=1
