@@ -106,8 +106,13 @@ install_shell() {
     chsh -s "$(which zsh)"
   fi
 
-  # Command replacement
-  brew install bat exa
+  if check_os $OS_MAC; then
+    brew install fzf
+    $(brew --prefix)/opt/fzf/install
+
+    # Command replacement
+    brew install bat exa
+  fi
 
   # Copy zshrc
   if check_exist ~/.zshrc; then
