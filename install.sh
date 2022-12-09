@@ -166,7 +166,8 @@ install_editor() {
 
 install_tools() {
   if check_os $OS_MAC; then
-    brew install hub shfmt
+    brew install hub
+    brew install shfmt jq
     brew install wget ffmpeg
 
     if ! check_set $NO_DEV; then
