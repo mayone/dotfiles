@@ -74,7 +74,7 @@ install_languages() {
     curl https://sh.rustup.rs -sSf | sh -s -- -y
     source ~/.cargo/env
     rustup default stable
-    # rustup toolchain install nightly
+    rustup toolchain install nightly
 
     # lints
     rustup component add clippy
@@ -111,7 +111,7 @@ install_shell() {
     $(brew --prefix)/opt/fzf/install
 
     # Command replacement
-    brew install bat exa
+    brew install bat exa ripgrep
   fi
 
   # Copy zshrc
