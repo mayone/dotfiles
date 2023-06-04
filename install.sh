@@ -189,6 +189,7 @@ install_tools() {
     brew install --cask via
 
     brew install --cask vlc
+    brew install --cask gimp
     brew install --cask notion
     brew install --cask discord
     brew install --cask google-chrome
