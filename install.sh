@@ -188,6 +188,9 @@ install_tools() {
     # https://usevia.app/
     brew install --cask via
 
+    # App uninstallation
+    brew install --cask appcleaner
+
     brew install --cask vlc
     brew install --cask gimp
     brew install --cask notion
