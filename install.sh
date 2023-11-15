@@ -111,7 +111,7 @@ install_shell() {
     $(brew --prefix)/opt/fzf/install
 
     # Command replacement
-    brew install bat exa ripgrep
+    brew install bat eza ripgrep
   fi
 
   # Copy zshrc

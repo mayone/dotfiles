@@ -34,9 +34,9 @@ if command -v bat >/dev/null 2>&1; then
   alias cat='bat --paging=never'
 fi
 
-if command -v exa >/dev/null 2>&1; then
-  alias l='exa'     l.='exa -d .*'  la='exa -a' ll='exa -laah'
-  alias ls='exa -F'
+if command -v eza >/dev/null 2>&1; then
+  alias l='eza'     l.='eza -d .*'  la='eza -a' ll='eza -laah'
+  alias ls='eza -F'
 else
   alias l='ls -CF'  l.='ls -d .*'   la='ls -A'  ll='ls -alF'
 fi
