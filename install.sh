@@ -49,7 +49,7 @@ install_essentials() {
       fi
     elif check_os $OS_LINUX; then
       # Install build-essential meta-packages
-      sudo apt install build-essential
+      sudo apt install build-essential libssl-dev pkg-config
     fi
   fi
 }
