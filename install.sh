@@ -195,6 +195,7 @@ install_tools() {
     brew install --cask gimp
     brew install --cask notion
     brew install --cask discord
+    brew install --cask telegram
     brew install --cask google-chrome
   fi
 }
