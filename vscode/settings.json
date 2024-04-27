@@ -1,5 +1,4 @@
 {
-    "terminal.integrated.shell.osx": "zsh",
     "terminal.integrated.fontFamily": "MesloLGS NF",
     "terminal.integrated.fontSize": 12,
     "terminal.integrated.cursorBlinking": true,
@@ -13,7 +12,6 @@
     "editor.formatOnSave": true,
     "editor.renderWhitespace": "all",
     "workbench.startupEditor": "readme",
-    "telemetry.enableTelemetry": false,
-    "telemetry.enableCrashReporter": false,
+    "telemetry.telemetryLevel": "off",
     "window.zoomLevel": 0
 }
