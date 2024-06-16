@@ -169,7 +169,7 @@ install_tools() {
   if check_os $OS_MAC; then
     brew install hub
     brew install shfmt jq
-    brew install wget ffmpeg
+    brew install wget ffmpeg yt-dlp
 
     if ! check_set $NO_DEV; then
       brew install --cask postman
