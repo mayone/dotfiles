@@ -12,6 +12,14 @@
   "workbench.startupEditor": "readme",
   "telemetry.telemetryLevel": "off",
   "window.zoomLevel": 0,
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
   // Prettier
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
