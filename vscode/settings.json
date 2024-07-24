@@ -1,17 +1,34 @@
 {
-    "terminal.integrated.fontFamily": "MesloLGS NF",
-    "terminal.integrated.fontSize": 12,
-    "terminal.integrated.cursorBlinking": true,
-    "terminal.integrated.cursorStyle": "line",
-    "terminal.external.osxExec": "iTerm.app",
-    "editor.rulers": [
-        120
-    ],
-    "editor.fontSize": 14,
-    "editor.largeFileOptimizations": false,
-    "editor.formatOnSave": true,
-    "editor.renderWhitespace": "all",
-    "workbench.startupEditor": "readme",
-    "telemetry.telemetryLevel": "off",
-    "window.zoomLevel": 0
+  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "terminal.integrated.fontSize": 12,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.external.osxExec": "iTerm.app",
+  "editor.rulers": [120],
+  "editor.fontSize": 14,
+  "editor.largeFileOptimizations": false,
+  "editor.formatOnSave": true,
+  "editor.renderWhitespace": "all",
+  "workbench.startupEditor": "readme",
+  "telemetry.telemetryLevel": "off",
+  "window.zoomLevel": 0,
+  // Prettier
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
