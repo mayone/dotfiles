@@ -25,7 +25,8 @@ uninstall_tools() {
 }
 
 uninstall_shell() {
-  rm -rf ~/.zinit/
+  ZINIT_DIR="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/"
+  rm -rf $ZINIT_DIR
 }
 
 uninstall_languages() {

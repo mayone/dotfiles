@@ -41,7 +41,7 @@ else
   alias l='ls -CF'  l.='ls -d .*'   la='ls -A'  ll='ls -alF'
 fi
 
-alias df='df -h'  du='du -h'      cp='cp -v'  mv='mv -v'
+alias df='df -h'    du='du -h'      cp='cp -v'  mv='mv -v'
 
 # Git
 if command -v hub >/dev/null 2>&1; then
@@ -54,15 +54,18 @@ alias glog_branches="git log --color=always --oneline --decorate --graph --branc
 #
 
 # Zinit
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [[ ! -d $ZINIT_HOME ]]; then
   print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-  command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-  command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zinit/bin" && \
+  mkdir -p "$(dirname $ZINIT_HOME)"
+fi
+if [[ ! -d $ZINIT_HOME/.git ]]; then
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME" && \
     print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
     print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
+source "${ZINIT_HOME}/zinit.zsh"
 
-source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 

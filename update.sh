@@ -9,7 +9,7 @@ DIR_PATH="$( cd -- "$( dirname -- "$SOURCE" )" >/dev/null 2>&1 && pwd -P )"
 source $DIR_PATH/sh_utils/index.sh
 
 # Variables
-ZINIT_HOME="$HOME/.zinit"
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 main() {
   update_pkgmanager
