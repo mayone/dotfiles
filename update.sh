@@ -33,6 +33,9 @@ update_pkgmanager() {
     brew update
     # Update packages
     brew upgrade
+    # List outdated packages for manual upgrade
+    warn "Outdated packages"
+    brew outdated --greedy
   elif check_os $OS_LINUX; then
     sudo apt update
     # Update packages
