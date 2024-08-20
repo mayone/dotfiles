@@ -175,7 +175,7 @@ install_tools() {
       brew install --cask postman
 
       # DevOps
-      # kubectx + kubens
+      brew install k9s
       brew install kubectx
       brew install --cask docker
       brew install --cask google-cloud-sdk
