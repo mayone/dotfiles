@@ -88,7 +88,7 @@ install_languages() {
   # Install Node.js
   if check_os $OS_MAC; then
     brew install node yarn
-    brew install oven-sh/bun/bun
+    # brew install oven-sh/bun/bun
     brew install nvm
   fi
 }
@@ -187,7 +187,7 @@ install_tools() {
 
     # Keyboard configurator
     # https://usevia.app/
-    brew install --cask via
+    # brew install --cask via
 
     # App uninstallation
     brew install --cask appcleaner
@@ -195,8 +195,9 @@ install_tools() {
     brew install --cask vlc
     brew install --cask gimp
     brew install --cask notion
+    brew install --cask chatgpt
     brew install --cask discord
-    brew install --cask telegram
+    # brew install --cask telegram
     brew install --cask google-chrome
   fi
 }
