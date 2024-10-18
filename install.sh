@@ -154,6 +154,7 @@ install_terminal() {
 install_editor() {
   # Install VS Code
   if check_os $OS_MAC; then
+    brew install --cask cursor
     brew install --cask visual-studio-code
     # Copy vscode settings
     mkdir -p ~/Library/Application\ Support/Code/User
@@ -194,6 +195,7 @@ install_tools() {
 
     brew install --cask vlc
     brew install --cask gimp
+    brew install --cask figma
     brew install --cask notion
     brew install --cask chatgpt
     brew install --cask discord
