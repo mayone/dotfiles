@@ -169,6 +169,7 @@ install_editor() {
 install_tools() {
   if check_os $OS_MAC; then
     brew install hub
+    brew install just
     brew install shfmt jq
     brew install wget ffmpeg yt-dlp
 
