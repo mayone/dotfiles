@@ -107,14 +107,6 @@ install_shell() {
     chsh -s "$(which zsh)"
   fi
 
-  if check_os $OS_MAC; then
-    brew install fzf
-    $(brew --prefix)/opt/fzf/install
-
-    # Command replacement
-    brew install bat eza ripgrep
-  fi
-
   # Copy zshrc
   if check_exist ~/.zshrc; then
     :
@@ -123,6 +115,14 @@ install_shell() {
   else
     info "Copy .zshrc file"
     cp zsh/.zshrc ~/.zshrc
+  fi
+
+  if check_os $OS_MAC; then
+    brew install fzf
+    $(brew --prefix)/opt/fzf/install
+
+    # Command replacement
+    brew install bat eza ripgrep
   fi
 
   # Install Nerdfonts
