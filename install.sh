@@ -82,7 +82,7 @@ install_languages() {
     # Cross-compilation
     # rustup target add aarch64-apple-ios x86_64-apple-ios aarch64-apple-darwin
     # rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
-    # rustup target add wasm32-unknown-unknown
+    rustup target add wasm32-unknown-unknown
   fi
 
   # Install Node.js
@@ -213,6 +213,7 @@ setup_git() {
   git config --global alias.br branch
   git config --global alias.com commit
   git config --global alias.st status
+  git config --global alias.pr "pull --rebase"
   if check_os $OS_MAC; then
     git config --global credential.helper osxkeychain
   elif check_os $OS_LINUX; then
