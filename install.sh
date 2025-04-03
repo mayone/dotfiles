@@ -201,6 +201,7 @@ install_tools() {
     brew install --cask chatgpt
     brew install --cask discord
     # brew install --cask telegram
+    brew install --cask musescore
     # VPN
     brew install --cask tunnelbear
     brew install --cask google-chrome
