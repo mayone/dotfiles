@@ -122,7 +122,7 @@ install_shell() {
     $(brew --prefix)/opt/fzf/install
 
     # Command replacement
-    brew install bat eza ripgrep
+    brew install bat eza htop ripgrep
   fi
 
   # Install Nerdfonts

@@ -7,7 +7,7 @@ typeset -g HISTSIZE=5000 SAVEHIST=5000 HISTFILE=~/.zsh_history
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin:$GOROOT/bin:/usr/local/bin
-source ~/.cargo/env
+[ -f ~/.cargo/env ] && source ~/.cargo/env
 export LANG="en_US.UTF-8"
 
 # NVM
@@ -21,6 +21,8 @@ export NVM_DIR="$HOME/.nvm"
 #
 # Powerlevel10k instant prompt
 #
+
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -39,6 +41,10 @@ if command -v eza >/dev/null 2>&1; then
   alias ls='eza -F'
 else
   alias l='ls -CF'  l.='ls -d .*'   la='ls -A'  ll='ls -alF'
+fi
+
+if command -v htop >/dev/null 2>&1; then
+  alias top=htop
 fi
 
 alias df='df -h'    du='du -h'      cp='cp -v'  mv='mv -v'
