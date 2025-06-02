@@ -182,7 +182,7 @@ in
   };
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
   # Virtualization (Containers and VMs)
@@ -256,7 +256,12 @@ in
     gnome-tweaks
     gparted
     mkcert
-    ventoy-full
+    # Issues related to binary blobs security
+    #https://github.com/NixOS/nixpkgs/issues/404663
+    # See the following Issues for context:
+    # https://github.com/ventoy/Ventoy/issues/2795
+    # https://github.com/ventoy/Ventoy/issues/3224
+    #ventoy-full
     # Used to check if an app is using Xwayland or Wayland
     curl
     docker-compose
@@ -452,8 +457,7 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
-
+  system.stateVersion = "25.05";
   # ===== Customized ===== #
   # Power Management
   # systemd.sleep.extraConfig = ''
