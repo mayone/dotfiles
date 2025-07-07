@@ -167,5 +167,10 @@
       "backgroundColor": "#966"
     }
   ],
-  "workbench.colorTheme": "One Dark Pro Night Flat"
+  "workbench.colorTheme": "One Dark Pro Night Flat",
+  "workbench.editor.customLabels.patterns": {
+    "**/Cargo.toml": "${dirname} (Cargo)",
+    "**/lib.*": "${dirname} (lib)",
+    "**/mod.*": "${dirname} (mod)"
+  }
 }
