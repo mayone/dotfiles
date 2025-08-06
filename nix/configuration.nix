@@ -206,6 +206,9 @@ in
   # Install firefox.
   programs.firefox.enable = true;
 
+  # Allow dynamic linking
+  programs.nix-ld.enable = true;
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -281,6 +284,10 @@ in
     #saleae-logic-2
     #stm32cubemx
 
+    # ===== Node.js ===== #
+    nodejs
+    pnpm
+
     # ===== Color Management ===== #
     #gnome.gnome-color-manager
 
@@ -311,12 +318,15 @@ in
         rust-lang.rust-analyzer
         gruntfuggly.todo-tree
         #vscodevim.vim
+        #asvetliakov.vscode-neovim
         github.vscode-github-actions
         ecmel.vscode-html-css
-        #asvetliakov.vscode-neovim  
         redhat.vscode-yaml
+        bradlc.vscode-tailwindcss
         esbenp.prettier-vscode
         charliermarsh.ruff
+        alefragnani.bookmarks
+        alefragnani.project-manager
 
       ] ++ unstable_pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         #{
