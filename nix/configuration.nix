@@ -276,7 +276,9 @@ in
     git
     gcc
     gnumake
+    just
     postman
+    gemini-cli
     # Postman Open-Source Alternative
     #hoppscotch
     nixpkgs-fmt
@@ -294,6 +296,7 @@ in
     # ===== IDE ===== #
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
+    unstable_pkgs.code-cursor
     (unstable_pkgs.vscode-with-extensions.override {
       vscode = unstable_pkgs.vscodium; # or unstable_pkgs.vscode
       vscodeExtensions = with unstable_pkgs.vscode-extensions; [
@@ -364,6 +367,12 @@ in
           publisher = "wokwi";
           version = "2.6.0";
           sha256 = "epWN+VQbXVb+mQCBJ3rvgmgemrMCliJE3AmPmw7g0IA=";
+        }
+        {
+          name = "triggertaskonsave";
+          publisher = "gruntfuggly";
+          version = "0.2.17";
+          sha256 = "sha256-ax/hkewlH0K+sLkFAvgofD6BjEheRYObAAvt8MA3pqc=";
         }
       ];
     })
