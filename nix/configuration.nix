@@ -279,6 +279,8 @@ in
     just
     postman
     gemini-cli
+    python313
+    python313Packages.pip
     # Postman Open-Source Alternative
     #hoppscotch
     nixpkgs-fmt
