@@ -7,11 +7,23 @@
   "editor.rulers": [120],
   "editor.fontSize": 14,
   "editor.largeFileOptimizations": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.renderWhitespace": "all",
   "workbench.startupEditor": "readme",
-  "telemetry.telemetryLevel": "off",
   "window.zoomLevel": 0,
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml",
+    "editor.formatOnSave": true
+  },
+  "[nix]": {
+    "editor.defaultFormatter": "jnoortheen.nix-ide",
+    "editor.formatOnSave": true
+  },
   "[python]": {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
@@ -41,5 +53,108 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "todo-tree.general.tags": [
+    "ASK",
+    "FIXME",
+    "IDEA",
+    "SOLUTION",
+    "TODO",
+    "TRY",
+    "WARNING",
+    "Z_PLACEHOLDER_1",
+    "Z_PLACEHOLDER_2",
+    "Z_PLACEHOLDER_3"
+  ],
+  "todo-tree.highlights.customHighlight": {
+    "ASK": {
+      "foreground": "#39c",
+      "icon": "accessibility",
+      "type": "none"
+    },
+    "FIXME": {
+      "foreground": "#c00",
+      "type": "none"
+    },
+    "IDEA": {
+      "foreground": "#fa0",
+      "icon": "light-bulb",
+      "type": "none"
+    },
+    "SOLUTION": {
+      "foreground": "#c39",
+      "type": "none"
+    },
+    "TODO": {
+      "type": "none"
+    },
+    "TRY": {
+      "foreground": "#f36",
+      "type": "none"
+    },
+    "WARNING": {
+      "foreground": "#c00",
+      "type": "none"
+    },
+    "Z_PLACEHOLDER_1": {
+      "foreground": "#366",
+      "type": "none"
+    },
+    "Z_PLACEHOLDER_2": {
+      "foreground": "#393",
+      "type": "none"
+    },
+    "Z_PLACEHOLDER_3": {
+      "foreground": "#966",
+      "type": "none"
+    }
+  },
+  "todohighlight.keywords": [
+    {
+      "text": "ASK:",
+      "color": "#fff",
+      "backgroundColor": "#39c"
+    },
+    {
+      "text": "FIXME:"
+    },
+    {
+      "text": "IDEA:",
+      "color": "#fff",
+      "backgroundColor": "#fa0"
+    },
+    {
+      "text": "SOLUTION:",
+      "color": "#fff",
+      "backgroundColor": "#c39"
+    },
+    {
+      "text": "TODO:"
+    },
+    {
+      "text": "TRY:",
+      "color": "#fff",
+      "backgroundColor": "#f36"
+    },
+    {
+      "text": "WARNING:",
+      "color": "#fff",
+      "backgroundColor": "#c00"
+    },
+    {
+      "text": "Z_PLACEHOLDER_1:",
+      "color": "#fff",
+      "backgroundColor": "#366"
+    },
+    {
+      "text": "Z_PLACEHOLDER_2:",
+      "color": "#fff",
+      "backgroundColor": "#393"
+    },
+    {
+      "text": "Z_PLACEHOLDER_3:",
+      "color": "#fff",
+      "backgroundColor": "#966"
+    }
+  ]
 }
