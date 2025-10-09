@@ -1,30 +1,29 @@
 {
-  "terminal.integrated.fontFamily": "MesloLGS Nerd Font Mono",
-  "terminal.integrated.fontSize": 12,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontSize": 14,
+  "editor.formatOnSave": true,
+  "editor.minimap.enabled": true,
+  "editor.rulers": [120],
+  "editor.stickyTabStops": true,
+  "editor.wordWrap": "on",
+  "security.workspace.trust.untrustedFiles": "open",
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.defaultProfile.linux": "zsh",
-  "security.workspace.trust.untrustedFiles": "open",
-  "editor.rulers": [120],
-  "editor.fontSize": 14,
-  "editor.wordWrap": "on",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
+  "terminal.integrated.fontFamily": "MesloLGS Nerd Font Mono",
+  "terminal.integrated.fontSize": 12,
+  "terminal.integrated.suggest.enabled": true,
   "[rust]": {
-    "editor.defaultFormatter": "rust-lang.rust-analyzer",
-    "editor.formatOnSave": true
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
   },
   "[toml]": {
-    "editor.defaultFormatter": "tamasfe.even-better-toml",
-    "editor.formatOnSave": true
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
   },
   "[nix]": {
-    "editor.defaultFormatter": "jnoortheen.nix-ide",
-    "editor.formatOnSave": true
+    "editor.defaultFormatter": "jnoortheen.nix-ide"
   },
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
-    "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
       "source.organizeImports": "explicit"
@@ -167,6 +166,7 @@
       "backgroundColor": "#966"
     }
   ],
+  "workbench.activityBar.orientation": "vertical",
   "workbench.colorTheme": "One Dark Pro Night Flat",
   "workbench.editor.customLabels.patterns": {
     "**/Cargo.toml": "${dirname} (Cargo)",

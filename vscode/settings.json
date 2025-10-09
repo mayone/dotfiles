@@ -1,17 +1,22 @@
 {
-  "terminal.integrated.fontFamily": "MesloLGS NF",
-  "terminal.integrated.fontSize": 12,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontSize": 14,
+  "editor.formatOnSave": true,
+  "editor.largeFileOptimizations": false,
+  "editor.minimap.enabled": true,
+  "editor.renderWhitespace": "all",
+  "editor.rulers": [120],
+  "editor.stickyTabStops": true,
+  "editor.wordWrap": "on",
+  "telemetry.telemetryLevel": "off",
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "terminal.integrated.fontSize": 12,
+  "terminal.integrated.suggest.enabled": true,
   "terminal.external.osxExec": "iTerm.app",
-  "editor.rulers": [120],
-  "editor.fontSize": 14,
-  "editor.largeFileOptimizations": false,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "editor.renderWhitespace": "all",
-  "workbench.startupEditor": "readme",
-  "window.zoomLevel": 0,
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
     "editor.formatOnSave": true
@@ -24,8 +29,15 @@
     "editor.defaultFormatter": "jnoortheen.nix-ide",
     "editor.formatOnSave": true
   },
+  "window.zoomLevel": 0,
+  "workbench.activityBar.orientation": "vertical",
+  "workbench.editor.customLabels.patterns": {
+    "**/Cargo.toml": "${dirname} (Cargo)",
+    "**/lib.*": "${dirname} (lib)",
+    "**/mod.*": "${dirname} (mod)"
+  },
+  "workbench.startupEditor": "readme",
   "[python]": {
-    "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
       "source.organizeImports": "explicit"
