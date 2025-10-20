@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 #
-# Apply Alacrit ty configuration.
+# Apply Alacritty configuration.
 
 cp alacritty.toml $HOME/.config/alacritty
