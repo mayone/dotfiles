@@ -47,7 +47,7 @@
   "todo-tree.highlights.customHighlight": {
     "ASK": {
       "foreground": "#39c",
-      "icon": "accessibility",
+      "icon": "question",
       "type": "none"
     },
     "FIXME": {
