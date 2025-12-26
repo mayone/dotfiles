@@ -237,6 +237,10 @@ in
     oh-my-zsh
     zsh
 
+    # ===== Management ===== #
+    # Add `vicinae toggle` in Settings > Keyboard > Shortcuts > Custom Shortcuts
+    unstable_pkgs.vicinae
+
     # ===== Note ===== #
     appflowy
 
