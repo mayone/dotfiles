@@ -1,16 +1,17 @@
 {
   "recommendations": [
+    "tamasfe.even-better-toml",
     "eamodio.gitlens",
     "mhutchie.git-graph",
+    "oderwat.indent-rainbow",
+    "esbenp.prettier-vscode",
+    "charliermarsh.ruff",
+    "rust-lang.rust-analyzer",
     "gruntfuggly.todo-tree",
     "nefrob.vscode-just-syntax",
     "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss",
     "ms-python.python",
-    "charliermarsh.ruff",
-    "rust-lang.rust-analyzer",
-    "tamasfe.even-better-toml",
     "jakobhoeg.vscode-pokemon"
   ]
 }
