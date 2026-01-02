@@ -1,5 +1,7 @@
 {
   "recommendations": [
+    "alefragnani.Bookmarks",
+    "fill-labs.dependi",
     "tamasfe.even-better-toml",
     "eamodio.gitlens",
     "mhutchie.git-graph",
