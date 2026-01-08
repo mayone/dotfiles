@@ -7,13 +7,14 @@
     "mhutchie.git-graph",
     "oderwat.indent-rainbow",
     "esbenp.prettier-vscode",
+    "ms-python.python",
     "charliermarsh.ruff",
     "rust-lang.rust-analyzer",
     "gruntfuggly.todo-tree",
     "nefrob.vscode-just-syntax",
     "dbaeumer.vscode-eslint",
+    "jakobhoeg.vscode-pokemon",
     "bradlc.vscode-tailwindcss",
-    "ms-python.python",
-    "jakobhoeg.vscode-pokemon"
+    "wayou.vscode-todo-highlight"
   ]
 }
