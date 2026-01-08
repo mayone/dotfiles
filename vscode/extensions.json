@@ -5,6 +5,7 @@
     "tamasfe.even-better-toml",
     "eamodio.gitlens",
     "mhutchie.git-graph",
+    "Lokalise.i18n-ally",
     "oderwat.indent-rainbow",
     "esbenp.prettier-vscode",
     "ms-python.python",
@@ -13,6 +14,7 @@
     "gruntfuggly.todo-tree",
     "nefrob.vscode-just-syntax",
     "dbaeumer.vscode-eslint",
+    "DavidAnson.vscode-markdownlint",
     "jakobhoeg.vscode-pokemon",
     "bradlc.vscode-tailwindcss",
     "wayou.vscode-todo-highlight"
