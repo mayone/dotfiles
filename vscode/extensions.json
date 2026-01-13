@@ -12,15 +12,17 @@
     "PKief.material-icon-theme",
     "esbenp.prettier-vscode",
     "ms-python.python",
+    "mechatroner.rainbow-csv",
     "charliermarsh.ruff",
     "rust-lang.rust-analyzer",
     "gruntfuggly.todo-tree",
+    "dbaeumer.vscode-eslint",
     "wix.vscode-import-cost",
     "nefrob.vscode-just-syntax",
-    "dbaeumer.vscode-eslint",
     "DavidAnson.vscode-markdownlint",
     "jakobhoeg.vscode-pokemon",
     "bradlc.vscode-tailwindcss",
-    "wayou.vscode-todo-highlight"
+    "wayou.vscode-todo-highlight",
+    "redhat.vscode-yaml"
   ]
 }
