@@ -158,7 +158,7 @@ install_editor() {
     brew install --cask visual-studio-code
     # Copy vscode settings
     mkdir -p ~/Library/Application\ Support/Code/User
-    cp vscode/* ~/Library/Application\ Support/Code/User/
+    cp .vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
   fi
 
   # Copy vim settings
