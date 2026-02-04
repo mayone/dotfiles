@@ -19,9 +19,9 @@ NO_DEV=1 ./install.sh
 <summary>Post Install Setup</summary>
 
 - zsh use `p10k` theme
-	- Open iTerm2 and type `p10k configure` to
-		1. Download `MesloLGS NF`
-		2. Configure prompt style
+  - Open iTerm2 and type `p10k configure` to
+    1. Download `MesloLGS NF`
+    2. Configure prompt style
 
 </details>
 
@@ -29,25 +29,25 @@ NO_DEV=1 ./install.sh
 <summary>Optional Post Install Steps</summary>
 
 1. iTerm2
-	- If `zsh` is installed by Homebrew
-		- Set Custom Shell to `/opt/homebrew/bin/zsh` on startup in iTerm2 settings
-	- Use different [iTerm2-Color-Schemes](https://github.com/mbadolato/iTerm2-Color-Schemes)
-		- Clone the repo, double-click the scheme to import
-	- [Option + Left/Right Arrow Keys to move cursor by word](http://tgmerritt.github.io/jekyll/update/2015/06/23/option-arrow-in-iterm2.html)
-		- Go to: `Preferences → Profiles → Keys → Key Mappings`
-			- Keyboard Shortcut:
-				- `⌥← (Option+Left Arrow)`
-				- `⌥→ (Option+Right Arrow)`
-			- Action: `Send Escape Sequence`
-			- ESC+:
-				- `b` for backward
-				- `f` for forward
-	- Configure Status Bar
-		- Go to: `Preferences → Profiles → Session`
-			- Enable status bar and configure
+  - If `zsh` is installed by Homebrew
+    - Set Custom Shell to `/opt/homebrew/bin/zsh` on startup in iTerm2 settings
+  - Use different [iTerm2-Color-Schemes](https://github.com/mbadolato/iTerm2-Color-Schemes)
+    - Clone the repo, double-click the scheme to import
+  - [Option + Left/Right Arrow Keys to move cursor by word](http://tgmerritt.github.io/jekyll/update/2015/06/23/option-arrow-in-iterm2.html)
+    - Go to: `Preferences → Profiles → Keys → Key Mappings`
+      - Keyboard Shortcut:
+        - `⌥← (Option+Left Arrow)`
+        - `⌥→ (Option+Right Arrow)`
+      - Action: `Send Escape Sequence`
+      - ESC+:
+        - `b` for backward
+        - `f` for forward
+  - Configure Status Bar
+    - Go to: `Preferences → Profiles → Session`
+      - Enable status bar and configure
 
 2. VSCode
-	- [VSCode - Launching from the command line](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line) to add `code` command to terminals
+  - [VSCode - Launching from the command line](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line) to add `code` command to terminals
 
 </details>
 
@@ -67,8 +67,8 @@ NO_DEV=1 ./install.sh
 
 #### Cannot choose prompt style in `p10k configure`
 - Make sure Terminal
-	- Use Powerline glyphs
-	- Use `xterm-256color`
+  - Use Powerline glyphs
+  - Use `xterm-256color`
 
 #### Powerline Font not installed after `p10k configure`
 - Manually install [MesloLGS NF](https://github.com/romkatv/powerlevel10k#manual-font-installation) and set Terminal font
