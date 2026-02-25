@@ -216,7 +216,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # ===== Browser ===== #
-    chromium
+    unstable_pkgs.chromium
     firefox
 
     # ===== Communication ===== #
