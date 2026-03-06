@@ -218,6 +218,7 @@ in
     # ===== Browser ===== #
     unstable_pkgs.chromium
     firefox
+    playwright-test
 
     # ===== Communication ===== #
     discord
@@ -396,6 +397,12 @@ in
     # Command-line wrapper for git that makes you better at GitHub
     hub
   ];
+
+  environment.sessionVariables = {
+    PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
+    PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
+    PLAYWRIGHT_HOST_PLATFORM_OVERRIDE = "ubuntu-24.04";
+  };
 
   # Global user shell config
   users.defaultUserShell = pkgs.zsh;
