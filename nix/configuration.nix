@@ -241,6 +241,7 @@ in
     # ===== Management ===== #
     # Add `vicinae toggle` in Settings > Keyboard > Shortcuts > Custom Shortcuts
     unstable_pkgs.vicinae
+    tmux
 
     # ===== Note ===== #
     appflowy
@@ -303,6 +304,7 @@ in
     # ===== IDE ===== #
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
+    unstable_pkgs.antigravity
     unstable_pkgs.code-cursor
     (unstable_pkgs.vscode-with-extensions.override {
       vscode = unstable_pkgs.vscodium; # or unstable_pkgs.vscode
@@ -400,8 +402,6 @@ in
 
   environment.sessionVariables = {
     PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
-    PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
-    PLAYWRIGHT_HOST_PLATFORM_OVERRIDE = "ubuntu-24.04";
   };
 
   # Global user shell config
