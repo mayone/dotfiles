@@ -155,6 +155,8 @@ install_editor() {
   # Install VS Code
   if check_os $OS_MAC; then
     brew install --cask cursor
+    brew install --cask claude-code@latest
+    brew install --cask antigravity
     brew install --cask visual-studio-code
     # Copy vscode settings
     mkdir -p ~/Library/Application\ Support/Code/User
