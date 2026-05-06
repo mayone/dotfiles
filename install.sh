@@ -158,6 +158,7 @@ install_editor() {
     brew install --cask claude-code@latest
     brew install --cask antigravity
     brew install --cask visual-studio-code
+    brew install ccusage
     # Copy vscode settings
     mkdir -p ~/Library/Application\ Support/Code/User
     cp .vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json

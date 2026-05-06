@@ -47,6 +47,10 @@ fi
 
 alias df='df -h'    du='du -h'      cp='cp -v'  mv='mv -v'
 
+if command -v claude >/dev/null 2>&1; then
+  alias cl='cd ~/claude-workspace && CLAUDE_CODE_EFFORT_LEVEL=max claude'
+fi
+
 # Git
 if command -v hub >/dev/null 2>&1; then
   alias git=hub
