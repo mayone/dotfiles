@@ -283,6 +283,7 @@ in
     gcc
     gnumake
     just
+    jq
     postman
     gemini-cli
     python313
