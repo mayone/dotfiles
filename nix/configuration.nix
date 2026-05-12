@@ -109,17 +109,10 @@ in
       enable = true;
       # Display manager
       displayManager = {
-        # Gnome's display manager
-        gdm.enable = true;
         # Tweak to make Display Link docks accept more monitors
         sessionCommands = ''
           xrandr --setprovideroutputsource 2 0
         '';
-      };
-
-      # Gnome Desktop Environment
-      desktopManager = {
-        gnome.enable = true;
       };
 
       # Keyboard Layout
@@ -128,6 +121,11 @@ in
         variant = "altgr-intl";
       };
     };
+
+    # Gnome's display manager (moved out of xserver in NixOS 24.11)
+    displayManager.gdm.enable = true;
+    # Gnome Desktop Environment (moved out of xserver in NixOS 24.11)
+    desktopManager.gnome.enable = true;
 
     # Printing server CUPS
     printing = {
@@ -252,7 +250,7 @@ in
     inkscape-with-extensions
     libreoffice-fresh
     # wpsoffice
-    libsForQt5.kdenlive
+    kdePackages.kdenlive
     obs-studio
     vlc
 
