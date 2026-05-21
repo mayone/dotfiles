@@ -156,7 +156,6 @@ install_editor() {
   if check_os $OS_MAC; then
     brew install --cask cursor
     brew install --cask claude-code@latest
-    brew install --cask antigravity
     brew install --cask visual-studio-code
     brew install ccusage
     # Copy vscode settings
@@ -171,6 +170,7 @@ install_editor() {
 
 install_tools() {
   if check_os $OS_MAC; then
+    brew install gh
     brew install hub
     brew install loc
     brew install just

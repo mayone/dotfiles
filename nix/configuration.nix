@@ -303,7 +303,6 @@ in
     # ===== IDE ===== #
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
-    unstable_pkgs.antigravity
     unstable_pkgs.code-cursor
     (unstable_pkgs.vscode-with-extensions.override {
       vscode = unstable_pkgs.vscodium; # or unstable_pkgs.vscode
