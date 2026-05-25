@@ -277,6 +277,7 @@ in
     zip
 
     # ===== DEV ===== #
+    gh
     git
     gcc
     gnumake
