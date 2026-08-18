@@ -91,10 +91,7 @@ zinit wait lucid for \
     zsh-users/zsh-completions
 
 zinit wait lucid for \
-  zdharma-continuum/zsh-unique-id \
-  OMZ::lib/git.zsh \
-  atload"unalias grv g" \
-  OMZ::plugins/git/git.plugin.zsh
+  zdharma-continuum/zsh-unique-id
 
 # Powerlevel10k
 zinit ice depth=1
