@@ -41,6 +41,7 @@ alias df='df -h'    du='du -h'      cp='cp -v'  mv='mv -v'
 
 if command -v claude >/dev/null 2>&1; then
   alias cl='cd ~/claude-workspace && CLAUDE_CODE_EFFORT_LEVEL=max claude'
+  alias cl48='cd ~/claude-workspace && ANTHROPIC_MODEL=claude-opus-4-8[1m] CLAUDE_CODE_EFFORT_LEVEL=max  claude'
 fi
 
 # Git
