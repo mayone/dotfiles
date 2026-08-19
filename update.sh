@@ -33,6 +33,10 @@ update_pkgmanager() {
     brew update
     # Update packages
     brew upgrade
+    # Remove old versions and cached downloads to reclaim disk space
+    info "Cleanup Homebrew"
+    brew cleanup
+    brew autoremove
     # List outdated packages for manual upgrade
     warn "Outdated packages"
     brew outdated --greedy
@@ -40,6 +44,10 @@ update_pkgmanager() {
     sudo apt update
     # Update packages
     sudo apt upgrade
+    # Remove unused packages and clear the apt cache to reclaim disk space
+    info "Cleanup apt"
+    sudo apt autoremove
+    sudo apt clean
   fi
 }
 
