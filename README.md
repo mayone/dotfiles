@@ -56,6 +56,11 @@ NO_DEV=1 ./install.sh
 ./update.sh
 ```
 
+On NixOS this also upgrades the system through `nix/apply.sh --upgrade`. To apply `nix/configuration.nix` without upgrading:
+```console
+nix/apply.sh
+```
+
 ## Uninstall
 ```console
 ./uninstall.sh
