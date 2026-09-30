@@ -53,10 +53,15 @@ if command -v claude >/dev/null 2>&1; then
 fi
 
 # Git
-if command -v hub >/dev/null 2>&1; then
-  alias git=hub
-fi
 alias glog_branches="git log --color=always --oneline --decorate --graph --branches"
+
+# Fetch and prune, fast-forward the current branch, then delete local
+# branches of merged PRs (replaces `hub sync`; needs seachicken/gh-poi)
+gsync() {
+  git fetch --all --prune || return
+  git merge --ff-only '@{u}'
+  gh poi
+}
 
 #
 # Zinit (plugin manager)
