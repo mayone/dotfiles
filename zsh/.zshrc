@@ -1,4 +1,36 @@
 #
+# Zinit (plugin manager)
+#
+
+# Zinit
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [[ ! -d $ZINIT_HOME ]]; then
+  print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+  mkdir -p "$(dirname $ZINIT_HOME)"
+fi
+if [[ ! -d $ZINIT_HOME/.git ]]; then
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME" && \
+    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+    print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+source "${ZINIT_HOME}/zinit.zsh"
+
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Oh My Zsh libraries (key bindings, completion styles, directory and history
+# options), loaded first so the settings below override them
+ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+[[ -d $ZSH_CACHE_DIR ]] || mkdir -p "$ZSH_CACHE_DIR"
+zinit for \
+  OMZL::completion.zsh \
+  OMZL::directories.zsh \
+  OMZL::functions.zsh \
+  OMZL::history.zsh \
+  OMZL::key-bindings.zsh \
+  OMZL::misc.zsh
+
+#
 # Exports
 #
 
@@ -62,26 +94,6 @@ gsync() {
   git merge --ff-only '@{u}'
   gh poi
 }
-
-#
-# Zinit (plugin manager)
-#
-
-# Zinit
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-if [[ ! -d $ZINIT_HOME ]]; then
-  print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-  mkdir -p "$(dirname $ZINIT_HOME)"
-fi
-if [[ ! -d $ZINIT_HOME/.git ]]; then
-  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME" && \
-    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-    print -P "%F{160}▓▒░ The clone has failed.%f%b"
-fi
-source "${ZINIT_HOME}/zinit.zsh"
-
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
 
 #
 # Load plugins
