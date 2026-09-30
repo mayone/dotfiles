@@ -5,8 +5,11 @@
 # History file configuration
 typeset -g HISTSIZE=5000 SAVEHIST=5000 HISTFILE=~/.zsh_history
 
+# Keep PATH entries unique, e.g. in nested shells
+typeset -U path PATH
+
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin:$GOROOT/bin:/usr/local/bin
+export PATH=$PATH:$GOPATH/bin:/usr/local/bin
 # Native installers such as claude put binaries here
 export PATH=$HOME/.local/bin:$PATH
 [ -f ~/.cargo/env ] && source ~/.cargo/env
@@ -17,8 +20,10 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fzf key bindings and completion (fzf >= 0.48)
+if command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
 
 #
 # Aliases
@@ -73,13 +78,6 @@ source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Zinit annexes
-zinit light-mode for \
-  zdharma-continuum/zinit-annex-rust \
-  zdharma-continuum/zinit-annex-as-monitor \
-  zdharma-continuum/zinit-annex-patch-dl \
-  zdharma-continuum/zinit-annex-bin-gem-node
-
 #
 # Load plugins
 #
@@ -92,9 +90,6 @@ zinit wait lucid for \
     zsh-users/zsh-autosuggestions \
   blockf \
     zsh-users/zsh-completions
-
-zinit wait lucid for \
-  zdharma-continuum/zsh-unique-id
 
 # Powerlevel10k
 zinit ice depth=1
