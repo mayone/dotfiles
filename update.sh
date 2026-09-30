@@ -1,10 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Update.
 
 # Use ${BASH_SOURCE[0]} if script is not executed by source, else use $0
 SOURCE="${BASH_SOURCE[0]:-$0}"
 DIR_PATH="$( cd -- "$( dirname -- "$SOURCE" )" >/dev/null 2>&1 && pwd -P )"
+# sh_utils/index.sh overwrites DIR_PATH, so keep the repo root separately
+ROOT_PATH="$DIR_PATH"
 
 source $DIR_PATH/sh_utils/index.sh
 
@@ -40,6 +42,9 @@ update_pkgmanager() {
     # List outdated packages for manual upgrade
     warn "Outdated packages"
     brew outdated --greedy
+  elif check_exist /etc/NIXOS; then
+    # Update the nixos channel and rebuild
+    "$ROOT_PATH/nix/apply.sh" --upgrade
   elif check_os $OS_LINUX; then
     sudo apt update
     # Update packages
