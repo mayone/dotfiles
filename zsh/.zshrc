@@ -7,6 +7,8 @@ typeset -g HISTSIZE=5000 SAVEHIST=5000 HISTFILE=~/.zsh_history
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin:$GOROOT/bin:/usr/local/bin
+# Native installers such as claude put binaries here
+export PATH=$HOME/.local/bin:$PATH
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 export LANG="en_US.UTF-8"
 
@@ -97,3 +99,6 @@ zinit wait lucid for \
 # Powerlevel10k
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
