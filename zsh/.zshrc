@@ -40,9 +40,9 @@ fi
 alias df='df -h'    du='du -h'      cp='cp -v'  mv='mv -v'
 
 if command -v claude >/dev/null 2>&1; then
-  alias cl='cd ~/claude-workspace && CLAUDE_CODE_EFFORT_LEVEL=max CLAUDE_CODE_SUBAGENT_MODEL=opus claude'
-  alias clop='cd ~/claude-workspace && ANTHROPIC_MODEL=claude-opus-5-5 CLAUDE_CODE_EFFORT_LEVEL=max   claude'
-  alias clso='cd ~/claude-workspace && ANTHROPIC_MODEL=claude-sonnet-5-5 CLAUDE_CODE_EFFORT_LEVEL=max claude'
+  alias cl='cd ~/claude-workspace && CLAUDE_CODE_SUBAGENT_MODEL=opus claude --effort max'
+  alias clop='cd ~/claude-workspace && ANTHROPIC_MODEL=claude-opus-5-5[1m] claude --effort max'
+  alias clso='cd ~/claude-workspace && ANTHROPIC_MODEL=claude-sonnet-5-5   claude --effort max'
 fi
 
 # Git
