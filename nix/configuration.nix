@@ -6,6 +6,11 @@
 let
   # You can reference to `unstable_pkgs.{package_name}` if you want latest available version for that package
   unstable_pkgs = import (builtins.fetchTarball https://github.com/nixos/nixpkgs/tarball/nixos-unstable) { config = config.nixpkgs.config; };
+
+  netbird_pkgs = import (builtins.fetchTarball {
+    url    = "https://github.com/nixos/nixpkgs/archive/2fcb964de67fcf60b43471c55d5d99e61a9ccb5a.tar.gz";
+    sha256 = "1qmvymzv712syhw9p3941vkn4fdp3mmi2vkskbrfpdllcy4wycs7";
+  }) { config = config.nixpkgs.config; };
 in
 {
   imports = [
@@ -177,6 +182,10 @@ in
       pkgs.openocd
     ];
   };
+
+  # NetBird VPN client — pinned to nixos-unstable for v0.76.3
+  services.netbird.enable  = true;
+  services.netbird.package = netbird_pkgs.netbird;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
