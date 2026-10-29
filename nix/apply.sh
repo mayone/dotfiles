@@ -16,6 +16,7 @@ main() {
   old_version="$(nixos-version)"
 
   info "Apply configuration.nix"
+  diff -u /etc/nixos/configuration.nix "$NIX_DIR/configuration.nix" || true
   sudo cp "$NIX_DIR/configuration.nix" /etc/nixos/
   sudo nixos-rebuild switch "$@"
 
