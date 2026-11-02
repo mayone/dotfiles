@@ -506,4 +506,7 @@ in
   #   AllowHybridSleep=no
   #   AllowSuspendThenHibernate=no
   # '';
+  # FIXME: a poweroff queued at resume leaves the frozen user.slice unthawed, so shutdown hangs
+  # on "Cannot stop frozen unit". Drop once the spurious poweroff on wake is fixed.
+  systemd.services.systemd-suspend.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
 }
