@@ -43,6 +43,16 @@ if command -v claude >/dev/null 2>&1; then
   alias cl='cd ~/claude-workspace && CLAUDE_CODE_SUBAGENT_MODEL=opus claude --effort max'
   alias clop='cd ~/claude-workspace && ANTHROPIC_MODEL=claude-opus-5-5[1m] claude --effort max'
   alias clso='cd ~/claude-workspace && ANTHROPIC_MODEL=claude-sonnet-5-5   claude --effort max'
+
+  # CL_DEFAULT_PROFILE names the profile that lives in ~/.claude (default:
+  # personal). A work machine sets it to "work" in ~/.zshenv.
+  if [[ ${CL_DEFAULT_PROFILE:-personal} == work ]]; then
+    alias cl-work='unset CLAUDE_CONFIG_DIR'
+    alias cl-pers='export CLAUDE_CONFIG_DIR=$HOME/.claude-personal'
+  else
+    alias cl-pers='unset CLAUDE_CONFIG_DIR'
+    alias cl-work='export CLAUDE_CONFIG_DIR=$HOME/.claude-work'
+  fi
 fi
 
 # Git
