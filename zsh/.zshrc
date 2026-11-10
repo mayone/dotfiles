@@ -99,9 +99,10 @@ gsync() {
 # Load plugins
 #
 
-# Fast-syntax-highlighting & autosuggestions
+# Fast-syntax-highlighting & autosuggestions. compinit runs without -C, so
+# ~/.zcompdump is rebuilt when completion files change (no global compinit)
 zinit wait lucid for \
-  atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay" \
+  atinit"ZINIT[COMPINIT_OPTS]=-i; zpcompinit; zpcdreplay" \
     zdharma-continuum/fast-syntax-highlighting \
   atload"!_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions \
