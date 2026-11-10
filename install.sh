@@ -22,6 +22,7 @@ main() {
   install_editor
 
   install_tools
+  setup_claude_statusline
 
   setup_git
 }
@@ -215,6 +216,11 @@ install_tools() {
     brew install --cask tunnelbear
     brew install --cask google-chrome
   fi
+}
+
+setup_claude_statusline() {
+  info "Set up Claude Code statusline"
+  "$DIR_PATH/claude/install-statusline.sh"
 }
 
 setup_git() {
