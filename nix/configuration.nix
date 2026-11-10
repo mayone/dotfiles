@@ -243,7 +243,6 @@ in
     ghostty
     fzf
     fastfetch
-    oh-my-zsh
     zsh
 
     # ===== Management ===== #
@@ -405,8 +404,6 @@ in
     eza
     # An interactive process viewer
     htop
-    # Command-line wrapper for git that makes you better at GitHub
-    hub
   ];
 
   environment.sessionVariables = {
@@ -419,21 +416,9 @@ in
   programs = {
     zsh = {
       enable = true;
-      autosuggestions.enable = true;
+      # Plugins, prompt and compinit come from zinit in dotfiles zsh/.zshrc
+      enableGlobalCompInit = false;
       zsh-autoenv.enable = true;
-      syntaxHighlighting.enable = true;
-      ohMyZsh = {
-        enable = true;
-        theme = "bureau";
-        plugins = [
-          "git"
-          "npm"
-          "history"
-          "node"
-          "rust"
-          "deno"
-        ];
-      };
     };
   };
 

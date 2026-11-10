@@ -1,12 +1,49 @@
 #
+# Zinit (plugin manager)
+#
+
+# Zinit
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [[ ! -d $ZINIT_HOME ]]; then
+  print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+  mkdir -p "$(dirname $ZINIT_HOME)"
+fi
+if [[ ! -d $ZINIT_HOME/.git ]]; then
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME" && \
+    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+    print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+source "${ZINIT_HOME}/zinit.zsh"
+
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Oh My Zsh libraries (key bindings, completion styles, directory and history
+# options), loaded first so the settings below override them
+ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+[[ -d $ZSH_CACHE_DIR ]] || mkdir -p "$ZSH_CACHE_DIR"
+zinit for \
+  OMZL::completion.zsh \
+  OMZL::directories.zsh \
+  OMZL::functions.zsh \
+  OMZL::history.zsh \
+  OMZL::key-bindings.zsh \
+  OMZL::misc.zsh
+
+#
 # Exports
 #
 
 # History file configuration
 typeset -g HISTSIZE=5000 SAVEHIST=5000 HISTFILE=~/.zsh_history
 
+# Keep PATH entries unique, e.g. in nested shells
+typeset -U path PATH
+
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin:$GOROOT/bin:/usr/local/bin
+export PATH=$PATH:$GOPATH/bin:/usr/local/bin
+# Native installers such as claude put binaries here
+export PATH=$HOME/.local/bin:$PATH
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 export LANG="en_US.UTF-8"
 
@@ -15,8 +52,10 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fzf key bindings and completion (fzf >= 0.48)
+if command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
 
 #
 # Aliases
@@ -55,54 +94,47 @@ if command -v claude >/dev/null 2>&1; then
 fi
 
 # Git
-if command -v hub >/dev/null 2>&1; then
-  alias git=hub
-fi
 alias glog_branches="git log --color=always --oneline --decorate --graph --branches"
 
-#
-# Zinit (plugin manager)
-#
-
-# Zinit
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-if [[ ! -d $ZINIT_HOME ]]; then
-  print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-  mkdir -p "$(dirname $ZINIT_HOME)"
-fi
-if [[ ! -d $ZINIT_HOME/.git ]]; then
-  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME" && \
-    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-    print -P "%F{160}▓▒░ The clone has failed.%f%b"
-fi
-source "${ZINIT_HOME}/zinit.zsh"
-
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-# Zinit annexes
-zinit light-mode for \
-  zdharma-continuum/zinit-annex-rust \
-  zdharma-continuum/zinit-annex-as-monitor \
-  zdharma-continuum/zinit-annex-patch-dl \
-  zdharma-continuum/zinit-annex-bin-gem-node
+# Fetch and prune, delete local branches of merged PRs with gh poi after a
+# confirmation (it also removes their clean linked worktrees, ignored files
+# included), then fast-forward the branch you end up on.
+# Replaces `hub sync`; needs seachicken/gh-poi.
+gsync() {
+  git fetch --all --prune || return
+  local plan deleted
+  if plan=$(gh poi --dry-run) && [[ $plan == *'Deleted branches'* ]]; then
+    deleted=${${plan#*Deleted branches}%%Branches not deleted*}
+    if [[ $deleted != *'There are no branches'* ]]; then
+      print -r -- "gh poi would delete:${deleted%$'\n\n'}"
+      if read -q '?Delete them? [y/N] '; then
+        print
+        gh poi
+      else
+        print
+      fi
+    fi
+  fi
+  git merge --ff-only '@{u}'
+}
 
 #
 # Load plugins
 #
 
-# Fast-syntax-highlighting & autosuggestions
+# Fast-syntax-highlighting & autosuggestions. compinit runs without -C, so
+# ~/.zcompdump is rebuilt when completion files change (no global compinit)
 zinit wait lucid for \
-  atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay" \
+  atinit"ZINIT[COMPINIT_OPTS]=-i; zpcompinit; zpcdreplay" \
     zdharma-continuum/fast-syntax-highlighting \
   atload"!_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions \
   blockf \
     zsh-users/zsh-completions
 
-zinit wait lucid for \
-  zdharma-continuum/zsh-unique-id
-
 # Powerlevel10k
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
