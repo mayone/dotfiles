@@ -44,8 +44,12 @@ if command -v claude >/dev/null 2>&1; then
   alias clop='cd ~/claude-workspace && ANTHROPIC_MODEL=claude-opus-5-5[1m] claude --effort max'
   alias clso='cd ~/claude-workspace && ANTHROPIC_MODEL=claude-sonnet-5-5   claude --effort max'
 
-  # A work machine makes cl-work the default by putting
-  # `export CLAUDE_CONFIG_DIR=$HOME/.claude-work` in ~/.zshenv.
+  # A work machine makes cl-work the default with this ~/.zshenv. It sets the
+  # default once per process tree, so child shells keep the parent's profile:
+  #   if [[ -z $CL_PROFILE_DEFAULTED ]]; then
+  #     export CL_PROFILE_DEFAULTED=1
+  #     export CLAUDE_CONFIG_DIR=$HOME/.claude-work
+  #   fi
   alias cl-pers='unset CLAUDE_CONFIG_DIR'
   alias cl-work='export CLAUDE_CONFIG_DIR=$HOME/.claude-work'
 fi
