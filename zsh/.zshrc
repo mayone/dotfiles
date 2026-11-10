@@ -87,12 +87,26 @@ fi
 # Git
 alias glog_branches="git log --color=always --oneline --decorate --graph --branches"
 
-# Fetch and prune, fast-forward the current branch, then delete local
-# branches of merged PRs (replaces `hub sync`; needs seachicken/gh-poi)
+# Fetch and prune, delete local branches of merged PRs with gh poi after a
+# confirmation (it also removes their clean linked worktrees, ignored files
+# included), then fast-forward the branch you end up on.
+# Replaces `hub sync`; needs seachicken/gh-poi.
 gsync() {
   git fetch --all --prune || return
+  local plan deleted
+  if plan=$(gh poi --dry-run) && [[ $plan == *'Deleted branches'* ]]; then
+    deleted=${${plan#*Deleted branches}%%Branches not deleted*}
+    if [[ $deleted != *'There are no branches'* ]]; then
+      print -r -- "gh poi would delete:${deleted%$'\n\n'}"
+      if read -q '?Delete them? [y/N] '; then
+        print
+        gh poi
+      else
+        print
+      fi
+    fi
+  fi
   git merge --ff-only '@{u}'
-  gh poi
 }
 
 #
