@@ -171,7 +171,6 @@ install_editor() {
 install_tools() {
   if check_os $OS_MAC; then
     brew install gh
-    brew install hub
     brew install loc
     brew install just
     brew install shfmt jq
