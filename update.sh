@@ -12,6 +12,7 @@ source $DIR_PATH/sh_utils/index.sh
 
 # Variables
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+TPM_HOME="${HOME}/.tmux/plugins/tpm"
 
 main() {
   update_pkgmanager
@@ -21,6 +22,7 @@ main() {
   update_rust
   # update_pip
   update_zinit
+  update_tmux_plugins
 }
 
 update_pkgmanager() {
@@ -94,6 +96,16 @@ update_zinit() {
 
   info "Update zinit"
   zsh -ic 'zi self-update; zi update -p 20'
+}
+
+update_tmux_plugins() {
+  if ! check_exist "${TPM_HOME}"; then
+    info "No tpm for update"
+    return
+  fi
+
+  info "Update tmux plugins"
+  "${TPM_HOME}/bin/update_plugins" all
 }
 
 main "$@"

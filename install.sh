@@ -143,7 +143,7 @@ install_terminal() {
   if check_os $OS_MAC; then
     brew install tmux
   elif check_os $OS_LINUX; then
-    sudo apt install tmux
+    sudo apt install tmux fzf
   fi
 
   # Copy tmux settings
