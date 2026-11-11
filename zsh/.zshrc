@@ -47,10 +47,11 @@ export PATH=$HOME/.local/bin:$PATH
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 export LANG="en_US.UTF-8"
 
-# NVM
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+# mise: runtimes and CLI tools. Activation puts them on PATH right away, so
+# the command checks below find them
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
 
 # fzf key bindings and completion (fzf >= 0.48)
 if command -v fzf >/dev/null 2>&1; then
