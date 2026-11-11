@@ -18,7 +18,7 @@ main() {
 
 uninstall_tools() {
   if check_os $OS_MAC; then
-    brew remove hub shfmt
+    brew remove shfmt
     brew remove tmux wget ffmpeg
     brew remove kubectx
   fi
