@@ -15,6 +15,7 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 main() {
   update_pkgmanager
+  update_mise
 
   update_gcloud_cli
 
@@ -54,6 +55,23 @@ update_pkgmanager() {
     sudo apt autoremove
     sudo apt clean
   fi
+}
+
+update_mise() {
+  if ! check_cmd mise; then
+    info "No mise for update"
+    return
+  fi
+
+  if [[ "$(command -v mise)" == "$HOME/.local/bin/mise" ]]; then
+    info "Update mise"
+    mise self-update --yes
+  fi
+
+  info "Update mise tools"
+  mise upgrade
+  info "Cleanup mise"
+  mise prune
 }
 
 update_gcloud_cli() {
