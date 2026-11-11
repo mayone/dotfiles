@@ -51,6 +51,18 @@ NO_DEV=1 ./install.sh
 
 </details>
 
+## Tools (mise)
+[mise](https://mise.jdx.dev) installs the runtimes (Node.js, pnpm, Yarn, Go, Java) and the command-line tools listed in `mise/global.toml` and `mise/dev.toml`, on macOS and Linux alike. Homebrew keeps the apps and the formulae that mise has no package for. Rust stays with rustup.
+
+`./install.sh` installs mise and runs `mise/apply.sh`. On a machine that is already set up, or on NixOS (where `nix/configuration.nix` provides mise), run:
+```console
+mise/apply.sh
+```
+
+It links `mise/global.toml` to `~/.config/mise/config.toml` and, unless `NO_DEV` is set, `mise/dev.toml` to `~/.config/mise/conf.d/dev.toml`. It adds the mise shims to `~/.zprofile` for login shells, then runs `mise install`. `zsh/.zshrc` activates mise in interactive shells.
+
+To add a tool, run `mise use -g <tool>`. It installs the tool and writes it through the link into `mise/global.toml`, so commit the change. For a tool that `NO_DEV` machines skip, add it to `mise/dev.toml` and run `mise install`.
+
 ## Update
 ```console
 ./update.sh
