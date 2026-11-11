@@ -10,6 +10,7 @@ source $DIR_PATH/sh_utils/index.sh
 
 main() {
   uninstall_tools
+  uninstall_mise
   uninstall_terminal
   uninstall_shell
 
@@ -19,9 +20,13 @@ main() {
 
 uninstall_tools() {
   if check_os $OS_MAC; then
-    brew remove shfmt
     brew remove tmux wget ffmpeg
-    brew remove kubectx
+  fi
+}
+
+uninstall_mise() {
+  if check_cmd mise; then
+    mise implode --config
   fi
 }
 
@@ -35,13 +40,6 @@ uninstall_shell() {
 }
 
 uninstall_languages() {
-  if check_os $OS_MAC; then
-    brew remove --cask temurin
-
-    brew remove go
-    brew remove node yarn
-  fi
-
   rustup self uninstall
 }
 
