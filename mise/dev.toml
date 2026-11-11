@@ -11,3 +11,8 @@ k9s = "latest"
 kubectx = "latest"
 kubens = "latest"
 "npm:ccusage" = "latest"
+
+[bootstrap.packages]
+"brew-cask:docker-desktop" = { os = "macos" }
+"brew-cask:gcloud-cli" = { os = "macos" }
+"brew-cask:postman" = { os = "macos" }
