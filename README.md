@@ -1,6 +1,6 @@
 # dotfiles
 - Shell: Zsh + Zinit + Powerlevel10k
-- Terminal: iTerm (for macOS) + tmux
+- Terminal: iTerm (for macOS) + tmux (TPM + Catppuccin + SessionX)
 - Editor: Vim, VSCode
 
 ---
@@ -22,6 +22,10 @@ NO_DEV=1 ./install.sh
   - Open iTerm2 and type `p10k configure` to
     1. Download `MesloLGS NF`
     2. Configure prompt style
+- tmux installs its plugins on first start
+  - Needs `git`, network access and a [Nerd Font](https://www.nerdfonts.com)
+  - `prefix + I` installs plugins, `prefix + U` updates them
+  - `prefix + O` opens the SessionX session switcher (needs `fzf`)
 
 </details>
 
@@ -61,6 +65,8 @@ On NixOS this also upgrades the system through `nix/apply.sh --upgrade`. To appl
 nix/apply.sh
 ```
 
+tmux plugins update through TPM. Catppuccin is pinned to a tag in `tmux/.tmux.conf`: to upgrade it, change the tag, remove `~/.tmux/plugins/tmux` and press `prefix + I`.
+
 ## Uninstall
 ```console
 ./uninstall.sh
@@ -77,6 +83,10 @@ nix/apply.sh
 
 #### Powerline Font not installed after `p10k configure`
 - Manually install [MesloLGS NF](https://github.com/romkatv/powerlevel10k#manual-font-installation) and set Terminal font
+
+#### tmux status line has no theme, or icons show as boxes
+- Plugins install on the first start with network access, press `prefix + I` to retry and `prefix + r` to reload
+- Set a Nerd Font as Terminal font; the SessionX key hints need Nerd Fonts v3
 
 ---
 
@@ -104,3 +114,6 @@ nix/apply.sh
 
 #### tmux
 - [gpakosz/.tmux](https://github.com/gpakosz/.tmux)
+- [tmux-plugins/tpm](https://github.com/tmux-plugins/tpm)
+- [catppuccin/tmux](https://github.com/catppuccin/tmux)
+- [omerxx/tmux-sessionx](https://github.com/omerxx/tmux-sessionx)
