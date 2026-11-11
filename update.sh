@@ -70,6 +70,10 @@ update_mise() {
 
   info "Update mise tools"
   mise upgrade
+  if check_os "$OS_MAC"; then
+    info "Update mise packages"
+    mise bootstrap packages upgrade
+  fi
   info "Cleanup mise"
   mise prune
 }

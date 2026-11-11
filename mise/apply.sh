@@ -19,13 +19,16 @@ main() {
     link_config "$MISE_DIR/dev.toml" "$CONFIG_DIR/conf.d/dev.toml"
   fi
 
+  if check_os "$OS_MAC" && ! check_cmd brew; then
+    add_zprofile_line 'export PATH="/opt/homebrew/bin:$PATH"'
+  fi
   if [[ "$(command -v mise)" == "$HOME/.local/bin/mise" ]]; then
     add_zprofile_line 'export PATH="$HOME/.local/bin:$PATH"'
   fi
   add_zprofile_line 'command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh --shims)"'
 
-  info "Install mise tools"
-  mise install
+  info "Install packages and tools"
+  mise bootstrap --only packages,tools
 }
 
 link_config() {

@@ -18,7 +18,7 @@ main() {
 }
 
 uninstall_tools() {
-  if check_os $OS_MAC; then
+  if check_os $OS_MAC && check_cmd brew; then
     brew remove tmux wget ffmpeg
   fi
 }
