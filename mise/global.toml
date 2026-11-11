@@ -1,0 +1,20 @@
+# Linked to ~/.config/mise/config.toml by mise/apply.sh
+
+[settings]
+# NixOS compiles tools from source by default until mise 2027.8.0. Use the
+# precompiled binaries there too; they need nix-ld (see nix/configuration.nix)
+all_compile = false
+# Keep `go install` binaries in ~/go/bin, which zsh/.zshrc puts on PATH,
+# instead of the bin directory of one Go version
+go.set_gobin = false
+
+[tools]
+bat = "latest"
+eza = "latest"
+fzf = "latest"
+gh = "latest"
+jq = "latest"
+just = "latest"
+ripgrep = "latest"
+shfmt = "latest"
+yt-dlp = "latest"
