@@ -47,6 +47,7 @@ adopt = true
 "brew-cask:cursor" = { os = "macos" }
 "brew-cask:discord" = { os = "macos" }
 "brew-cask:figma" = { os = "macos" }
+"brew-cask:font-meslo-lg-nerd-font" = { os = "macos" }
 "brew-cask:gimp" = { os = "macos" }
 "brew-cask:google-chrome" = { os = "macos" }
 "brew-cask:iterm2" = { os = "macos" }
@@ -61,7 +62,6 @@ adopt = true
 
 # Not installed by default
 # "brew-cask:font-fira-code-nerd-font" = { os = "macos" }
-# "brew-cask:font-meslo-lg-nerd-font" = { os = "macos" }
 # "brew-cask:telegram" = { os = "macos" }
 # Keyboard configurator, https://usevia.app/
 # "brew-cask:via" = { os = "macos" }

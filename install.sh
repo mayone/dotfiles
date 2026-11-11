@@ -13,6 +13,7 @@ main() {
   install_pkgmanager
 
   install_essentials
+  install_packages
 
   if ! check_set $NO_DEV; then
     install_languages
@@ -23,7 +24,6 @@ main() {
   install_editor
 
   install_tools
-  install_mise_tools
   setup_claude_statusline
 
   setup_git
@@ -31,12 +31,7 @@ main() {
 
 install_pkgmanager() {
   if check_os $OS_MAC; then
-    if ! check_cmd brew; then
-      info "Install Homebrew"
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-    fi
+    export PATH="/opt/homebrew/bin:$PATH"
   elif check_os $OS_LINUX; then
     sudo apt update
   fi
@@ -49,17 +44,23 @@ install_pkgmanager() {
 }
 
 install_essentials() {
-  # Install GCC
-  if ! check_cmd gcc || ! check_cmd make; then
-    if check_os $OS_MAC; then
-      # Install Command Line Developer Tools for Xcode
-      if check_cmd xcode-select; then
-        xcode-select --install
-      fi
-    elif check_os $OS_LINUX; then
-      # Install build-essential meta-packages
-      sudo apt install build-essential libssl-dev pkg-config
-    fi
+  if check_os $OS_MAC && ! xcode-select -p >/dev/null 2>&1; then
+    info "Install Command Line Developer Tools for Xcode"
+    xcode-select --install
+    until xcode-select -p >/dev/null 2>&1; do
+      sleep 5
+    done
+  fi
+}
+
+install_packages() {
+  if ! check_cmd zsh; then
+    ZSH_WAS_MISSING=1
+  fi
+
+  "$ROOT_PATH/mise/apply.sh"
+  if check_cmd mise; then
+    eval "$(mise activate bash --shims)"
   fi
 }
 
@@ -83,15 +84,7 @@ install_languages() {
 }
 
 install_shell() {
-  # Install Zsh
-  if ! check_cmd zsh; then
-    info "Install Zsh"
-    if check_os $OS_MAC; then
-      brew install zsh zsh-completions
-    elif check_os $OS_LINUX; then
-      sudo apt install zsh
-    fi
-
+  if check_set $ZSH_WAS_MISSING && check_cmd zsh; then
     # Set default shell to zsh
     chsh -s "$(which zsh)"
   fi
@@ -106,10 +99,7 @@ install_shell() {
     cp zsh/.zshrc ~/.zshrc
   fi
 
-  if check_os $OS_MAC; then
-    # Command replacement
-    brew install htop
-  elif check_os $OS_LINUX; then
+  if check_os $OS_LINUX; then
     # apt's fzf is too old on Ubuntu 22.04/24.04 and Debian 12: the zshrc needs
     # fzf --zsh (0.48) and SessionX needs 0.41, so use the upstream binary
     if ! check_folder ~/.fzf; then
@@ -117,38 +107,16 @@ install_shell() {
     fi
     ~/.fzf/install --bin
   fi
-
-  # Install Nerdfonts
-  if check_os $OS_MAC; then
-    brew install --cask font-meslo-lg-nerd-font
-    # brew install --cask font-fira-code-nerd-font
-  fi
 }
 
 install_terminal() {
-  # Install iTerm2
-  if check_os $OS_MAC; then
-    brew install --cask iterm2
-  fi
-
-  # Install tmux
-  if check_os $OS_MAC; then
-    brew install tmux
-  elif check_os $OS_LINUX; then
-    sudo apt install tmux
-  fi
-
   # Copy tmux settings
   info "Copy .tmux.conf file"
   cp tmux/.tmux.conf ~/.tmux.conf
 }
 
 install_editor() {
-  # Install VS Code
   if check_os $OS_MAC; then
-    brew install --cask cursor
-    brew install --cask claude-code@latest
-    brew install --cask visual-studio-code
     # Copy vscode settings
     mkdir -p ~/Library/Application\ Support/Code/User
     cp .vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
@@ -160,47 +128,8 @@ install_editor() {
 }
 
 install_tools() {
-  if check_os $OS_MAC; then
-    brew install loc
-    brew install wget ffmpeg
-
-    if ! check_set $NO_DEV; then
-      brew install --cask postman
-
-      # DevOps
-      brew install --cask docker
-      brew install --cask google-cloud-sdk
-      gcloud components install gke-gcloud-auth-plugin
-    fi
-
-    # Window management
-    brew install --cask rectangle
-
-    # Keyboard configurator
-    # https://usevia.app/
-    # brew install --cask via
-
-    # App uninstallation
-    brew install --cask appcleaner
-
-    brew install --cask vlc
-    brew install --cask gimp
-    brew install --cask figma
-    brew install --cask notion
-    brew install --cask chatgpt
-    brew install --cask discord
-    # brew install --cask telegram
-    brew install --cask musescore
-    # VPN
-    brew install --cask tunnelbear
-    brew install --cask google-chrome
-  fi
-}
-
-install_mise_tools() {
-  "$ROOT_PATH/mise/apply.sh"
-  if check_cmd mise; then
-    eval "$(mise activate bash --shims)"
+  if check_os $OS_MAC && ! check_set $NO_DEV && check_cmd gcloud; then
+    gcloud components install gke-gcloud-auth-plugin
   fi
 }
 
