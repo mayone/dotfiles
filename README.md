@@ -35,6 +35,9 @@ NO_DEV=1 ./install.sh
 1. iTerm2
   - If `zsh` is installed by Homebrew
     - Set Custom Shell to `/opt/homebrew/bin/zsh` on startup in iTerm2 settings
+  - Use the Nerd Fonts v3 `MesloLGS Nerd Font Mono` that `install.sh` installs
+    - Go to: `Preferences → Profiles → Text → Font`
+    - Set `POWERLEVEL9K_MODE=nerdfont-v3` in `~/.p10k.zsh`, or run `p10k configure` again
   - Use different [iTerm2-Color-Schemes](https://github.com/mbadolato/iTerm2-Color-Schemes)
     - Clone the repo, double-click the scheme to import
   - [Option + Left/Right Arrow Keys to move cursor by word](http://tgmerritt.github.io/jekyll/update/2015/06/23/option-arrow-in-iterm2.html)

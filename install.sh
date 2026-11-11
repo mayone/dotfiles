@@ -126,11 +126,10 @@ install_shell() {
   fi
 
   # Install Nerdfonts
-  # if check_os $OS_MAC; then
-  #   brew tap homebrew/cask-fonts
-  #   brew install --cask font-meslo-lg-nerd-font
-  #   brew install --cask font-fira-code-nerd-font
-  # fi
+  if check_os $OS_MAC; then
+    brew install --cask font-meslo-lg-nerd-font
+    # brew install --cask font-fira-code-nerd-font
+  fi
 }
 
 install_terminal() {
