@@ -67,7 +67,9 @@ fi
 
 if command -v eza >/dev/null 2>&1; then
   alias l='eza'     l.='eza -d .*'  la='eza -a' ll='eza -laah'
-  alias ls='eza -F'
+  # --classify=auto, not -F: eza's zsh completion takes the word after -F as
+  # its value, so file names stop completing
+  alias ls='eza --classify=auto'
 else
   alias l='ls -CF'  l.='ls -d .*'   la='ls -A'  ll='ls -alF'
 fi
