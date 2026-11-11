@@ -292,6 +292,9 @@ in
     gnumake
     just
     jq
+    # Runtime and CLI tool version manager, configured in dotfiles mise/.
+    # nixos-unstable keeps its tool registry current
+    unstable_pkgs.mise
     postman
     gemini-cli
     python313
