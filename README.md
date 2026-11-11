@@ -25,7 +25,7 @@ NO_DEV=1 ./install.sh
 - tmux installs its plugins on first start
   - Needs `git`, network access and a [Nerd Font](https://www.nerdfonts.com)
   - `prefix + I` installs plugins, `prefix + U` updates them
-  - `prefix + O` opens the SessionX session switcher (needs `fzf`)
+  - `prefix + C-f` opens the SessionX session switcher (needs `fzf`)
 
 </details>
 
