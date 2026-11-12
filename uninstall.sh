@@ -10,6 +10,7 @@ source $DIR_PATH/sh_utils/index.sh
 
 main() {
   uninstall_tools
+  uninstall_terminal
   uninstall_shell
 
   uninstall_languages
@@ -22,6 +23,10 @@ uninstall_tools() {
     brew remove tmux wget ffmpeg
     brew remove kubectx
   fi
+}
+
+uninstall_terminal() {
+  rm -rf ~/.tmux/plugins
 }
 
 uninstall_shell() {

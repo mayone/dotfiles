@@ -123,14 +123,20 @@ install_shell() {
 
     # Command replacement
     brew install bat eza htop ripgrep
+  elif check_os $OS_LINUX; then
+    # apt's fzf is too old on Ubuntu 22.04/24.04 and Debian 12: the zshrc needs
+    # fzf --zsh (0.48) and SessionX needs 0.41, so use the upstream binary
+    if ! check_folder ~/.fzf; then
+      git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    fi
+    ~/.fzf/install --bin
   fi
 
   # Install Nerdfonts
-  # if check_os $OS_MAC; then
-  #   brew tap homebrew/cask-fonts
-  #   brew install --cask font-meslo-lg-nerd-font
-  #   brew install --cask font-fira-code-nerd-font
-  # fi
+  if check_os $OS_MAC; then
+    brew install --cask font-meslo-lg-nerd-font
+    # brew install --cask font-fira-code-nerd-font
+  fi
 }
 
 install_terminal() {
