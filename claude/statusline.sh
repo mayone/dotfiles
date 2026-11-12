@@ -1,6 +1,5 @@
 #!/bin/sh
-DIR=$(dirname "$(readlink -f "$0")")
-CCUSAGE="$DIR/node_modules/.bin/ccusage"
+CCUSAGE="$(dirname "$0")/statusline/node_modules/.bin/ccusage"
 [ -x "$CCUSAGE" ] || CCUSAGE=ccusage
 TMP=$(mktemp "${TMPDIR:-/tmp}/ccstatusline.XXXXXX")
 trap 'rm -f "$TMP"' EXIT

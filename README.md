@@ -76,7 +76,7 @@ tmux plugins update through TPM. Catppuccin is pinned to a tag in `tmux/.tmux.co
 claude/install-statusline.sh
 ```
 
-It links `~/.claude/statusline.sh` to `claude/statusline.sh`, installs the pinned `ccusage` with `npm ci`, and points `statusLine` in `~/.claude/settings.json` (and in `~/.claude-work/settings.json` when that profile exists) at the link. It needs `jq`. Without `npm`, the statusline uses `ccusage` from `PATH`.
+It copies `claude/statusline.sh` to `~/.claude/statusline.sh`, installs the pinned `ccusage` into `~/.claude/statusline/` with `npm ci`, and points `statusLine` in `~/.claude/settings.json` (and in `~/.claude-work/settings.json` when that profile exists) at the copy. It needs `jq`. Without `npm`, the statusline uses `ccusage` from `PATH`. The copy does not follow the repo: run the installer again after changing `claude/statusline.sh`, `claude/package.json`, or `claude/package-lock.json`.
 
 To upgrade `ccusage`, run `npm install --prefix claude --save-exact ccusage@<version>` and commit `claude/package.json` and `claude/package-lock.json`.
 
