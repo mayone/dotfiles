@@ -27,8 +27,7 @@
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.defaultProfile.linux": "zsh",
-  // "terminal.integrated.fontFamily": "MesloLGS Nerd Font Mono",
-  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "terminal.integrated.fontFamily": "'MesloLGS Nerd Font Mono', 'MesloLGS NF'",
   "terminal.integrated.fontSize": 12,
   "terminal.integrated.suggest.enabled": true,
   "terminal.external.osxExec": "iTerm.app",
@@ -136,7 +135,7 @@
     }
   ],
   "workbench.activityBar.orientation": "vertical",
-  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.colorTheme": "One Dark Pro Night Flat",
   "workbench.editor.customLabels.patterns": {
     "**/Cargo.toml": "${dirname} (Cargo.toml)",
     "**/index.*": "${dirname} (index)",
