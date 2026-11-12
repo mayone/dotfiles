@@ -135,7 +135,7 @@
     }
   ],
   "workbench.activityBar.orientation": "vertical",
-  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.colorTheme": "One Dark Pro Night Flat",
   "workbench.editor.customLabels.patterns": {
     "**/Cargo.toml": "${dirname} (Cargo.toml)",
     "**/index.*": "${dirname} (index)",
