@@ -44,6 +44,8 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin:/usr/local/bin
 # Native installers such as claude put binaries here
 export PATH=$HOME/.local/bin:$PATH
+# fzf cloned by install.sh on Linux, ahead of an older system fzf
+[ -d ~/.fzf/bin ] && export PATH=$HOME/.fzf/bin:$PATH
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 export LANG="en_US.UTF-8"
 
