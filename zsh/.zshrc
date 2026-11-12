@@ -54,10 +54,12 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-# fzf key bindings and completion (fzf >= 0.48)
-if command -v fzf >/dev/null 2>&1; then
-  source <(fzf --zsh)
+# fzf key bindings and completion; skipped when fzf is older than 0.48 and
+# has no --zsh, which would print "unknown option" in every new shell
+if command -v fzf >/dev/null 2>&1 && _fzf_init="$(fzf --zsh 2>/dev/null)"; then
+  eval "$_fzf_init"
 fi
+unset _fzf_init
 
 #
 # Aliases
