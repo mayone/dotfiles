@@ -5,6 +5,7 @@
 # Use ${BASH_SOURCE[0]} if script is not executed by source, else use $0
 SOURCE="${BASH_SOURCE[0]:-$0}"
 DIR_PATH="$( cd -- "$( dirname -- "$SOURCE" )" >/dev/null 2>&1 && pwd -P )"
+ROOT_PATH="$DIR_PATH"
 
 source $DIR_PATH/sh_utils/index.sh
 
@@ -22,6 +23,7 @@ main() {
   install_editor
 
   install_tools
+  setup_claude_statusline
 
   setup_git
 }
@@ -215,6 +217,11 @@ install_tools() {
     brew install --cask tunnelbear
     brew install --cask google-chrome
   fi
+}
+
+setup_claude_statusline() {
+  info "Set up Claude Code statusline"
+  "$ROOT_PATH/claude/install-statusline.sh"
 }
 
 setup_git() {

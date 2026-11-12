@@ -70,6 +70,16 @@ nix/apply.sh
 
 tmux plugins update through TPM. Catppuccin is pinned to a tag in `tmux/.tmux.conf`: to upgrade it, change the tag, remove `~/.tmux/plugins/tmux` and press `prefix + I`.
 
+## Claude Code statusline
+`./install.sh` sets it up. On a machine that is already set up, or on NixOS, run:
+```console
+claude/install-statusline.sh
+```
+
+It copies `claude/statusline.sh` to `~/.claude/statusline.sh`, installs the pinned `ccusage` into `~/.claude/statusline/` with `npm ci`, and points `statusLine` in `~/.claude/settings.json` (and in `~/.claude-work/settings.json` when that profile exists) at the copy. It needs `jq`. Without `npm`, the statusline uses `ccusage` from `PATH`. The copy does not follow the repo: run the installer again after changing `claude/statusline.sh`, `claude/package.json`, or `claude/package-lock.json`.
+
+To upgrade `ccusage`, run `npm install --prefix claude --save-exact ccusage@<version>` and commit `claude/package.json` and `claude/package-lock.json`.
+
 ## Uninstall
 ```console
 ./uninstall.sh
