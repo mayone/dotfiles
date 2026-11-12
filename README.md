@@ -25,7 +25,7 @@ NO_DEV=1 ./install.sh
 - tmux installs its plugins on first start
   - Needs `git`, network access and a [Nerd Font](https://www.nerdfonts.com)
   - `prefix + I` installs plugins, `prefix + U` updates them
-  - `prefix + O` opens the SessionX session switcher (needs `fzf`)
+  - `prefix + C-f` opens the SessionX session switcher (needs `fzf`)
 
 </details>
 
@@ -89,7 +89,7 @@ tmux plugins update through TPM. Catppuccin is pinned to a tag in `tmux/.tmux.co
 
 #### tmux status line has no theme, or icons show as boxes
 - Plugins install on the first start with network access, press `prefix + I` to retry and `prefix + r` to reload
-- Set a Nerd Font as Terminal font; the SessionX key hints need Nerd Fonts v3
+- Set a Nerd Font as Terminal font; the SessionX key hints need Nerd Fonts 2.3 or newer, and a `MesloLGS NF` downloaded before April 2023 is older than that
 
 ---
 
