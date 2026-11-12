@@ -5,6 +5,7 @@
 # Use ${BASH_SOURCE[0]} if script is not executed by source, else use $0
 SOURCE="${BASH_SOURCE[0]:-$0}"
 DIR_PATH="$( cd -- "$( dirname -- "$SOURCE" )" >/dev/null 2>&1 && pwd -P )"
+ROOT_PATH="$DIR_PATH"
 
 source $DIR_PATH/sh_utils/index.sh
 
@@ -220,7 +221,7 @@ install_tools() {
 
 setup_claude_statusline() {
   info "Set up Claude Code statusline"
-  "$DIR_PATH/claude/install-statusline.sh"
+  "$ROOT_PATH/claude/install-statusline.sh"
 }
 
 setup_git() {
