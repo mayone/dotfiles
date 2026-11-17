@@ -19,7 +19,7 @@ jq -r --arg cc "$CC" --arg profile "$PROFILE" --argjson ka "${KA:-null}" '
      | if . <= 0 then "🧊 cold" elif . <= 10 then "\u001b[33m⏳ \(.)m\u001b[0m" else "⏳ \(.)m" end)
     + (if $ka == null then "" else " (\($ka.count)/\($ka.max))" end);
 
-  ["👤 " + $profile]
+  ["👤 " + $profile[:4]]
   + [[ (.rate_limits.five_hour | select(.used_percentage != null)
        | "5h \(.used_percentage | ceil)%" + ((.resets_at // 0) - now | if . > 0 then " (\(. / 60 | ceil | dur))" else "" end)),
      (.rate_limits.seven_day | select(.used_percentage != null) | "7d \(.used_percentage | ceil)%")
