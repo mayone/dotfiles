@@ -104,7 +104,9 @@ alias glog_branches="git log --color=always --oneline --decorate --graph --branc
 
 # Fetch and prune, delete local branches of merged PRs with gh poi after a
 # confirmation (it also removes their clean linked worktrees, ignored files
-# included), then fast-forward the branch you end up on.
+# included), then fast-forward every local branch that is behind its upstream:
+# the branch you end up on, the rest, and those checked out in other worktrees
+# without uncommitted changes. Diverged branches only get a warning.
 # Replaces `hub sync`; needs seachicken/gh-poi.
 gsync() {
   git fetch --all --prune || return
@@ -121,7 +123,35 @@ gsync() {
       fi
     fi
   fi
-  git merge --ff-only '@{u}'
+  local head common branch old upstream track wt dirty rc=0
+  head=$(git symbolic-ref -q HEAD)
+  common=$(git rev-parse --path-format=absolute --git-common-dir)
+  while IFS=: read -r branch old upstream track wt; do
+    [[ refs/heads/$branch == "$head" ]] && continue
+    case $track in
+      '<>') print -ru2 -- "warning: skipped '$branch': diverged from its upstream" ;;
+      '<')
+        if [[ -z $wt ]]; then
+          git fetch -q . "${upstream}:refs/heads/$branch" || { rc=1; continue; }
+        elif [[ $(git -C "$wt" rev-parse --path-format=absolute --git-common-dir 2>/dev/null) != "$common" ]] ||
+             [[ $(git -C "$wt" symbolic-ref -q HEAD 2>/dev/null) != "refs/heads/$branch" ]]; then
+          print -ru2 -- "warning: skipped '$branch': not checked out in $wt"
+          continue
+        elif ! dirty=$(git -C "$wt" status --porcelain --untracked-files=no); then
+          print -ru2 -- "warning: skipped '$branch': cannot check $wt for uncommitted changes"
+          continue
+        elif [[ -z $dirty ]]; then
+          git -C "$wt" merge --ff-only --no-overwrite-ignore -q "$upstream" || { rc=1; continue; }
+        else
+          print -ru2 -- "warning: skipped '$branch': uncommitted changes in $wt"
+          continue
+        fi
+        print -r -- "Updated branch $branch (was $old)."
+        ;;
+    esac
+  done < <(git for-each-ref --format='%(refname:lstrip=2):%(objectname:short):%(upstream):%(upstream:trackshort):%(worktreepath)' refs/heads)
+  git merge --ff-only '@{u}' || rc=1
+  return $rc
 }
 
 #
