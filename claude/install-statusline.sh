@@ -32,7 +32,7 @@ for profile in "$HOME/.claude" "$HOME/.claude-work"; do
   [ -d "$profile" ] || continue
   settings="$profile/settings.json"
   [ -s "$settings" ] || echo '{}' > "$settings"
-  updated=$(jq '.statusLine = {type: "command", command: "~/.claude/statusline.sh", padding: 0}' "$settings")
+  updated=$(jq '.statusLine = {type: "command", command: "~/.claude/statusline.sh", padding: 0, refreshInterval: 30}' "$settings")
   printf '%s\n' "$updated" > "$settings"
   echo "Set statusLine in $settings"
 done
