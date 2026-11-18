@@ -5,7 +5,7 @@ TMP=$(mktemp "${TMPDIR:-/tmp}/ccstatusline.XXXXXX")
 trap 'rm -f "$TMP"' EXIT
 cat > "$TMP"
 
-CC=$("$CCUSAGE" statusline --cost-source ccusage --offline < "$TMP" 2>/dev/null)
+CC=$("$CCUSAGE" statusline --cost-source ccusage --offline --refresh-interval 300 < "$TMP" 2>/dev/null)
 SID=$(jq -r '.session_id // empty' < "$TMP" 2>/dev/null)
 KA=$(jq -c 'select(.count >= 1)' "/tmp/claude-keepalive/$SID.json" 2>/dev/null)
 PROFILE=${CLAUDE_CONFIG_DIR:-personal}
