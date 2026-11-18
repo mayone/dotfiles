@@ -123,8 +123,9 @@ gsync() {
       fi
     fi
   fi
-  local head branch old upstream track wt rc=0
+  local head common branch old upstream track wt dirty rc=0
   head=$(git symbolic-ref -q HEAD)
+  common=$(git rev-parse --path-format=absolute --git-common-dir)
   while IFS=: read -r branch old upstream track wt; do
     [[ refs/heads/$branch == "$head" ]] && continue
     case $track in
@@ -132,8 +133,15 @@ gsync() {
       '<')
         if [[ -z $wt ]]; then
           git fetch -q . "${upstream}:refs/heads/$branch" || { rc=1; continue; }
-        elif [[ -z $(git -C "$wt" status --porcelain --untracked-files=no) ]]; then
-          git -C "$wt" merge --ff-only -q "$upstream" || { rc=1; continue; }
+        elif [[ $(git -C "$wt" rev-parse --path-format=absolute --git-common-dir 2>/dev/null) != "$common" ]] ||
+             [[ $(git -C "$wt" symbolic-ref -q HEAD 2>/dev/null) != "refs/heads/$branch" ]]; then
+          print -ru2 -- "warning: skipped '$branch': not checked out in $wt"
+          continue
+        elif ! dirty=$(git -C "$wt" status --porcelain --untracked-files=no); then
+          print -ru2 -- "warning: skipped '$branch': cannot check $wt for uncommitted changes"
+          continue
+        elif [[ -z $dirty ]]; then
+          git -C "$wt" merge --ff-only --no-overwrite-ignore -q "$upstream" || { rc=1; continue; }
         else
           print -ru2 -- "warning: skipped '$branch': uncommitted changes in $wt"
           continue
