@@ -11,6 +11,21 @@ let
     url    = "https://github.com/nixos/nixpkgs/archive/2fcb964de67fcf60b43471c55d5d99e61a9ccb5a.tar.gz";
     sha256 = "1qmvymzv712syhw9p3941vkn4fdp3mmi2vkskbrfpdllcy4wycs7";
   }) { config = config.nixpkgs.config; };
+
+  # TODO: switch to unstable_pkgs.pnpm_12 once nixos-unstable ships 12.21.0 or later (nixpkgs PR 588992)
+  pnpm_pkgs = import (builtins.fetchTarball {
+    url    = "https://github.com/nixos/nixpkgs/archive/1a08097fc1ed85575db39763b2c4a5d8970a37ba.tar.gz";
+    sha256 = "1srmfqxj66lfnrvcn6k14njvd6plx5blii5n99p6jwxmq55739kk";
+  }) { config = config.nixpkgs.config; };
+
+  pnpm_12_21 = (pnpm_pkgs.pnpm_12.override {
+    version      = "12.21.0";
+    srcHash      = "sha256-fbRLUhp1t8bTaOms7nnWMTG5Y6/l1vN/GuCrbYYX7NA=";
+    cargoHash    = "sha256-TKTGtPIAQmJXTKhdTkwoVeTw2ilPOWUf4mzAgXkqwdw=";
+    cargoPatches = [ ];
+  }).overrideAttrs (old: {
+    buildInputs = old.buildInputs ++ [ pnpm_pkgs.zstd ];
+  });
 in
 {
   imports = [
@@ -305,7 +320,7 @@ in
 
     # ===== Node.js ===== #
     nodejs
-    pnpm
+    pnpm_12_21
 
     # ===== Color Management ===== #
     #gnome.gnome-color-manager
