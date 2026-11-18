@@ -19,17 +19,18 @@ jq -r --arg cc "$CC" --arg profile "$PROFILE" --argjson ka "${KA:-null}" --arg c
      | if . <= 0 then "🧊 cold" elif . <= 10 then "\u001b[33m⏳ \(.)m\u001b[0m" else "⏳ \(.)m" end)
     + (if $ka == null then "" else " (\($ka.count)/\($ka.max))" end);
   def cells: gsub("\u001b\\[[0-9;]*m"; "") | length + ([scan("[👤📊⏳🧊💰🔥🧠]")] | length);
+  def footer_padding_x: 2;
   def fit: ($columns | tonumber? // 0) as $width
     | select(length > 0)
-    | if $width > 0 then first(.[] | select(cells < $width)) // last else first end;
+    | if $width > 0 then first(.[] | select(cells <= $width - 2 * footer_padding_x)) // last else first end;
   def until_reset: (.resets_at // 0) - now | if . > 0 then " (\(. / 60 | ceil | dur))" else "" end;
-  def quota($reset):
+  def quota($reset; $week):
     [ (.rate_limits.five_hour | select(.used_percentage != null)
        | "5h \(.used_percentage | ceil)%" + (if $reset then until_reset else "" end)),
-      (.rate_limits.seven_day | select(.used_percentage != null) | "7d \(.used_percentage | ceil)%")
+      (select($week) | .rate_limits.seven_day | select(.used_percentage != null) | "7d \(.used_percentage | ceil)%")
     ] | select(length > 0) | "📊 " + join(" · ");
-  def line1($name; $reset):
-    ["👤 " + $name] + [quota($reset)] + [.prompt_cache | select(. != null) | cache] | join(" | ");
+  def line1($name; $reset; $week):
+    ["👤 " + $name] + [quota($reset; $week)] + [.prompt_cache | select(. != null) | cache] | join(" | ");
   def line2($today):
     [ (usd(" session") as $s | usd(" today") as $t | select($s != null and $t != null)
        | "💰 $\($s)" + (if $today then " · 24h $\($t)" else "" end)),
@@ -37,6 +38,6 @@ jq -r --arg cc "$CC" --arg profile "$PROFILE" --argjson ka "${KA:-null}" --arg c
       (.context_window | select(.used_percentage != null) | "🧠 \((.total_input_tokens // 0) / 1000 | ceil)k (\(.used_percentage | ceil)%)")
     ] | select(any(.[]; startswith("🔥") | not)) | join(" | ");
 
-  ([line1($profile; true), line1($profile[:4]; true), line1($profile[:4]; false)] | fit),
+  ([line1($profile; true; true), line1($profile[:4]; true; true), line1($profile[:4]; false; true), line1($profile[:4]; false; false)] | fit),
   ([line2(true), line2(false)] | fit)
 ' < "$TMP" 2>/dev/null
