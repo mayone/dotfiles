@@ -14,9 +14,21 @@ PROFILE=${PROFILE##*/.claude-}
 jq -r --arg cc "$CC" --arg profile "$PROFILE" --argjson ka "${KA:-null}" --arg columns "${COLUMNS:-}" '
   def dur: if . >= 60 then "\(. / 60 | floor)h\(. % 60 | if . < 10 then "0\(.)" else "\(.)" end)m" else "\(.)m" end;
   def usd($suffix): [$cc | capture("\\$(?<v>[0-9.]+)" + $suffix) | .v | tonumber | ceil] | first;
-  def cache:
+  def paint($code): "\u001b[\($code)m\(.)\u001b[0m";
+  def tint($pct; $warn; $crit): if $pct >= $crit then paint(31) elif $pct >= $warn then paint(33) else . end;
+  def miss_cause($c):
+    if . == "tools_changed" then "tools" + ([($c.tools_added // 0 | select(. > 0) | " +\(.)"), ($c.tools_removed // 0 | select(. > 0) | " -\(.)")] | join(""))
+    elif . == "system_prompt_changed" then "system prompt"
+    elif startswith("ttl_expired_") then ltrimstr("ttl_expired_") + " TTL"
+    else gsub("_"; " ") end;
+  def miss:
+    select(.warm and (.last_miss_at // 0) > now - 300)
+    | (.last_miss_cause // {}) as $c
+    | " (miss" + ([$c.causes // [] | .[] | strings | miss_cause($c)] | if length > 0 then ": " + join(", ") else "" end) + ")";
+  def cache($why):
     (if .warm and .expires_at != null then (.expires_at - now) / 60 | ceil else 0 end
-     | if . <= 0 then "🧊 cold" elif . <= 10 then "\u001b[33m⏳ \(.)m\u001b[0m" else "⏳ \(.)m" end)
+     | if . <= 0 then "🧊 cold" elif . <= 10 then "⏳ \(.)m" | paint(33) else "⏳ \(.)m" end)
+    + (if $why then (try miss) // "" else "" end)
     + (if $ka == null then "" else " (\($ka.count)/\($ka.max))" end);
   def cells: gsub("\u001b\\[[0-9;]*m"; "") | length + ([scan("[👤📊⏳🧊💰🔥🧠]")] | length);
   def footer_padding_x: 2;
@@ -25,19 +37,22 @@ jq -r --arg cc "$CC" --arg profile "$PROFILE" --argjson ka "${KA:-null}" --arg c
     | if $width > 0 then first(.[] | select(cells <= $width - 2 * footer_padding_x)) // last else first end;
   def until_reset: (.resets_at // 0) - now | if . > 0 then " (\(. / 60 | ceil | dur))" else "" end;
   def quota($reset; $week):
-    [ (.rate_limits.five_hour | select(.used_percentage != null)
-       | "5h \(.used_percentage | ceil)%" + (if $reset then until_reset else "" end)),
-      (select($week) | .rate_limits.seven_day | select(.used_percentage != null) | "7d \(.used_percentage | ceil)%")
+    [ (.rate_limits.five_hour | select(.used_percentage != null) | (.used_percentage | ceil) as $pct
+       | "5h \($pct)%" + (if $reset then until_reset else "" end) | tint($pct; 70; 90)),
+      (select($week) | .rate_limits.seven_day | select(.used_percentage != null) | (.used_percentage | ceil) as $pct
+       | "7d \($pct)%" | tint($pct; 70; 90))
     ] | select(length > 0) | "📊 " + join(" · ");
-  def line1($name; $reset; $week):
-    ["👤 " + $name] + [quota($reset; $week)] + [.prompt_cache | select(. != null) | cache] | join(" | ");
+  def line1($name; $reset; $week; $why):
+    ["👤 " + $name] + [quota($reset; $week)] + [.prompt_cache | select(. != null) | cache($why)] | join(" | ");
   def line2($today):
     [ (usd(" session") as $s | usd(" today") as $t | select($s != null and $t != null)
        | "💰 $\($s)" + (if $today then " · 24h $\($t)" else "" end)),
       (usd("/hr") | select(. != null) | "🔥 $\(.)/hr"),
-      (.context_window | select(.used_percentage != null) | "🧠 \((.total_input_tokens // 0) / 1000 | ceil)k (\(.used_percentage | ceil)%)")
+      (.context_window | select(.used_percentage != null) | (.used_percentage | ceil) as $pct
+       | "🧠 " + ("\((.total_input_tokens // 0) / 1000 | ceil)k (\($pct)%)" | tint($pct; 50; 80)))
     ] | select(any(.[]; startswith("🔥") | not)) | join(" | ");
 
-  ([line1($profile; true; true), line1($profile[:4]; true; true), line1($profile[:4]; false; true), line1($profile[:4]; false; false)] | fit),
+  ([line1($profile; true; true; true), line1($profile; true; true; false), line1($profile[:4]; true; true; false),
+    line1($profile[:4]; false; true; false), line1($profile[:4]; false; false; false)] | fit),
   ([line2(true), line2(false)] | fit)
 ' < "$TMP" 2>/dev/null
