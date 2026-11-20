@@ -31,8 +31,20 @@ main() {
   fi
   add_zprofile_line 'command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh --shims)"'
 
-  info "Install packages and tools"
-  mise bootstrap --only packages,tools
+  local packages_failed=""
+  info "Install packages"
+  if ! mise bootstrap --only packages; then
+    packages_failed=1
+    warn "Some packages failed to install; installing the tools anyway"
+  fi
+
+  info "Install tools"
+  mise install
+
+  if check_set "$packages_failed"; then
+    warn "Some packages are missing: fix the errors above and run mise/apply.sh again"
+    exit 1
+  fi
 }
 
 link_config() {
