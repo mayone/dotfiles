@@ -199,6 +199,9 @@ install_tools() {
 
 install_mise_tools() {
   "$ROOT_PATH/mise/apply.sh"
+  if check_cmd mise; then
+    eval "$(mise activate bash --shims)"
+  fi
 }
 
 setup_claude_statusline() {
