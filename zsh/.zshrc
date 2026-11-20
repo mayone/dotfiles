@@ -57,6 +57,13 @@ if command -v mise >/dev/null 2>&1; then
     print -ru2 -- "mise: $_mise_link links to a missing file, run mise/apply.sh again"
   done
   unset _mise_link
+  # gh writes its own path into the git credential helper; the shim keeps that
+  # path valid after mise upgrades gh and prunes the old version
+  _mise_gh=${MISE_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/mise}/shims/gh
+  if [[ -x $_mise_gh ]]; then
+    export GH_PATH=$_mise_gh
+  fi
+  unset _mise_gh
 fi
 
 # fzf key bindings and completion; skipped when fzf is older than 0.48 and
