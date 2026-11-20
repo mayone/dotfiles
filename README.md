@@ -60,8 +60,8 @@ NO_DEV=1 ./install.sh
 
 ## Tools and packages (mise)
 [mise](https://mise.jdx.dev) installs what `mise/global.toml` and `mise/dev.toml` list:
-- `[tools]`: the runtimes (Node.js, pnpm, Yarn, Go, Java) and the command-line tools, on macOS and Linux alike.
-- `[bootstrap.packages]`: the host packages, with apt on Debian and Ubuntu, and as Homebrew formulae and casks on macOS. mise installs the formulae into `/opt/homebrew` and the apps into `/Applications` itself, so the Homebrew program is not needed.
+- `[tools]`: the runtimes (Node.js, pnpm, Yarn, Go, Java) and the command-line tools, on macOS and Linux alike. Entries with `os = ["macos"]`, such as tmux, ffmpeg, and Claude Code, replace the Homebrew formulae and casks that the Mac used to get.
+- `[bootstrap.packages]`: the host packages: apt packages on Debian and Ubuntu, and on macOS the apps and the Nerd Font as Homebrew casks. mise installs the casks into `/Applications` and `~/Library/Fonts` itself, so the Homebrew program is not needed.
 
 Rust stays with rustup.
 
@@ -70,7 +70,9 @@ Rust stays with rustup.
 mise/apply.sh
 ```
 
-It links `mise/global.toml` to `~/.config/mise/config.toml` and, unless `NO_DEV` is set, `mise/dev.toml` to `~/.config/mise/conf.d/dev.toml`. For login shells it adds the mise shims to `~/.zprofile`, and `/opt/homebrew/bin` on a Mac without Homebrew. Then it runs `mise bootstrap --only packages,tools`, which asks before it installs packages. `zsh/.zshrc` activates mise in interactive shells.
+It links `mise/global.toml` to `~/.config/mise/config.toml` and, unless `NO_DEV` is set, `mise/dev.toml` to `~/.config/mise/conf.d/dev.toml`. For login shells it adds the mise shims to `~/.zprofile`, and `/opt/homebrew/bin` on a Mac without Homebrew. Then it runs `mise bootstrap --only packages`, which asks before it installs packages, and `mise install`. When a package fails to install, it still installs the tools and exits 1 at the end. `zsh/.zshrc` activates mise in interactive shells.
+
+On a Mac, `mise/dev.toml` runs Docker with colima instead of Docker Desktop: run `colima start` before the first `docker` command. `docker compose` and `docker buildx` work through the links that `mise install` writes to `~/.docker/cli-plugins`.
 
 `zsh/.zshrc` also points `GH_PATH` at the mise shim of `gh`, so `gh auth login` and `gh auth setup-git` write a Git credential helper that still works after `mise upgrade`. On a machine where either ran before this setup, run `gh auth setup-git` again.
 
