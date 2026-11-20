@@ -27,6 +27,11 @@ main() {
   setup_claude_statusline
 
   setup_git
+
+  if check_set $MISE_APPLY_FAILED; then
+    warn "mise/apply.sh failed: fix the errors it printed and run it again"
+    exit 1
+  fi
 }
 
 install_pkgmanager() {
@@ -58,7 +63,9 @@ install_packages() {
     ZSH_WAS_MISSING=1
   fi
 
-  "$ROOT_PATH/mise/apply.sh"
+  if ! "$ROOT_PATH/mise/apply.sh"; then
+    MISE_APPLY_FAILED=1
+  fi
   if check_cmd mise; then
     eval "$(mise activate bash --shims)"
   fi
