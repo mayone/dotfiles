@@ -23,7 +23,6 @@ main() {
   install_terminal
   install_editor
 
-  install_tools
   setup_claude_statusline
 
   setup_git
@@ -132,12 +131,6 @@ install_editor() {
   # Copy vim settings
   info "Copy .vimrc file"
   cp vim/.vimrc ~/.vimrc
-}
-
-install_tools() {
-  if check_os $OS_MAC && ! check_set $NO_DEV && check_cmd gcloud; then
-    gcloud components install gke-gcloud-auth-plugin
-  fi
 }
 
 setup_claude_statusline() {

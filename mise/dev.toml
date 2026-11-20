@@ -14,5 +14,4 @@ kubens = "latest"
 
 [bootstrap.packages]
 "brew-cask:docker-desktop" = { os = "macos" }
-"brew-cask:gcloud-cli" = { os = "macos" }
 "brew-cask:postman" = { os = "macos" }
