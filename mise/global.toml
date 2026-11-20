@@ -46,10 +46,6 @@ adopt = true
 
 # App uninstallation
 "brew-cask:appcleaner" = { os = "macos" }
-"brew-cask:chatgpt" = { os = "macos" }
-"brew-cask:cursor" = { os = "macos" }
-"brew-cask:discord" = { os = "macos" }
-"brew-cask:figma" = { os = "macos" }
 "brew-cask:font-meslo-lg-nerd-font" = { os = "macos" }
 "brew-cask:gimp" = { os = "macos" }
 "brew-cask:google-chrome" = { os = "macos" }
@@ -58,8 +54,6 @@ adopt = true
 "brew-cask:notion" = { os = "macos" }
 # Window management
 "brew-cask:rectangle" = { os = "macos" }
-# VPN
-"brew-cask:tunnelbear" = { os = "macos" }
 "brew-cask:visual-studio-code" = { os = "macos" }
 "brew-cask:vlc" = { os = "macos" }
 
