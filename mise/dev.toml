@@ -1,0 +1,13 @@
+# Linked to ~/.config/mise/conf.d/dev.toml by mise/apply.sh, unless NO_DEV is set
+
+[tools]
+node = "lts"
+pnpm = "latest"
+# Yarn Classic, as the Homebrew formula installed
+yarn = "1"
+go = "latest"
+java = "temurin-25"
+k9s = "latest"
+kubectx = "latest"
+kubens = "latest"
+"npm:ccusage" = "latest"

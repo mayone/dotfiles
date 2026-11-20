@@ -23,6 +23,7 @@ main() {
   install_editor
 
   install_tools
+  install_mise_tools
   setup_claude_statusline
 
   setup_git
@@ -38,6 +39,12 @@ install_pkgmanager() {
     fi
   elif check_os $OS_LINUX; then
     sudo apt update
+  fi
+
+  if ! check_cmd mise; then
+    info "Install mise"
+    curl -fsSL https://mise.run | sh
+    export PATH="$HOME/.local/bin:$PATH"
   fi
 }
 
@@ -57,19 +64,6 @@ install_essentials() {
 }
 
 install_languages() {
-  # Install OpenJDK
-  info "Install OpenJDK"
-  if check_os $OS_MAC; then
-    brew install --cask temurin
-  elif check_os $OS_LINUX; then
-    sudo apt install default-jdk
-  fi
-
-  # Install Go
-  if check_os $OS_MAC; then
-    brew install go
-  fi
-
   # Install Rust
   if ! check_cmd rustup; then
     info "Install Rust"
@@ -85,13 +79,6 @@ install_languages() {
     # rustup target add aarch64-apple-ios x86_64-apple-ios aarch64-apple-darwin
     # rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
     rustup target add wasm32-unknown-unknown
-  fi
-
-  # Install Node.js
-  if check_os $OS_MAC; then
-    brew install node yarn
-    brew install pnpm
-    brew install nvm
   fi
 }
 
@@ -120,11 +107,8 @@ install_shell() {
   fi
 
   if check_os $OS_MAC; then
-    brew install fzf
-    $(brew --prefix)/opt/fzf/install
-
     # Command replacement
-    brew install bat eza htop ripgrep
+    brew install htop
   elif check_os $OS_LINUX; then
     # apt's fzf is too old on Ubuntu 22.04/24.04 and Debian 12: the zshrc needs
     # fzf --zsh (0.48) and SessionX needs 0.41, so use the upstream binary
@@ -165,7 +149,6 @@ install_editor() {
     brew install --cask cursor
     brew install --cask claude-code@latest
     brew install --cask visual-studio-code
-    brew install ccusage
     # Copy vscode settings
     mkdir -p ~/Library/Application\ Support/Code/User
     cp .vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
@@ -178,18 +161,13 @@ install_editor() {
 
 install_tools() {
   if check_os $OS_MAC; then
-    brew install gh
     brew install loc
-    brew install just
-    brew install shfmt jq
-    brew install wget ffmpeg yt-dlp
+    brew install wget ffmpeg
 
     if ! check_set $NO_DEV; then
       brew install --cask postman
 
       # DevOps
-      brew install k9s
-      brew install kubectx
       brew install --cask docker
       brew install --cask google-cloud-sdk
       gcloud components install gke-gcloud-auth-plugin
@@ -216,6 +194,13 @@ install_tools() {
     # VPN
     brew install --cask tunnelbear
     brew install --cask google-chrome
+  fi
+}
+
+install_mise_tools() {
+  "$ROOT_PATH/mise/apply.sh"
+  if check_cmd mise; then
+    eval "$(mise activate bash --shims)"
   fi
 }
 

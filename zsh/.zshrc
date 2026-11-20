@@ -49,10 +49,22 @@ export PATH=$HOME/.local/bin:$PATH
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 export LANG="en_US.UTF-8"
 
-# NVM
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+# mise: runtimes and CLI tools. Activation puts them on PATH right away, so
+# the command checks below find them
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+  for _mise_link in ${XDG_CONFIG_HOME:-$HOME/.config}/mise/{config.toml,conf.d/*.toml}(N-@); do
+    print -ru2 -- "mise: $_mise_link links to a missing file, run mise/apply.sh again"
+  done
+  unset _mise_link
+  # gh writes its own path into the git credential helper; the shim keeps that
+  # path valid after mise upgrades gh and prunes the old version
+  _mise_gh=${MISE_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/mise}/shims/gh
+  if [[ -x $_mise_gh ]]; then
+    export GH_PATH=$_mise_gh
+  fi
+  unset _mise_gh
+fi
 
 # fzf key bindings and completion; skipped when fzf is older than 0.48 and
 # has no --zsh, which would print "unknown option" in every new shell
