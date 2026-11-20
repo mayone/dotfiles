@@ -13,6 +13,10 @@ main() {
     echo "mise is required: https://mise.jdx.dev/installing-mise.html" >&2
     exit 1
   fi
+  if [[ -f "$MISE_DIR/../.git" ]]; then
+    echo "Run mise/apply.sh from the main checkout: links into a worktree break when the worktree is removed" >&2
+    exit 1
+  fi
 
   link_config "$MISE_DIR/global.toml" "$CONFIG_DIR/config.toml"
   if ! check_set "${NO_DEV:-}"; then
@@ -35,6 +39,8 @@ link_config() {
   if [[ -e "$link_path" && ! -L "$link_path" ]]; then
     mv "$link_path" "$link_path.bak"
     warn "Moved the existing $link_path to $link_path.bak"
+  elif [[ -L "$link_path" && "$(readlink "$link_path")" != "$config_file" ]]; then
+    warn "Relinked $link_path, which pointed to $(readlink "$link_path")"
   fi
   ln -sfn "$config_file" "$link_path"
   info "Linked $link_path"

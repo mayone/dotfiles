@@ -72,6 +72,14 @@ update_mise() {
     mise self-update --yes
   fi
 
+  local config
+  for config in "${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.toml" "${XDG_CONFIG_HOME:-$HOME/.config}"/mise/conf.d/*.toml; do
+    if [[ -L "$config" && ! -e "$config" ]]; then
+      warn "Skip mise upgrade and prune: $config links to a missing file, run mise/apply.sh again"
+      return
+    fi
+  done
+
   info "Update mise tools"
   mise upgrade
   info "Cleanup mise"

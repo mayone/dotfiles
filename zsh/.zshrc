@@ -53,6 +53,10 @@ export LANG="en_US.UTF-8"
 # the command checks below find them
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
+  for _mise_link in ${XDG_CONFIG_HOME:-$HOME/.config}/mise/{config.toml,conf.d/*.toml}(N-@); do
+    print -ru2 -- "mise: $_mise_link links to a missing file, run mise/apply.sh again"
+  done
+  unset _mise_link
 fi
 
 # fzf key bindings and completion; skipped when fzf is older than 0.48 and
