@@ -12,6 +12,23 @@ kubectx = "latest"
 kubens = "latest"
 "npm:ccusage" = "latest"
 
+# Docker on macOS without Docker Desktop: `colima start` runs the engine in a
+# Lima VM. The postinstall links put the Compose and Buildx plugins where the
+# docker CLI looks for them, and every `mise install` repairs them
+colima = { version = "latest", os = ["macos"] }
+docker-cli = { version = "latest", os = ["macos"] }
+lima = { version = "latest", os = ["macos"] }
+
+[tools.docker-compose]
+version = "latest"
+os = ["macos"]
+postinstall = { run = 'mkdir -p "$HOME/.docker/cli-plugins" && ln -sfn "$(command -v docker-compose)" "$HOME/.docker/cli-plugins/docker-compose"', when = "always" }
+
+[tools."github:docker/buildx"]
+version = "latest"
+os = ["macos"]
+bin = "docker-buildx"
+postinstall = { run = 'mkdir -p "$HOME/.docker/cli-plugins" && ln -sfn "$(command -v docker-buildx)" "$HOME/.docker/cli-plugins/docker-buildx"', when = "always" }
+
 [bootstrap.packages]
-"brew-cask:docker-desktop" = { os = "macos" }
 "brew-cask:postman" = { os = "macos" }
