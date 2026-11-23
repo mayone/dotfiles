@@ -30,5 +30,14 @@ os = ["macos"]
 bin = "docker-buildx"
 postinstall = { run = 'mkdir -p "$HOME/.docker/cli-plugins" && ln -sfn "$(command -v docker-buildx)" "$HOME/.docker/cli-plugins/docker-buildx"', when = "always" }
 
+# docker login keeps credentials in the Keychain only when
+# docker-credential-osxkeychain is on PATH; without it they go into
+# ~/.docker/config.json as base64 plain text
+[tools."github:docker/docker-credential-helpers"]
+version = "latest"
+os = ["macos"]
+matching = "osxkeychain"
+bin = "docker-credential-osxkeychain"
+
 [bootstrap.packages]
 "brew-cask:postman" = { os = "macos" }

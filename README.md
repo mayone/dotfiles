@@ -72,7 +72,7 @@ mise/apply.sh
 
 It links `mise/global.toml` to `~/.config/mise/config.toml` and, unless `NO_DEV` is set, `mise/dev.toml` to `~/.config/mise/conf.d/dev.toml`. For login shells it adds the mise shims to `~/.zprofile`, and `/opt/homebrew/bin` on a Mac without Homebrew. Then it runs `mise bootstrap --only packages`, which asks before it installs packages, and `mise install`. When a package fails to install, it still installs the tools and exits 1 at the end. `zsh/.zshrc` activates mise in interactive shells.
 
-On a Mac, `mise/dev.toml` runs Docker with colima instead of Docker Desktop: run `colima start` before the first `docker` command. `docker compose` and `docker buildx` work through the links that `mise install` writes to `~/.docker/cli-plugins`.
+On a Mac, `mise/dev.toml` runs Docker with colima instead of Docker Desktop: run `colima start` before the first `docker` command. `docker compose` and `docker buildx` work through the links that `mise install` writes to `~/.docker/cli-plugins`, and `docker login` keeps credentials in the Keychain through `docker-credential-osxkeychain`. On a Mac that ran Docker Desktop, change `"credsStore": "desktop"` to `"credsStore": "osxkeychain"` in `~/.docker/config.json`, or `docker` fails to find `docker-credential-desktop`.
 
 `zsh/.zshrc` also points `GH_PATH` at the mise shim of `gh`, so `gh auth login` and `gh auth setup-git` write a Git credential helper that still works after `mise upgrade`. On a machine where either ran before this setup, run `gh auth setup-git` again.
 
