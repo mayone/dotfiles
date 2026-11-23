@@ -18,3 +18,47 @@ just = "latest"
 ripgrep = "latest"
 shfmt = "latest"
 yt-dlp = "latest"
+
+# macOS only, like the Homebrew formulae and cask they replace. NixOS gets tmux,
+# htop, wget, and ffmpeg from nix/configuration.nix, and Debian and Ubuntu get
+# tmux from apt
+claude = { version = "latest", os = ["macos"] }
+"conda:htop" = { version = "latest", os = ["macos"] }
+"conda:wget" = { version = "latest", os = ["macos"] }
+ffmpeg = { version = "latest", os = ["macos"] }
+"github:boyter/scc" = { version = "latest", os = ["macos"] }
+tmux = { version = "latest", os = ["macos"] }
+
+[bootstrap.brew]
+# Take over an app that is already in /Applications instead of replacing it,
+# which can reset its macOS privacy permissions. A different build of an app
+# that does not update itself makes the install fail and leaves the app alone
+adopt = true
+
+# Host packages for `mise bootstrap`. mise installs the Homebrew casks itself,
+# without the Homebrew program
+[bootstrap.packages]
+"apt:build-essential" = "latest"
+"apt:libssl-dev" = "latest"
+"apt:pkg-config" = "latest"
+"apt:tmux" = "latest"
+"apt:zsh" = "latest"
+
+# App uninstallation
+"brew-cask:appcleaner" = { os = "macos" }
+"brew-cask:font-meslo-lg-nerd-font" = { os = "macos" }
+"brew-cask:gimp" = { os = "macos" }
+"brew-cask:google-chrome" = { os = "macos" }
+"brew-cask:iterm2" = { os = "macos" }
+"brew-cask:musescore" = { os = "macos" }
+"brew-cask:notion" = { os = "macos" }
+# Window management
+"brew-cask:rectangle" = { os = "macos" }
+"brew-cask:visual-studio-code" = { os = "macos" }
+"brew-cask:vlc" = { os = "macos" }
+
+# Not installed by default
+# "brew-cask:font-fira-code-nerd-font" = { os = "macos" }
+# "brew-cask:telegram" = { os = "macos" }
+# Keyboard configurator, https://usevia.app/
+# "brew-cask:via" = { os = "macos" }
