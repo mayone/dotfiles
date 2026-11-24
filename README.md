@@ -1,6 +1,6 @@
 # dotfiles
 - Shell: Zsh + Zinit + Powerlevel10k
-- Terminal: iTerm (for macOS) + tmux (TPM + Catppuccin + SessionX)
+- Terminal: iTerm (for macOS) + tmux (TPM + Catppuccin + SessionX) + herdr
 - Editor: Vim, VSCode
 
 ---
@@ -101,6 +101,20 @@ claude/install-statusline.sh
 It copies `claude/statusline.sh` to `~/.claude/statusline.sh`, installs the pinned `ccusage` into `~/.claude/statusline/` with `npm ci`, and points `statusLine` in `~/.claude/settings.json` (and in `~/.claude-work/settings.json` when that profile exists) at the copy. It needs `jq`. Without `npm`, the statusline uses `ccusage` from `PATH`. The copy does not follow the repo: run the installer again after changing `claude/statusline.sh`, `claude/package.json`, or `claude/package-lock.json`.
 
 To upgrade `ccusage`, run `npm install --prefix claude --save-exact ccusage@<version>` and commit `claude/package.json` and `claude/package-lock.json`.
+
+## herdr
+[herdr](https://herdr.dev) runs coding agents in terminal panes that a background server keeps alive, and its sidebar shows which agents are working, blocked, or idle. mise installs it from `mise/global.toml`, and `./install.sh` sets it up. On a machine that is already set up, or on NixOS, run:
+```console
+herdr/apply.sh
+```
+
+It copies `herdr/config.toml` to `~/.config/herdr/config.toml` and installs herdr's Claude Code integration in each Claude profile that exists (`~/.claude` and `~/.claude-work`). The integration is a `SessionStart` hook in `settings.json` that runs `hooks/herdr-agent-state.sh`: it lets herdr resume the same Claude session after the herdr server restarts. The hook needs `python3` and does nothing outside a herdr pane.
+
+The copy does not follow the repo: run the script again after changing `herdr/config.toml`. The script moves an existing config that differs to `config.toml.bak`, so to keep a change made in herdr's Settings screen, copy it into `herdr/config.toml`.
+
+Start herdr with `herdr`. The prefix is `ctrl+b`, as in tmux: `prefix+?` lists the keys, `prefix+q` detaches and leaves the agents running, and `herdr` attaches again. Inside tmux, press `ctrl+b` twice to reach herdr's prefix.
+
+`./update.sh` upgrades herdr through `mise upgrade`; `herdr update` does not update a mise install. A running server stays on the old version until `herdr server stop`, which also stops its panes. Run `herdr/apply.sh` again when `herdr integration status` shows the Claude integration as outdated.
 
 ## Uninstall
 ```console
