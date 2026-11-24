@@ -52,6 +52,7 @@ adopt = true
 # App uninstallation
 "brew-cask:appcleaner" = { os = "macos" }
 "brew-cask:font-meslo-lg-nerd-font" = { os = "macos" }
+"brew-cask:ghostty" = { os = "macos" }
 "brew-cask:gimp" = { os = "macos" }
 "brew-cask:google-chrome" = { os = "macos" }
 "brew-cask:iterm2" = { os = "macos" }
