@@ -33,6 +33,10 @@ main() {
     warn "mise/apply.sh failed: fix the errors it printed and run it again"
     exit 1
   fi
+  if check_set "$GHOSTTY_APPLY_FAILED"; then
+    warn "ghostty/apply.sh failed: fix the errors it printed and run it again"
+    exit 1
+  fi
   if check_set "$HERDR_APPLY_FAILED"; then
     warn "herdr/apply.sh failed: fix the errors it printed and run it again"
     exit 1
@@ -125,6 +129,11 @@ install_terminal() {
   # Copy tmux settings
   info "Copy .tmux.conf file"
   cp tmux/.tmux.conf ~/.tmux.conf
+
+  info "Set up Ghostty"
+  if ! "$ROOT_PATH/ghostty/apply.sh"; then
+    GHOSTTY_APPLY_FAILED=1
+  fi
 }
 
 install_editor() {
