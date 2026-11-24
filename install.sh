@@ -32,6 +32,10 @@ main() {
     warn "mise/apply.sh failed: fix the errors it printed and run it again"
     exit 1
   fi
+  if check_set "$HERDR_APPLY_FAILED"; then
+    warn "herdr/apply.sh failed: fix the errors it printed and run it again"
+    exit 1
+  fi
 }
 
 install_pkgmanager() {
@@ -141,7 +145,9 @@ setup_claude_statusline() {
 
 setup_herdr() {
   info "Set up herdr"
-  "$ROOT_PATH/herdr/apply.sh"
+  if ! "$ROOT_PATH/herdr/apply.sh"; then
+    HERDR_APPLY_FAILED=1
+  fi
 }
 
 setup_git() {
