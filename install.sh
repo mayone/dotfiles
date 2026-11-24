@@ -26,6 +26,7 @@ main() {
   setup_claude_statusline
 
   setup_git
+  setup_gh
 
   if check_set $MISE_APPLY_FAILED; then
     warn "mise/apply.sh failed: fix the errors it printed and run it again"
@@ -159,6 +160,27 @@ setup_git() {
   #   git config --global user.name "$user_name"
   #   git config --global user.email "$user_email"
   # fi
+}
+
+setup_gh() {
+  # gsync in zsh/.zshrc deletes the branches of merged PRs with gh poi
+  if ! check_cmd gh; then
+    return
+  fi
+  # gh extension commands exit 4 without a login. gh auth token is not the
+  # same check: it can find a Keychain token when hosts.yml has no login
+  local extensions status=0
+  extensions="$(gh extension list 2>/dev/null)" || status=$?
+  if [[ $status -eq 4 ]]; then
+    warn "gh is not logged in: run gh auth login, then gh extension install seachicken/gh-poi"
+    return
+  fi
+  if ! grep -qF seachicken/gh-poi <<<"$extensions"; then
+    info "Install gh-poi"
+    if ! gh extension install seachicken/gh-poi; then
+      warn "gh extension install seachicken/gh-poi failed: fix the errors it printed and run it again"
+    fi
+  fi
 }
 
 main "$@"
