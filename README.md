@@ -26,6 +26,9 @@ NO_DEV=1 ./install.sh
   - Needs `git`, network access and a [Nerd Font](https://www.nerdfonts.com)
   - `prefix + I` installs plugins, `prefix + U` updates them
   - `prefix + C-f` opens the SessionX session switcher (needs `fzf`)
+- `gsync` needs the [gh-poi](https://github.com/seachicken/gh-poi) extension of `gh`
+  - `./install.sh` installs it when `gh` is logged in
+  - Otherwise run `gh auth login`, then `gh extension install seachicken/gh-poi`
 
 </details>
 

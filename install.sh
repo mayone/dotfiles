@@ -26,6 +26,7 @@ main() {
   setup_claude_statusline
 
   setup_git
+  setup_gh
 
   if check_set $MISE_APPLY_FAILED; then
     warn "mise/apply.sh failed: fix the errors it printed and run it again"
@@ -159,6 +160,22 @@ setup_git() {
   #   git config --global user.name "$user_name"
   #   git config --global user.email "$user_email"
   # fi
+}
+
+setup_gh() {
+  # gsync in zsh/.zshrc deletes the branches of merged PRs with gh poi
+  if ! check_cmd gh; then
+    return
+  fi
+  # gh extension commands need a login
+  if ! gh auth token >/dev/null 2>&1; then
+    warn "gh is not logged in: run gh auth login, then gh extension install seachicken/gh-poi"
+    return
+  fi
+  if ! gh extension list | grep -qF seachicken/gh-poi; then
+    info "Install gh-poi"
+    gh extension install seachicken/gh-poi
+  fi
 }
 
 main "$@"
