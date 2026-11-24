@@ -24,6 +24,7 @@ main() {
   install_editor
 
   setup_claude_statusline
+  setup_herdr
 
   setup_git
 
@@ -136,6 +137,11 @@ install_editor() {
 setup_claude_statusline() {
   info "Set up Claude Code statusline"
   "$ROOT_PATH/claude/install-statusline.sh"
+}
+
+setup_herdr() {
+  info "Set up herdr"
+  "$ROOT_PATH/herdr/apply.sh"
 }
 
 setup_git() {

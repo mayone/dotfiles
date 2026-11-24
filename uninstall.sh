@@ -10,6 +10,7 @@ source $DIR_PATH/sh_utils/index.sh
 
 main() {
   uninstall_tools
+  uninstall_herdr
   uninstall_mise
   uninstall_terminal
   uninstall_shell
@@ -22,6 +23,19 @@ uninstall_tools() {
   if check_os $OS_MAC && check_cmd brew; then
     brew remove tmux wget ffmpeg
   fi
+}
+
+uninstall_herdr() {
+  if ! check_cmd herdr; then
+    return
+  fi
+
+  local profile
+  for profile in "$HOME/.claude" "$HOME/.claude-work"; do
+    if check_folder "$profile"; then
+      CLAUDE_CONFIG_DIR="$profile" herdr integration uninstall claude
+    fi
+  done
 }
 
 uninstall_mise() {
