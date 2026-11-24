@@ -108,9 +108,9 @@ To upgrade `ccusage`, run `npm install --prefix claude --save-exact ccusage@<ver
 herdr/apply.sh
 ```
 
-It copies `herdr/config.toml` to `~/.config/herdr/config.toml` and installs herdr's Claude Code integration in each Claude profile that exists (`~/.claude` and `~/.claude-work`). The integration is a `SessionStart` hook in `settings.json` that runs `hooks/herdr-agent-state.sh`: it lets herdr resume the same Claude session after the herdr server restarts. The hook needs `python3` and does nothing outside a herdr pane.
+It copies `herdr/config.toml` to `~/.config/herdr/config.toml` and installs herdr's Claude Code integration in each Claude profile that exists (`~/.claude` and `~/.claude-work`). It names a profile that it skips: run it again once that profile exists. The integration is a `SessionStart` hook in `settings.json` that runs `hooks/herdr-agent-state.sh`: it lets herdr resume the same Claude session after the herdr server restarts. The hook needs `python3` and does nothing outside a herdr pane.
 
-The copy does not follow the repo: run the script again after changing `herdr/config.toml`. The script moves an existing config that differs to `config.toml.bak`, so to keep a change made in herdr's Settings screen, copy it into `herdr/config.toml`.
+The copy does not follow the repo: run the script again after changing `herdr/config.toml`, and press `prefix+shift+r` in a running herdr to reload its config. The script moves an existing config that differs to `config.toml.bak`, so to keep a change made in herdr's Settings screen, copy it into `herdr/config.toml`.
 
 Start herdr with `herdr`. The prefix is `ctrl+b`, as in tmux: `prefix+?` lists the keys, `prefix+q` detaches and leaves the agents running, and `herdr` attaches again. Inside tmux, press `ctrl+b` twice to reach herdr's prefix.
 

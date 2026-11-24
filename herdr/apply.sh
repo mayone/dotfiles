@@ -34,6 +34,7 @@ install_claude_integration() {
 
   for profile in "$HOME/.claude" "$HOME/.claude-work"; do
     if ! check_folder "$profile"; then
+      info "Skip $profile: the directory does not exist"
       continue
     fi
 
