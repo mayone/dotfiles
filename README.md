@@ -110,6 +110,8 @@ herdr/apply.sh
 
 It copies `herdr/config.toml` to `~/.config/herdr/config.toml` and installs herdr's Claude Code integration in each Claude profile that exists (`~/.claude` and `~/.claude-work`). It names a profile that it skips: run it again once that profile exists. The integration is a `SessionStart` hook in `settings.json` that runs `hooks/herdr-agent-state.sh`: it lets herdr resume the same Claude session after the herdr server restarts. The hook needs `python3` and does nothing outside a herdr pane.
 
+The server takes its environment from the shell that starts it, and herdr resumes every session in that environment, so a session comes back only when its `CLAUDE_CONFIG_DIR` matches the server's. A session started with `CLAUDE_CONFIG_DIR=~/.claude-work` in a server started without it is looked up in `~/.claude`, where it does not exist: run `claude --resume` with `CLAUDE_CONFIG_DIR=~/.claude-work` to get it back.
+
 The copy does not follow the repo: run the script again after changing `herdr/config.toml`, and press `prefix+shift+r` in a running herdr to reload its config. The script moves an existing config that differs to `config.toml.bak`, so to keep a change made in herdr's Settings screen, copy it into `herdr/config.toml`.
 
 Start herdr with `herdr`. The prefix is `ctrl+b`, as in tmux: `prefix+?` lists the keys, `prefix+q` detaches and leaves the agents running, and `herdr` attaches again. Inside tmux, press `ctrl+b` twice to reach herdr's prefix.
