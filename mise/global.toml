@@ -22,17 +22,16 @@ gh = "latest"
 herdr = "latest"
 jq = "latest"
 just = "latest"
+# Python 3.14, as the Homebrew formula installed
+python = "3.14"
 ripgrep = "latest"
 shfmt = "latest"
 tmux = "latest"
 yt-dlp = "latest"
 
-# macOS only, like the Homebrew formulae and cask they replace. NixOS gets
-# Python from nix/configuration.nix
+# macOS only, like the Homebrew cask and formula they replace
 claude = { version = "latest", os = ["macos"] }
 "github:boyter/scc" = { version = "latest", os = ["macos"] }
-# Python 3.14, as the Homebrew formula installed
-python = { version = "3.14", os = ["macos"] }
 
 [bootstrap.brew]
 # Take over an app that is already in /Applications instead of replacing it,
