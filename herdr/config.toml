@@ -1,0 +1,9 @@
+# Copied to ~/.config/herdr/config.toml by herdr/apply.sh
+
+# First-run setup leads to the agent integrations, and herdr/apply.sh installs
+# the one for Claude Code
+onboarding = false
+
+# Catppuccin Mocha, like tmux/.tmux.conf and alacritty/alacritty.toml
+[theme]
+name = "catppuccin"

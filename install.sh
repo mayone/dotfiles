@@ -24,12 +24,17 @@ main() {
   install_editor
 
   setup_claude_statusline
+  setup_herdr
 
   setup_git
   setup_gh
 
   if check_set $MISE_APPLY_FAILED; then
     warn "mise/apply.sh failed: fix the errors it printed and run it again"
+    exit 1
+  fi
+  if check_set "$HERDR_APPLY_FAILED"; then
+    warn "herdr/apply.sh failed: fix the errors it printed and run it again"
     exit 1
   fi
 }
@@ -137,6 +142,13 @@ install_editor() {
 setup_claude_statusline() {
   info "Set up Claude Code statusline"
   "$ROOT_PATH/claude/install-statusline.sh"
+}
+
+setup_herdr() {
+  info "Set up herdr"
+  if ! "$ROOT_PATH/herdr/apply.sh"; then
+    HERDR_APPLY_FAILED=1
+  fi
 }
 
 setup_git() {
