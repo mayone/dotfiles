@@ -46,10 +46,10 @@ NO_DEV=1 ./install.sh
 
 ## Tools and packages (mise)
 [mise](https://mise.jdx.dev) installs what `mise/global.toml` and `mise/dev.toml` list:
-- `[tools]`: the runtimes (Node.js, pnpm, Yarn, Go, Java, Deno) and the command-line tools, such as kubectl, on macOS and Linux alike. Entries with `os = ["macos"]`, such as tmux, ffmpeg, Python, and Claude Code, replace the Homebrew formulae and casks that the Mac used to get.
+- `[tools]`: the runtimes (Node.js, pnpm, Yarn, Go, Java, Deno, Python) and the command-line tools, such as tmux, ffmpeg, and kubectl, on macOS and Linux alike. Entries with `os = ["macos"]`, such as Claude Code and colima, replace Homebrew formulae and casks that only the Mac had.
 - `[bootstrap.packages]`: the host packages: apt packages on Debian and Ubuntu, and on macOS the apps and the Nerd Font as Homebrew casks. mise installs the casks into `/Applications` and `~/Library/Fonts` itself, so the Homebrew program is not needed.
 
-Rust stays with rustup. On NixOS, `nix/configuration.nix` installs mise but not the tools that mise installs on Linux, so `gh`, `jq`, Node.js, and the other `[tools]` entries come only from mise there.
+Rust stays with rustup. On NixOS, `nix/configuration.nix` installs mise but not the tools that mise installs on Linux, so `gh`, `jq`, tmux, Python, Node.js, and the other `[tools]` entries come only from mise there.
 
 `./install.sh` installs mise and runs `mise/apply.sh`. On a machine that is already set up, or on NixOS (where `nix/configuration.nix` provides mise), run:
 ```console
@@ -59,6 +59,8 @@ mise/apply.sh
 It links `mise/global.toml` to `~/.config/mise/config.toml` and, unless `NO_DEV` is set, `mise/dev.toml` to `~/.config/mise/conf.d/dev.toml`. For login shells it adds the mise shims to `~/.zprofile`, and `/opt/homebrew/bin` on a Mac without Homebrew. Then it runs `mise bootstrap --only packages`, which asks before it installs packages, and `mise install`. When a package fails to install, it still installs the tools and exits 1 at the end. `zsh/.zshrc` activates mise in interactive shells. `./install.sh` copies it only when `~/.zshrc` does not exist, so on a machine with an older `~/.zshrc`, run `cp zsh/.zshrc ~/.zshrc`: without the activation, a terminal finds no mise tool.
 
 On a Mac, `mise/dev.toml` runs Docker with colima instead of Docker Desktop: run `colima start` before the first `docker` command. `docker compose` and `docker buildx` work through the links that `mise install` writes to `~/.docker/cli-plugins`, and `docker login` keeps credentials in the Keychain through `docker-credential-osxkeychain`. On a Mac that ran Docker Desktop, change `"credsStore": "desktop"` to `"credsStore": "osxkeychain"` in `~/.docker/config.json`, or `docker` fails to find `docker-credential-desktop`.
+
+On Linux, the Docker engine and the `docker` command come from the system, and mise installs only `docker-compose`. `mise install` writes the same link to `~/.docker/cli-plugins` there, so `docker compose` runs the mise Compose and not the plugin that the system docker includes.
 
 `zsh/.zshrc` also points `GH_PATH` at the mise shim of `gh`, so `gh auth login` and `gh auth setup-git` write a Git credential helper that still works after `mise upgrade`. On a machine where either ran before this setup, run `gh auth setup-git` again.
 
