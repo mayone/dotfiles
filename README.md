@@ -106,7 +106,7 @@ It copies `claude/statusline.sh` to `~/.claude/statusline.sh`, installs the pinn
 To upgrade `ccusage`, run `npm install --prefix claude --save-exact ccusage@<version>` and commit `claude/package.json` and `claude/package-lock.json`.
 
 ## herdr
-[herdr](https://herdr.dev) runs coding agents in terminal panes that a background server keeps alive, and its sidebar shows which agents are working, blocked, or idle. mise installs it from `mise/global.toml`, and `./install.sh` sets it up. On NixOS, `nix/configuration.nix` installs it from nixos-unstable and sets `MISE_DISABLE_TOOLS=herdr`, so mise skips it there. On a machine that is already set up, or on NixOS, run:
+[herdr](https://herdr.dev) runs coding agents in terminal panes that a background server keeps alive, and its sidebar shows which agents are working, blocked, or idle. mise installs it from `mise/global.toml`, and `./install.sh` sets it up. On a machine that is already set up, or on NixOS, run:
 ```console
 herdr/apply.sh
 ```
@@ -119,7 +119,7 @@ The copy does not follow the repo: run the script again after changing `herdr/co
 
 Start herdr with `herdr`. The prefix is `ctrl+b`, as in tmux: `prefix+?` lists the keys, `prefix+q` detaches and leaves the agents running, and `herdr` attaches again. Inside tmux, press `ctrl+b` twice to reach herdr's prefix.
 
-`./update.sh` upgrades herdr through `mise upgrade`, or on NixOS through `nix/apply.sh --upgrade`; `herdr update` does not update a mise install. A running server stays on the old version until `herdr server stop`, which also stops its panes. Run `herdr/apply.sh` again when `herdr integration status` shows the Claude integration as outdated.
+`./update.sh` upgrades herdr through `mise upgrade`; `herdr update` does not update a mise install. A running server stays on the old version until `herdr server stop`, which also stops its panes. Run `herdr/apply.sh` again when `herdr integration status` shows the Claude integration as outdated.
 
 ## Uninstall
 ```console

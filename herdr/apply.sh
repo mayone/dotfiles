@@ -9,7 +9,7 @@ source "$HERDR_DIR/../sh_utils/index.sh"
 
 main() {
   if ! check_cmd herdr; then
-    echo "herdr is required: run mise/apply.sh first, or nix/apply.sh on NixOS" >&2
+    echo "herdr is required: run mise/apply.sh first" >&2
     exit 1
   fi
 

@@ -249,9 +249,6 @@ in
     # Add `vicinae toggle` in Settings > Keyboard > Shortcuts > Custom Shortcuts
     unstable_pkgs.vicinae
     tmux
-    # Agent multiplexer, configured in dotfiles herdr/.
-    # The 26.05 channel does not have it
-    unstable_pkgs.herdr
 
     # ===== Note ===== #
     appflowy
@@ -413,9 +410,6 @@ in
 
   environment.sessionVariables = {
     PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
-    # environment.systemPackages provides herdr, so mise skips the herdr entry
-    # in dotfiles mise/global.toml
-    MISE_DISABLE_TOOLS = "herdr";
   };
 
   # Global user shell config
