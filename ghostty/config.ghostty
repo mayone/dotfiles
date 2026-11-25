@@ -1,16 +1,12 @@
-# Linked to ~/.config/ghostty/config.ghostty by ghostty/apply.sh
-# The values come from the iTerm2 profile that Ghostty replaces. Run
-# `ghostty +show-config --default --docs` for all options and their defaults
+# Linked to ~/.config/ghostty/config.ghostty by ghostty/apply.sh, on macOS and
+# Linux. Run `ghostty +show-config --default --docs` for all options and their
+# defaults
 
-# MesloLGS NF is the Powerlevel10k font. Ghostty skips a family that is not
-# installed, so a Mac without it and NixOS use the Nerd Fonts version
-font-family = MesloLGS NF
+# mise bootstrap installs it on macOS, and nix/configuration.nix on NixOS
 font-family = MesloLGS Nerd Font Mono
 font-size = 16
 
-# The iTerm2 colors are Builtin Dark with a different blue
-theme = Builtin Dark
-palette = 4=#0000bb
+theme = GitHub Dark
 # Bold text in the default color is white, and other bold text uses the
 # bright colors
 bold-color = #ffffff
@@ -18,18 +14,14 @@ bold-color = #ffffff
 window-width = 100
 window-height = 25
 
-# A block cursor that does not blink, also at the prompt
-cursor-style-blink = false
-shell-integration-features = no-cursor
+# A blinking block cursor, also at the prompt (`no-cursor`). With `true`, the
+# cursor keeps blinking after a program resets DEC mode 12, as `cnorm` does.
+# TERM stays xterm-ghostty: `sudo` keeps its terminfo under sudo, and `ssh-env`
+# sends xterm-256color to SSH hosts
+cursor-style-blink = true
+shell-integration-features = no-cursor,sudo,ssh-env
 
-# As in iTerm2. SSH hosts and sudo do not always find the terminfo entry of
-# the default, xterm-ghostty
-term = xterm-256color
-
-copy-on-select = clipboard
-confirm-close-surface = false
-
-# New windows, tabs, and splits open in the home directory
+# New windows and tabs open in the home directory, and a split opens in the
+# directory of the split it comes from
 window-inherit-working-directory = false
 tab-inherit-working-directory = false
-split-inherit-working-directory = false
