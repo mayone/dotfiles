@@ -1,6 +1,6 @@
 # dotfiles
 - Shell: Zsh + Zinit + Powerlevel10k
-- Terminal: iTerm (for macOS) + tmux (TPM + Catppuccin + SessionX) + herdr
+- Terminal: Ghostty + tmux (TPM + Catppuccin + SessionX) + herdr
 - Editor: Vim, VSCode
 
 ---
@@ -19,9 +19,8 @@ NO_DEV=1 ./install.sh
 <summary>Post Install Setup</summary>
 
 - zsh use `p10k` theme
-  - Open iTerm2 and type `p10k configure` to
-    1. Download `MesloLGS NF`
-    2. Configure prompt style
+  - Open Ghostty and type `p10k configure` to configure prompt style
+  - Ghostty uses the Nerd Fonts v3 `MesloLGS Nerd Font Mono` that `install.sh` installs (`nix/configuration.nix` on NixOS), so `~/.p10k.zsh` needs `POWERLEVEL9K_MODE=nerdfont-v3`: `p10k configure` in Ghostty sets it
 - tmux installs its plugins on first start
   - Needs `git`, network access and a [Nerd Font](https://www.nerdfonts.com)
   - `prefix + I` installs plugins, `prefix + U` updates them
@@ -35,26 +34,10 @@ NO_DEV=1 ./install.sh
 <details>
 <summary>Optional Post Install Steps</summary>
 
-1. iTerm2
-  - If `zsh` is installed by Homebrew
-    - Set Custom Shell to `/opt/homebrew/bin/zsh` on startup in iTerm2 settings
-  - Use the Nerd Fonts v3 `MesloLGS Nerd Font Mono` that `install.sh` installs
-    - Go to: `Preferences → Profiles → Text → Font`
-    - Set `POWERLEVEL9K_MODE=nerdfont-v3` in `~/.p10k.zsh`, or run `p10k configure` again
-  - Use different [iTerm2-Color-Schemes](https://github.com/mbadolato/iTerm2-Color-Schemes)
-    - Clone the repo, double-click the scheme to import
-  - [Option + Left/Right Arrow Keys to move cursor by word](http://tgmerritt.github.io/jekyll/update/2015/06/23/option-arrow-in-iterm2.html)
-    - Go to: `Preferences → Profiles → Keys → Key Mappings`
-      - Keyboard Shortcut:
-        - `⌥← (Option+Left Arrow)`
-        - `⌥→ (Option+Right Arrow)`
-      - Action: `Send Escape Sequence`
-      - ESC+:
-        - `b` for backward
-        - `f` for forward
-  - Configure Status Bar
-    - Go to: `Preferences → Profiles → Session`
-      - Enable status bar and configure
+1. Ghostty
+  - Use a different theme
+    - `ghostty +list-themes` previews the themes that Ghostty includes
+    - Set `theme` in `ghostty/config.ghostty`
 
 2. VSCode
   - [VSCode - Launching from the command line](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line) to add `code` command to terminals
@@ -94,6 +77,18 @@ nix/apply.sh
 ```
 
 tmux plugins update through TPM. Catppuccin is pinned to a tag in `tmux/.tmux.conf`: to upgrade it, change the tag, remove `~/.tmux/plugins/tmux` and press `prefix + I`.
+
+## Ghostty
+`./install.sh` runs `ghostty/apply.sh`. On a machine that is already set up, or on NixOS, run:
+```console
+ghostty/apply.sh
+```
+
+It links `ghostty/config.ghostty` to `~/.config/ghostty/config.ghostty`, and the font size file of the OS, `ghostty/macos.ghostty` or `ghostty/linux.ghostty`, next to it. `config.ghostty` loads both with `config-file = ?...`, and Ghostty skips the one that is not linked. The sizes differ because Ghostty converts points at 72 dpi on macOS and at 96 dpi on Linux: 16 on macOS is the size of 12 on Linux. The script also moves an existing `~/.config/ghostty/config` to `config.bak`, because Ghostty loads that file next to `config.ghostty`.
+
+`TERM` stays `xterm-ghostty`: the `sudo` shell integration feature keeps its terminfo under `sudo`, and `ssh-env` sends `xterm-256color` to SSH hosts. Ghostty already sends `ESC b` and `ESC f` for `⌥←` and `⌥→`, so it needs no key mapping. Ghostty reads the files through the links: after a change, press `⌘⇧,` (`ctrl+shift+,` on Linux) to reload them. `ghostty +show-config --default --docs` shows all the options.
+
+The links point into the checkout that runs `ghostty/apply.sh`, so run it from the main checkout: it refuses to run from a worktree. On a branch without `ghostty/`, Ghostty starts with its defaults.
 
 ## Claude Code statusline
 `./install.sh` sets it up. On a machine that is already set up, or on NixOS, run:

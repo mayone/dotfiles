@@ -30,7 +30,7 @@
   "terminal.integrated.fontFamily": "'MesloLGS Nerd Font Mono', 'MesloLGS NF'",
   "terminal.integrated.fontSize": 12,
   "terminal.integrated.suggest.enabled": true,
-  "terminal.external.osxExec": "iTerm.app",
+  "terminal.external.osxExec": "Ghostty.app",
   "todo-tree.general.tags": [
     "ASK",
     "FIXME",

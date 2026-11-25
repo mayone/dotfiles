@@ -1,0 +1,31 @@
+# Linked to ~/.config/ghostty/config.ghostty by ghostty/apply.sh, on macOS and
+# Linux. Run `ghostty +show-config --default --docs` for all options and their
+# defaults
+
+# mise bootstrap installs it on macOS, and nix/configuration.nix on NixOS
+font-family = MesloLGS Nerd Font Mono
+
+theme = GitHub Dark
+# Bold text in the default color is white, and other bold text uses the
+# bright colors
+bold-color = #ffffff
+
+window-width = 100
+window-height = 25
+
+# A blinking block cursor, also at the prompt (`no-cursor`). With `true`, the
+# cursor keeps blinking after a program resets DEC mode 12, as `cnorm` does.
+# TERM stays xterm-ghostty: `sudo` keeps its terminfo under sudo, and `ssh-env`
+# sends xterm-256color to SSH hosts
+cursor-style-blink = true
+shell-integration-features = no-cursor,sudo,ssh-env
+
+# New windows and tabs open in the home directory, and a split opens in the
+# directory of the split it comes from
+window-inherit-working-directory = false
+tab-inherit-working-directory = false
+
+# The font size of each OS. ghostty/apply.sh links only the file of this OS,
+# and Ghostty skips the other: `?` makes a file optional
+config-file = ?macos.ghostty
+config-file = ?linux.ghostty
