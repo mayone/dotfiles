@@ -247,13 +247,11 @@ in
     # ===== Management ===== #
     # Add `vicinae toggle` in Settings > Keyboard > Shortcuts > Custom Shortcuts
     unstable_pkgs.vicinae
-    tmux
 
     # ===== Note ===== #
     appflowy
 
     # ===== Media ===== #
-    ffmpeg
     gimp-with-plugins
     inkscape-with-extensions
     libreoffice-fresh
@@ -269,7 +267,6 @@ in
     # ===== System Tools ===== #
     gnome-tweaks
     gparted
-    mkcert
     # Issues related to binary blobs security
     #https://github.com/NixOS/nixpkgs/issues/404663
     # See the following Issues for context:
@@ -278,9 +275,7 @@ in
     #ventoy-full
     # Used to check if an app is using Xwayland or Wayland
     curl
-    docker-compose
     ttf-tw-moe
-    wget
     xeyes
     zip
 
@@ -295,8 +290,6 @@ in
     unstable_pkgs.mise
     postman
     gemini-cli
-    python313
-    python313Packages.pip
     # Postman Open-Source Alternative
     #hoppscotch
     nixpkgs-fmt
@@ -309,7 +302,6 @@ in
 
     # ===== IDE ===== #
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    neovim
     (unstable_pkgs.vscode-with-extensions.override {
       vscode = unstable_pkgs.vscodium; # or unstable_pkgs.vscode
       vscodeExtensions = with unstable_pkgs.vscode-extensions; [
@@ -392,10 +384,6 @@ in
 
     # ===== Input Method (fcitx5-chewing) ===== #
     gnomeExtensions.kimpanel
-
-    # ===== Custom ===== #
-    # An interactive process viewer
-    htop
   ];
 
   environment.sessionVariables = {
