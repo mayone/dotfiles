@@ -63,7 +63,7 @@ NO_DEV=1 ./install.sh
 
 ## Tools and packages (mise)
 [mise](https://mise.jdx.dev) installs what `mise/global.toml` and `mise/dev.toml` list:
-- `[tools]`: the runtimes (Node.js, pnpm, Yarn, Go, Java) and the command-line tools, on macOS and Linux alike. Entries with `os = ["macos"]`, such as tmux, ffmpeg, and Claude Code, replace the Homebrew formulae and casks that the Mac used to get.
+- `[tools]`: the runtimes (Node.js, pnpm, Yarn, Go, Java, Deno) and the command-line tools, such as kubectl, on macOS and Linux alike. Entries with `os = ["macos"]`, such as tmux, ffmpeg, Python, and Claude Code, replace the Homebrew formulae and casks that the Mac used to get.
 - `[bootstrap.packages]`: the host packages: apt packages on Debian and Ubuntu, and on macOS the apps and the Nerd Font as Homebrew casks. mise installs the casks into `/Applications` and `~/Library/Fonts` itself, so the Homebrew program is not needed.
 
 Rust stays with rustup.

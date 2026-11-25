@@ -10,6 +10,9 @@ go.set_gobin = false
 
 [tools]
 bat = "latest"
+# yt-dlp needs a JavaScript runtime for full YouTube support, and Deno is the
+# only one that it enables by default
+deno = "latest"
 eza = "latest"
 fzf = "latest"
 gh = "latest"
@@ -21,13 +24,15 @@ shfmt = "latest"
 yt-dlp = "latest"
 
 # macOS only, like the Homebrew formulae and cask they replace. NixOS gets tmux,
-# htop, wget, and ffmpeg from nix/configuration.nix, and Debian and Ubuntu get
-# tmux from apt
+# htop, wget, ffmpeg, and Python from nix/configuration.nix, and Debian and
+# Ubuntu get tmux from apt
 claude = { version = "latest", os = ["macos"] }
 "conda:htop" = { version = "latest", os = ["macos"] }
 "conda:wget" = { version = "latest", os = ["macos"] }
 ffmpeg = { version = "latest", os = ["macos"] }
 "github:boyter/scc" = { version = "latest", os = ["macos"] }
+# Python 3.14, as the Homebrew formula installed
+python = { version = "3.14", os = ["macos"] }
 tmux = { version = "latest", os = ["macos"] }
 
 [bootstrap.brew]
@@ -48,6 +53,7 @@ adopt = true
 # App uninstallation
 "brew-cask:appcleaner" = { os = "macos" }
 "brew-cask:font-meslo-lg-nerd-font" = { os = "macos" }
+"brew-cask:ghostty" = { os = "macos" }
 "brew-cask:gimp" = { os = "macos" }
 "brew-cask:google-chrome" = { os = "macos" }
 "brew-cask:iterm2" = { os = "macos" }
