@@ -289,7 +289,6 @@ in
     # not in this list
     unstable_pkgs.mise
     postman
-    gemini-cli
     # Postman Open-Source Alternative
     #hoppscotch
     nixpkgs-fmt
