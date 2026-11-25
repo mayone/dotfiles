@@ -9,7 +9,6 @@ DIR_PATH="$( cd -- "$( dirname -- "$SOURCE" )" >/dev/null 2>&1 && pwd -P )"
 source $DIR_PATH/sh_utils/index.sh
 
 main() {
-  uninstall_tools
   uninstall_herdr
   uninstall_mise
   uninstall_terminal
@@ -17,12 +16,6 @@ main() {
 
   uninstall_languages
   uninstall_pkgmanager
-}
-
-uninstall_tools() {
-  if check_os $OS_MAC && check_cmd brew; then
-    brew remove tmux wget ffmpeg
-  fi
 }
 
 uninstall_herdr() {
