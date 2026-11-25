@@ -241,7 +241,6 @@ in
     alacritty
     alacritty-theme
     ghostty
-    fzf
     fastfetch
     zsh
 
@@ -286,14 +285,13 @@ in
     zip
 
     # ===== DEV ===== #
-    gh
     git
     gcc
     gnumake
-    just
-    jq
     # Runtime and CLI tool version manager, configured in dotfiles mise/.
-    # nixos-unstable keeps its tool registry current
+    # nixos-unstable keeps its tool registry current.
+    # The tools that mise installs on Linux, such as gh, jq, and Node.js, are
+    # not in this list
     unstable_pkgs.mise
     postman
     gemini-cli
@@ -306,17 +304,12 @@ in
     #saleae-logic-2
     #stm32cubemx
 
-    # ===== Node.js ===== #
-    nodejs
-    pnpm
-
     # ===== Color Management ===== #
     #gnome.gnome-color-manager
 
     # ===== IDE ===== #
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
-    unstable_pkgs.code-cursor
     (unstable_pkgs.vscode-with-extensions.override {
       vscode = unstable_pkgs.vscodium; # or unstable_pkgs.vscode
       vscodeExtensions = with unstable_pkgs.vscode-extensions; [
@@ -401,10 +394,6 @@ in
     gnomeExtensions.kimpanel
 
     # ===== Custom ===== #
-    # A cat clone with syntax highlighting and Git intergration
-    bat
-    # A modern, maintained replacement for ls
-    eza
     # An interactive process viewer
     htop
   ];
