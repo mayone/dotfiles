@@ -20,7 +20,7 @@ NO_DEV=1 ./install.sh
 
 - zsh use `p10k` theme
   - Open Ghostty and type `p10k configure` to configure prompt style
-  - Ghostty uses `MesloLGS NF` if it is installed, else the `MesloLGS Nerd Font Mono` that `install.sh` installs. `p10k configure` downloads `MesloLGS NF` only in iTerm2
+  - Ghostty uses the Nerd Fonts v3 `MesloLGS Nerd Font Mono` that `install.sh` installs (`nix/configuration.nix` on NixOS), so `~/.p10k.zsh` needs `POWERLEVEL9K_MODE=nerdfont-v3`: `p10k configure` in Ghostty sets it
 - tmux installs its plugins on first start
   - Needs `git`, network access and a [Nerd Font](https://www.nerdfonts.com)
   - `prefix + I` installs plugins, `prefix + U` updates them
@@ -35,9 +35,6 @@ NO_DEV=1 ./install.sh
 <summary>Optional Post Install Steps</summary>
 
 1. Ghostty
-  - Use the Nerd Fonts v3 `MesloLGS Nerd Font Mono` that `install.sh` installs
-    - Remove `font-family = MesloLGS NF` from `ghostty/config.ghostty`
-    - Set `POWERLEVEL9K_MODE=nerdfont-v3` in `~/.p10k.zsh`, or run `p10k configure` again
   - Use a different theme
     - `ghostty +list-themes` previews the themes that Ghostty includes
     - Set `theme` in `ghostty/config.ghostty`
@@ -82,14 +79,16 @@ nix/apply.sh
 tmux plugins update through TPM. Catppuccin is pinned to a tag in `tmux/.tmux.conf`: to upgrade it, change the tag, remove `~/.tmux/plugins/tmux` and press `prefix + I`.
 
 ## Ghostty
-`./install.sh` links `ghostty/config.ghostty` to `~/.config/ghostty/config.ghostty`. On a machine that is already set up, or on NixOS, run:
+`./install.sh` runs `ghostty/apply.sh`. On a machine that is already set up, or on NixOS, run:
 ```console
 ghostty/apply.sh
 ```
 
-The config keeps the font, colors, window size, cursor, and `TERM` of the iTerm2 profile that Ghostty replaces. Ghostty already sends `ESC b` and `ESC f` for `⌥←` and `⌥→`, so it needs no key mapping. Ghostty reads the file through the link: after a change, press `⌘⇧,` (`ctrl+shift+,` on Linux) to reload it. `ghostty +show-config --default --docs` shows all the options.
+It links `ghostty/config.ghostty` to `~/.config/ghostty/config.ghostty`, and the font size file of the OS, `ghostty/macos.ghostty` or `ghostty/linux.ghostty`, next to it. `config.ghostty` loads both with `config-file = ?...`, and Ghostty skips the one that is not linked. The sizes differ because Ghostty converts points at 72 dpi on macOS and at 96 dpi on Linux: 16 on macOS is the size of 12 on Linux. The script also moves an existing `~/.config/ghostty/config` to `config.bak`, because Ghostty loads that file next to `config.ghostty`.
 
-The link points into the checkout that runs `ghostty/apply.sh`, so run it from the main checkout: it refuses to run from a worktree. On a branch without `ghostty/`, Ghostty starts with its defaults.
+`TERM` stays `xterm-ghostty`: the `sudo` shell integration feature keeps its terminfo under `sudo`, and `ssh-env` sends `xterm-256color` to SSH hosts. Ghostty already sends `ESC b` and `ESC f` for `⌥←` and `⌥→`, so it needs no key mapping. Ghostty reads the files through the links: after a change, press `⌘⇧,` (`ctrl+shift+,` on Linux) to reload them. `ghostty +show-config --default --docs` shows all the options.
+
+The links point into the checkout that runs `ghostty/apply.sh`, so run it from the main checkout: it refuses to run from a worktree. On a branch without `ghostty/`, Ghostty starts with its defaults.
 
 ## Claude Code statusline
 `./install.sh` sets it up. On a machine that is already set up, or on NixOS, run:
