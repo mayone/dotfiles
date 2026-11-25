@@ -13,6 +13,8 @@ bat = "latest"
 eza = "latest"
 fzf = "latest"
 gh = "latest"
+# Skipped on NixOS: nix/configuration.nix installs herdr and sets
+# MISE_DISABLE_TOOLS=herdr
 herdr = "latest"
 jq = "latest"
 just = "latest"
