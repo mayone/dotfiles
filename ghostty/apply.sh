@@ -14,6 +14,11 @@ main() {
   fi
 
   link_config "$GHOSTTY_DIR/config.ghostty" "$CONFIG_DIR/config.ghostty"
+  if check_os "$OS_MAC"; then
+    link_config "$GHOSTTY_DIR/macos.ghostty" "$CONFIG_DIR/macos.ghostty"
+  else
+    link_config "$GHOSTTY_DIR/linux.ghostty" "$CONFIG_DIR/linux.ghostty"
+  fi
 }
 
 # The same as link_config in mise/apply.sh

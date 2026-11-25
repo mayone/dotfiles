@@ -4,7 +4,6 @@
 
 # mise bootstrap installs it on macOS, and nix/configuration.nix on NixOS
 font-family = MesloLGS Nerd Font Mono
-font-size = 16
 
 theme = GitHub Dark
 # Bold text in the default color is white, and other bold text uses the
@@ -25,3 +24,8 @@ shell-integration-features = no-cursor,sudo,ssh-env
 # directory of the split it comes from
 window-inherit-working-directory = false
 tab-inherit-working-directory = false
+
+# The font size of each OS. ghostty/apply.sh links only the file of this OS,
+# and Ghostty skips the other: `?` makes a file optional
+config-file = ?macos.ghostty
+config-file = ?linux.ghostty

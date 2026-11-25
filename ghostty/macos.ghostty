@@ -1,0 +1,4 @@
+# Linked to ~/.config/ghostty/macos.ghostty by ghostty/apply.sh on macOS.
+# Ghostty converts points at 72 dpi on macOS and at 96 dpi on Linux, so 16 here
+# is the size of 12 in linux.ghostty
+font-size = 16
