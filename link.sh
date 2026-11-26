@@ -13,11 +13,16 @@ source "$ROOT_PATH/sh_utils/index.sh"
 main() {
   require_main_checkout "$ROOT_PATH" link.sh
 
-  link_config "$ROOT_PATH/zsh/.zshrc" "${ZDOTDIR:-$HOME}/.zshrc"
-  link_config "$ROOT_PATH/tmux/.tmux.conf" "$HOME/.tmux.conf"
-  link_config "$ROOT_PATH/vim/.vimrc" "$HOME/.vimrc"
+  local failed=""
+  link_config "$ROOT_PATH/zsh/.zshrc" "${ZDOTDIR:-$HOME}/.zshrc" || failed=1
+  link_config "$ROOT_PATH/tmux/.tmux.conf" "$HOME/.tmux.conf" || failed=1
+  link_config "$ROOT_PATH/vim/.vimrc" "$HOME/.vimrc" || failed=1
   if check_os "$OS_MAC"; then
-    link_config "$ROOT_PATH/.vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+    link_config "$ROOT_PATH/.vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json" || failed=1
+  fi
+
+  if check_set "$failed"; then
+    exit 1
   fi
 }
 

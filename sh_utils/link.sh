@@ -27,8 +27,6 @@ require_main_checkout() {
 # Arguments:
 #   Config file in the checkout.
 #   Path of the link.
-# Returns:
-#   1 if the file at the path differs and <path>.bak already exists, 0 if not.
 #######################################
 link_config() {
   local config_file="$1" link_path="$2"
@@ -43,12 +41,12 @@ link_config() {
       warn "Did not link $link_path: it differs from $config_file and $link_path.bak already exists. Move one of them away and run this again"
       return 1
     fi
-    mv "$link_path" "$link_path.bak"
+    mv "$link_path" "$link_path.bak" || return 1
     warn "Moved the existing $link_path to $link_path.bak"
   elif [[ -L "$link_path" && "$(readlink "$link_path")" != "$config_file" ]]; then
     warn "Relinked $link_path, which pointed to $(readlink "$link_path")"
   fi
-  ln -sfn "$config_file" "$link_path"
+  ln -sfn "$config_file" "$link_path" || return 1
   info "Linked $link_path"
 }
 
