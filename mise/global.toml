@@ -10,30 +10,31 @@ go.set_gobin = false
 
 [tools]
 bat = "latest"
+"conda:wget" = "latest"
 # yt-dlp needs a JavaScript runtime for full YouTube support, and Deno is the
 # only one that it enables by default
 deno = "latest"
 eza = "latest"
+ffmpeg = "latest"
 fzf = "latest"
 gh = "latest"
 herdr = "latest"
 jq = "latest"
 just = "latest"
+# Python 3.14, as the Homebrew formula installed
+python = "3.14"
 ripgrep = "latest"
 shfmt = "latest"
+tmux = "latest"
 yt-dlp = "latest"
 
-# macOS only, like the Homebrew formulae and cask they replace. NixOS gets tmux,
-# htop, wget, ffmpeg, and Python from nix/configuration.nix, and Debian and
-# Ubuntu get tmux from apt
+# macOS only, like the Homebrew cask and formulae they replace. NixOS gets htop
+# from nix/configuration.nix: the htop of conda-forge looks up terminfo in
+# hex-named directories (78/xterm-ghostty), so it does not find the
+# xterm-ghostty entry of NixOS and fails to start in Ghostty
 claude = { version = "latest", os = ["macos"] }
 "conda:htop" = { version = "latest", os = ["macos"] }
-"conda:wget" = { version = "latest", os = ["macos"] }
-ffmpeg = { version = "latest", os = ["macos"] }
 "github:boyter/scc" = { version = "latest", os = ["macos"] }
-# Python 3.14, as the Homebrew formula installed
-python = { version = "3.14", os = ["macos"] }
-tmux = { version = "latest", os = ["macos"] }
 
 [bootstrap.brew]
 # Take over an app that is already in /Applications instead of replacing it,
@@ -47,7 +48,6 @@ adopt = true
 "apt:build-essential" = "latest"
 "apt:libssl-dev" = "latest"
 "apt:pkg-config" = "latest"
-"apt:tmux" = "latest"
 "apt:zsh" = "latest"
 
 # App uninstallation

@@ -217,6 +217,10 @@ in
   # Allow dynamic linking
   programs.nix-ld.enable = true;
 
+  # The Python that mise installs (python-build-standalone) trusts the CAs in
+  # /etc/ssl/cert.pem or a hashed /etc/ssl/certs, and NixOS has neither
+  environment.etc."ssl/cert.pem".source = "/etc/ssl/certs/ca-certificates.crt";
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -247,13 +251,11 @@ in
     # ===== Management ===== #
     # Add `vicinae toggle` in Settings > Keyboard > Shortcuts > Custom Shortcuts
     unstable_pkgs.vicinae
-    tmux
 
     # ===== Note ===== #
     appflowy
 
     # ===== Media ===== #
-    ffmpeg
     gimp-with-plugins
     inkscape-with-extensions
     libreoffice-fresh
@@ -269,7 +271,6 @@ in
     # ===== System Tools ===== #
     gnome-tweaks
     gparted
-    mkcert
     # Issues related to binary blobs security
     #https://github.com/NixOS/nixpkgs/issues/404663
     # See the following Issues for context:
@@ -278,9 +279,7 @@ in
     #ventoy-full
     # Used to check if an app is using Xwayland or Wayland
     curl
-    docker-compose
     ttf-tw-moe
-    wget
     xeyes
     zip
 
@@ -294,9 +293,6 @@ in
     # not in this list
     unstable_pkgs.mise
     postman
-    gemini-cli
-    python313
-    python313Packages.pip
     # Postman Open-Source Alternative
     #hoppscotch
     nixpkgs-fmt
@@ -309,7 +305,6 @@ in
 
     # ===== IDE ===== #
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    neovim
     (unstable_pkgs.vscode-with-extensions.override {
       vscode = unstable_pkgs.vscodium; # or unstable_pkgs.vscode
       vscodeExtensions = with unstable_pkgs.vscode-extensions; [
