@@ -20,6 +20,7 @@ NO_DEV=1 ./install.sh
 
 - zsh use `p10k` theme
   - Open Ghostty and type `p10k configure` to configure prompt style
+  - `~/.zshrc` links to `zsh/.zshrc`, so when `p10k configure` asks `Apply changes to ~/.zshrc?`, answer `n`: `y` adds its instant prompt block to `zsh/.zshrc` in the checkout
   - Ghostty uses the Nerd Fonts v3 `MesloLGS Nerd Font Mono` that `install.sh` installs (`nix/configuration.nix` on NixOS), so `~/.p10k.zsh` needs `POWERLEVEL9K_MODE=nerdfont-v3`: `p10k configure` in Ghostty sets it
 - tmux installs its plugins on first start
   - Needs `git`, network access and a [Nerd Font](https://www.nerdfonts.com)
