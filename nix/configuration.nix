@@ -242,8 +242,6 @@ in
     ## https://chromewebstore.google.com/detail/line/ophjlpahpchlmihnnnihgmmeilfjmjjc?hl=zh-TW
 
     # ===== Terminal ===== #
-    alacritty
-    alacritty-theme
     ghostty
     fastfetch
     zsh
