@@ -91,11 +91,11 @@ tmux plugins update through TPM. Catppuccin is pinned to a tag in `tmux/.tmux.co
 
 It links `zsh/.zshrc` to `~/.zshrc`, `tmux/.tmux.conf` to `~/.tmux.conf`, and `vim/.vimrc` to `~/.vimrc`. On macOS it also links `.vscode/settings.json` to the user settings of VS Code, `~/Library/Application Support/Code/User/settings.json`. The programs read the files through the links, so a change in the checkout, for example from `git pull`, needs no copy step: open a new shell, press `prefix + r` in tmux, or start Vim again. Writes go through the links too: a program that appends to `~/.zshrc` changes `zsh/.zshrc`, and a setting that you change in VS Code changes `.vscode/settings.json`. `git status` shows these changes.
 
-For VSCodium and Alacritty, which `nix/configuration.nix` installs, two more scripts link in the same way: `.vscode/apply_vscodium.sh` links `.vscode/settings.json` to `~/.config/VSCodium/User/settings.json`, and `alacritty/apply.sh` links `alacritty/alacritty.toml` to `~/.config/alacritty/alacritty.toml`.
+For VSCodium, which `nix/configuration.nix` installs, `.vscode/apply_vscodium.sh` links `.vscode/settings.json` to `~/.config/VSCodium/User/settings.json` in the same way. On NixOS, `./install.sh` runs it after `link.sh`.
 
 A file that is already at one of the paths and is a copy of the repo file becomes the link. A file that differs moves to `<path>.bak` first. When that `.bak` already exists, the script changes neither file, links the other files, and exits 1: move one of them away and run it again. A path that already is the repo file, through `ZDOTDIR` or a linked directory, stays as it is.
 
-The links point into the checkout that runs the script, so run it from the main checkout: each script refuses to run from a worktree. The config follows the branch of that checkout. After you move the checkout to another directory, run `./link.sh`, `mise/apply.sh`, and `ghostty/apply.sh` again from the new directory, and on NixOS also the two scripts above: until then the links are broken, and a new shell starts without the zsh config.
+The links point into the checkout that runs the script, so run it from the main checkout: each script refuses to run from a worktree. The config follows the branch of that checkout. After you move the checkout to another directory, run `./link.sh`, `mise/apply.sh`, and `ghostty/apply.sh` again from the new directory, and on NixOS also `.vscode/apply_vscodium.sh`: until then the links are broken, and a new shell starts without the zsh config.
 
 ## Ghostty
 `./install.sh` runs `ghostty/apply.sh`. On a machine that is already set up, run:
