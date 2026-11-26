@@ -19,9 +19,9 @@ main() {
     install_languages
   fi
 
+  link_configs
   install_shell
   install_terminal
-  install_editor
 
   setup_claude_statusline
   setup_herdr
@@ -31,6 +31,10 @@ main() {
 
   if check_set $MISE_APPLY_FAILED; then
     warn "mise/apply.sh failed: fix the errors it printed and run it again"
+    exit 1
+  fi
+  if check_set "$LINK_FAILED"; then
+    warn "link.sh failed: fix the errors it printed and run it again"
     exit 1
   fi
   if check_set "$GHOSTTY_APPLY_FAILED"; then
@@ -99,20 +103,17 @@ install_languages() {
   fi
 }
 
+link_configs() {
+  info "Link the config files"
+  if ! "$ROOT_PATH/link.sh"; then
+    LINK_FAILED=1
+  fi
+}
+
 install_shell() {
   if check_set $ZSH_WAS_MISSING && check_cmd zsh; then
     # Set default shell to zsh
     chsh -s "$(which zsh)"
-  fi
-
-  # Copy zshrc
-  if check_exist ~/.zshrc; then
-    :
-    # info "Merging .zshrc files"
-    # cat zsh/.zshrc | cat - ~/.zshrc > temp && rm ~/.zshrc && mv temp ~/.zshrc
-  else
-    info "Copy .zshrc file"
-    cp zsh/.zshrc ~/.zshrc
   fi
 
   if check_os $OS_LINUX; then
@@ -126,26 +127,10 @@ install_shell() {
 }
 
 install_terminal() {
-  # Copy tmux settings
-  info "Copy .tmux.conf file"
-  cp tmux/.tmux.conf ~/.tmux.conf
-
   info "Set up Ghostty"
   if ! "$ROOT_PATH/ghostty/apply.sh"; then
     GHOSTTY_APPLY_FAILED=1
   fi
-}
-
-install_editor() {
-  if check_os $OS_MAC; then
-    # Copy vscode settings
-    mkdir -p ~/Library/Application\ Support/Code/User
-    cp .vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
-  fi
-
-  # Copy vim settings
-  info "Copy .vimrc file"
-  cp vim/.vimrc ~/.vimrc
 }
 
 setup_claude_statusline() {

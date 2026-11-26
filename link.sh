@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#
+# Link the zsh, tmux, and Vim config of this checkout into the home directory,
+# and on macOS the VS Code settings.
+
+set -euo pipefail
+
+# sh_utils/index.sh overwrites DIR_PATH, so keep the repo root separately
+ROOT_PATH="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd -P )"
+
+source "$ROOT_PATH/sh_utils/index.sh"
+
+main() {
+  require_main_checkout "$ROOT_PATH" link.sh
+
+  local failed=""
+  link_config "$ROOT_PATH/zsh/.zshrc" "${ZDOTDIR:-$HOME}/.zshrc" || failed=1
+  link_config "$ROOT_PATH/tmux/.tmux.conf" "$HOME/.tmux.conf" || failed=1
+  link_config "$ROOT_PATH/vim/.vimrc" "$HOME/.vimrc" || failed=1
+  if check_os "$OS_MAC"; then
+    link_config "$ROOT_PATH/.vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json" || failed=1
+  fi
+
+  if check_set "$failed"; then
+    exit 1
+  fi
+}
+
+main "$@"
