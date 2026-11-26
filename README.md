@@ -56,7 +56,7 @@ Rust stays with rustup. On NixOS, `nix/configuration.nix` installs mise but not 
 mise/apply.sh
 ```
 
-It links `mise/global.toml` to `~/.config/mise/config.toml` and, unless `NO_DEV` is set, `mise/dev.toml` to `~/.config/mise/conf.d/dev.toml`. For login shells it adds the mise shims to `~/.zprofile`, and `/opt/homebrew/bin` on a Mac without Homebrew. Then it runs `mise bootstrap --only packages`, which asks before it installs packages, and `mise install`. When a package fails to install, it still installs the tools and exits 1 at the end. `zsh/.zshrc` activates mise in interactive shells. `./install.sh` copies it only when `~/.zshrc` does not exist, so on a machine with an older `~/.zshrc`, run `cp zsh/.zshrc ~/.zshrc`: without the activation, a terminal finds no mise tool.
+It links `mise/global.toml` to `~/.config/mise/config.toml` and, unless `NO_DEV` is set, `mise/dev.toml` to `~/.config/mise/conf.d/dev.toml`. For login shells it adds the mise shims to `~/.zprofile`, and `/opt/homebrew/bin` on a Mac without Homebrew. Then it runs `mise bootstrap --only packages`, which asks before it installs packages, and `mise install`. When a package fails to install, it still installs the tools and exits 1 at the end. `zsh/.zshrc` activates mise in interactive shells, and `link.sh` links it to `~/.zshrc`. On a machine where `~/.zshrc` is still an older copy, run `./link.sh`: without the activation, a terminal finds no mise tool.
 
 On a Mac, `mise/dev.toml` runs Docker with colima instead of Docker Desktop: run `colima start` before the first `docker` command. `docker compose` and `docker buildx` work through the links that `mise install` writes to `~/.docker/cli-plugins`, and `docker login` keeps credentials in the Keychain through `docker-credential-osxkeychain`. On a Mac that ran Docker Desktop, change `"credsStore": "desktop"` to `"credsStore": "osxkeychain"` in `~/.docker/config.json`, or `docker` fails to find `docker-credential-desktop`.
 
@@ -77,6 +77,18 @@ nix/apply.sh
 ```
 
 tmux plugins update through TPM. Catppuccin is pinned to a tag in `tmux/.tmux.conf`: to upgrade it, change the tag, remove `~/.tmux/plugins/tmux` and press `prefix + I`.
+
+## Zsh, tmux, and Vim
+`./install.sh` runs `link.sh`. On a machine that is already set up, or on NixOS, run:
+```console
+./link.sh
+```
+
+It links `zsh/.zshrc` to `~/.zshrc`, `tmux/.tmux.conf` to `~/.tmux.conf`, and `vim/.vimrc` to `~/.vimrc`. The programs read the files through the links, so a change in the checkout, for example from `git pull`, needs no copy step: open a new shell, press `prefix + r` in tmux, or start Vim again. A program that appends to `~/.zshrc` writes into `zsh/.zshrc`, and `git status` shows the change.
+
+A file that is already at one of the paths and is a copy of the repo file becomes the link. A file that differs moves to `<path>.bak` first. When that `.bak` already exists, the script stops and changes neither file: move one of them away and run it again.
+
+The links point into the checkout that runs `link.sh`, so run it from the main checkout: it refuses to run from a worktree. The config follows the branch of that checkout. After you move the checkout to another directory, run `./link.sh`, `mise/apply.sh`, and `ghostty/apply.sh` again from the new directory: until then the links are broken, and a new shell starts without the zsh config.
 
 ## Ghostty
 `./install.sh` runs `ghostty/apply.sh`. On a machine that is already set up, or on NixOS, run:
