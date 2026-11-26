@@ -387,6 +387,10 @@ in
 
     # ===== Input Method (fcitx5-chewing) ===== #
     gnomeExtensions.kimpanel
+
+    # ===== Custom ===== #
+    # An interactive process viewer
+    htop
   ];
 
   environment.sessionVariables = {

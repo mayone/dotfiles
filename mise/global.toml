@@ -10,7 +10,6 @@ go.set_gobin = false
 
 [tools]
 bat = "latest"
-"conda:htop" = "latest"
 "conda:wget" = "latest"
 # yt-dlp needs a JavaScript runtime for full YouTube support, and Deno is the
 # only one that it enables by default
@@ -29,8 +28,12 @@ shfmt = "latest"
 tmux = "latest"
 yt-dlp = "latest"
 
-# macOS only, like the Homebrew cask and formula they replace
+# macOS only, like the Homebrew cask and formulae they replace. NixOS gets htop
+# from nix/configuration.nix: the htop of conda-forge looks up terminfo in
+# hex-named directories (78/xterm-ghostty), so it does not find the
+# xterm-ghostty entry of NixOS and fails to start in Ghostty
 claude = { version = "latest", os = ["macos"] }
+"conda:htop" = { version = "latest", os = ["macos"] }
 "github:boyter/scc" = { version = "latest", os = ["macos"] }
 
 [bootstrap.brew]
