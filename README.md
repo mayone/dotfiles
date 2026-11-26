@@ -10,6 +10,8 @@
 ./install.sh
 ```
 
+On NixOS, `./install.sh` runs `nix/apply.sh` where other Linux machines run `apt update`: it prints the diff from `/etc/nixos/configuration.nix` to `nix/configuration.nix`, copies the file to `/etc/nixos/`, and runs `sudo nixos-rebuild switch`. That configuration provides mise, so `./install.sh` does not install mise there.
+
 ### Install (excluding devtools)
 ```console
 NO_DEV=1 ./install.sh
@@ -52,7 +54,7 @@ NO_DEV=1 ./install.sh
 
 Rust stays with rustup. On NixOS, `nix/configuration.nix` installs mise but not the tools that mise installs on Linux, so `gh`, `jq`, tmux, Python, Node.js, and the other `[tools]` entries come only from mise there.
 
-`./install.sh` installs mise and runs `mise/apply.sh`. On a machine that is already set up, or on NixOS (where `nix/configuration.nix` provides mise), run:
+`./install.sh` installs mise, except on NixOS, where `nix/configuration.nix` provides it, and runs `mise/apply.sh`. On a machine that is already set up, run:
 ```console
 mise/apply.sh
 ```
@@ -82,7 +84,7 @@ nix/apply.sh
 tmux plugins update through TPM. Catppuccin is pinned to a tag in `tmux/.tmux.conf`: to upgrade it, change the tag, remove `~/.tmux/plugins/tmux` and press `prefix + I`.
 
 ## Zsh, tmux, Vim, and VS Code
-`./install.sh` runs `link.sh`. On a machine that is already set up, or on NixOS, run:
+`./install.sh` runs `link.sh`. On a machine that is already set up, run:
 ```console
 ./link.sh
 ```
@@ -96,7 +98,7 @@ A file that is already at one of the paths and is a copy of the repo file become
 The links point into the checkout that runs the script, so run it from the main checkout: each script refuses to run from a worktree. The config follows the branch of that checkout. After you move the checkout to another directory, run `./link.sh`, `mise/apply.sh`, and `ghostty/apply.sh` again from the new directory, and on NixOS also the two scripts above: until then the links are broken, and a new shell starts without the zsh config.
 
 ## Ghostty
-`./install.sh` runs `ghostty/apply.sh`. On a machine that is already set up, or on NixOS, run:
+`./install.sh` runs `ghostty/apply.sh`. On a machine that is already set up, run:
 ```console
 ghostty/apply.sh
 ```
@@ -108,7 +110,7 @@ It links `ghostty/config.ghostty` to `~/.config/ghostty/config.ghostty`, and the
 The links point into the checkout that runs `ghostty/apply.sh`, so run it from the main checkout: it refuses to run from a worktree. On a branch without `ghostty/`, Ghostty starts with its defaults.
 
 ## Claude Code statusline
-`./install.sh` sets it up. On a machine that is already set up, or on NixOS, run:
+`./install.sh` sets it up. On a machine that is already set up, run:
 ```console
 claude/install-statusline.sh
 ```
@@ -118,7 +120,7 @@ It copies `claude/statusline.sh` to `~/.claude/statusline.sh`, installs the pinn
 To upgrade `ccusage`, run `npm install --prefix claude --save-exact ccusage@<version>` and commit `claude/package.json` and `claude/package-lock.json`.
 
 ## herdr
-[herdr](https://herdr.dev) runs coding agents in terminal panes that a background server keeps alive, and its sidebar shows which agents are working, blocked, or idle. mise installs it from `mise/global.toml`, and `./install.sh` sets it up. On a machine that is already set up, or on NixOS, run:
+[herdr](https://herdr.dev) runs coding agents in terminal panes that a background server keeps alive, and its sidebar shows which agents are working, blocked, or idle. mise installs it from `mise/global.toml`, and `./install.sh` sets it up. On a machine that is already set up, run:
 ```console
 herdr/apply.sh
 ```
