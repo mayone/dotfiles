@@ -3,8 +3,6 @@
 [tools]
 node = "lts"
 pnpm = "latest"
-# Yarn Classic, as the Homebrew formula installed
-yarn = "1"
 go = "latest"
 java = "temurin-25"
 k9s = "latest"
