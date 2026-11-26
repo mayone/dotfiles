@@ -29,6 +29,10 @@ main() {
   setup_git
   setup_gh
 
+  if check_set "$NIX_APPLY_FAILED"; then
+    warn "nix/apply.sh failed: fix the errors it printed and run it again"
+    exit 1
+  fi
   if check_set $MISE_APPLY_FAILED; then
     warn "mise/apply.sh failed: fix the errors it printed and run it again"
     exit 1
@@ -50,6 +54,10 @@ main() {
 install_pkgmanager() {
   if check_os $OS_MAC; then
     export PATH="/opt/homebrew/bin:$PATH"
+  elif check_nixos; then
+    if ! "$ROOT_PATH/nix/apply.sh"; then
+      NIX_APPLY_FAILED=1
+    fi
   elif check_os $OS_LINUX; then
     sudo apt update
   fi
