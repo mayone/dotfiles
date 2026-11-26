@@ -41,6 +41,10 @@ main() {
     warn "link.sh failed: fix the errors it printed and run it again"
     exit 1
   fi
+  if check_set "$VSCODIUM_APPLY_FAILED"; then
+    warn ".vscode/apply_vscodium.sh failed: fix the errors it printed and run it again"
+    exit 1
+  fi
   if check_set "$GHOSTTY_APPLY_FAILED"; then
     warn "ghostty/apply.sh failed: fix the errors it printed and run it again"
     exit 1
@@ -115,6 +119,9 @@ link_configs() {
   info "Link the config files"
   if ! "$ROOT_PATH/link.sh"; then
     LINK_FAILED=1
+  fi
+  if check_nixos && ! "$ROOT_PATH/.vscode/apply_vscodium.sh"; then
+    VSCODIUM_APPLY_FAILED=1
   fi
 }
 
