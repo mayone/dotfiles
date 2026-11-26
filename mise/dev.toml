@@ -11,8 +11,6 @@ k9s = "latest"
 kubectl = "latest"
 kubectx = "latest"
 kubens = "latest"
-mkcert = "latest"
-neovim = "latest"
 "npm:ccusage" = "latest"
 
 # Docker on macOS without Docker Desktop: `colima start` runs the engine in a
