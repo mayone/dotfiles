@@ -217,6 +217,10 @@ in
   # Allow dynamic linking
   programs.nix-ld.enable = true;
 
+  # The Python that mise installs (python-build-standalone) trusts the CAs in
+  # /etc/ssl/cert.pem or a hashed /etc/ssl/certs, and NixOS has neither
+  environment.etc."ssl/cert.pem".source = "/etc/ssl/certs/ca-certificates.crt";
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
