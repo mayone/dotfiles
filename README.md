@@ -88,7 +88,7 @@ It links `zsh/.zshrc` to `~/.zshrc`, `tmux/.tmux.conf` to `~/.tmux.conf`, and `v
 
 For VSCodium and Alacritty, which `nix/configuration.nix` installs, two more scripts link in the same way: `.vscode/apply_vscodium.sh` links `.vscode/settings.json` to `~/.config/VSCodium/User/settings.json`, and `alacritty/apply.sh` links `alacritty/alacritty.toml` to `~/.config/alacritty/alacritty.toml`.
 
-A file that is already at one of the paths and is a copy of the repo file becomes the link. A file that differs moves to `<path>.bak` first. When that `.bak` already exists, the script stops and changes neither file: move one of them away and run it again.
+A file that is already at one of the paths and is a copy of the repo file becomes the link. A file that differs moves to `<path>.bak` first. When that `.bak` already exists, the script changes neither file, links the other files, and exits 1: move one of them away and run it again. A path that already is the repo file, through `ZDOTDIR` or a linked directory, stays as it is.
 
 The links point into the checkout that runs the script, so run it from the main checkout: each script refuses to run from a worktree. The config follows the branch of that checkout. After you move the checkout to another directory, run `./link.sh`, `mise/apply.sh`, and `ghostty/apply.sh` again from the new directory, and on NixOS also the two scripts above: until then the links are broken, and a new shell starts without the zsh config.
 
