@@ -34,6 +34,10 @@ link_config() {
   local config_file="$1" link_path="$2"
 
   mkdir -p "$(dirname "$link_path")"
+  if [[ ! -L "$link_path" && "$(physical_path "$link_path")" == "$(physical_path "$config_file")" ]]; then
+    info "Kept $link_path: it is $config_file itself"
+    return 0
+  fi
   if [[ -e "$link_path" && ! -L "$link_path" ]] && ! cmp -s "$config_file" "$link_path"; then
     if [[ -e "$link_path.bak" || -L "$link_path.bak" ]]; then
       warn "Did not link $link_path: it differs from $config_file and $link_path.bak already exists. Move one of them away and run this again"
@@ -46,4 +50,10 @@ link_config() {
   fi
   ln -sfn "$config_file" "$link_path"
   info "Linked $link_path"
+}
+
+physical_path() {
+  local path="$1"
+
+  printf '%s/%s\n' "$(cd -- "$(dirname -- "$path")" >/dev/null 2>&1 && pwd -P)" "${path##*/}"
 }
