@@ -22,7 +22,6 @@ main() {
   link_configs
   install_shell
   install_terminal
-  install_editor
 
   setup_claude_statusline
   setup_herdr
@@ -105,7 +104,7 @@ install_languages() {
 }
 
 link_configs() {
-  info "Link the zsh, tmux, and Vim config"
+  info "Link the config files"
   if ! "$ROOT_PATH/link.sh"; then
     LINK_FAILED=1
   fi
@@ -131,14 +130,6 @@ install_terminal() {
   info "Set up Ghostty"
   if ! "$ROOT_PATH/ghostty/apply.sh"; then
     GHOSTTY_APPLY_FAILED=1
-  fi
-}
-
-install_editor() {
-  if check_os $OS_MAC; then
-    # Copy vscode settings
-    mkdir -p ~/Library/Application\ Support/Code/User
-    cp .vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
   fi
 }
 

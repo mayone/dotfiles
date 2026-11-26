@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
-# Link the zsh, tmux, and Vim config of this checkout into the home directory.
+# Link the zsh, tmux, and Vim config of this checkout into the home directory,
+# and on macOS the VS Code settings.
 
 set -euo pipefail
 
@@ -15,6 +16,9 @@ main() {
   link_config "$ROOT_PATH/zsh/.zshrc" "${ZDOTDIR:-$HOME}/.zshrc"
   link_config "$ROOT_PATH/tmux/.tmux.conf" "$HOME/.tmux.conf"
   link_config "$ROOT_PATH/vim/.vimrc" "$HOME/.vimrc"
+  if check_os "$OS_MAC"; then
+    link_config "$ROOT_PATH/.vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+  fi
 }
 
 main "$@"
