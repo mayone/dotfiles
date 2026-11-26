@@ -22,20 +22,21 @@ require_main_checkout() {
 
 #######################################
 # Link a config file of the checkout to the path where its program reads it.
-# A file that is already at the path moves to <path>.bak first.
+# A file that is already at the path and differs from the config file moves
+# to <path>.bak first. A copy of the config file is replaced without a backup.
 # Arguments:
 #   Config file in the checkout.
 #   Path of the link.
 # Returns:
-#   1 if a file is at the path and <path>.bak already exists, 0 if not.
+#   1 if the file at the path differs and <path>.bak already exists, 0 if not.
 #######################################
 link_config() {
   local config_file="$1" link_path="$2"
 
   mkdir -p "$(dirname "$link_path")"
-  if [[ -e "$link_path" && ! -L "$link_path" ]]; then
+  if [[ -e "$link_path" && ! -L "$link_path" ]] && ! cmp -s "$config_file" "$link_path"; then
     if [[ -e "$link_path.bak" || -L "$link_path.bak" ]]; then
-      warn "Did not link $link_path: $link_path.bak already exists. Move one of them away and run this again"
+      warn "Did not link $link_path: it differs from $config_file and $link_path.bak already exists. Move one of them away and run this again"
       return 1
     fi
     mv "$link_path" "$link_path.bak"
