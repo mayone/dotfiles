@@ -4,6 +4,6 @@
 # the one for Claude Code
 onboarding = false
 
-# Catppuccin Mocha, like tmux/.tmux.conf and alacritty/alacritty.toml
+# Catppuccin Mocha, like tmux/.tmux.conf
 [theme]
 name = "catppuccin"

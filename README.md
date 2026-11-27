@@ -10,6 +10,8 @@
 ./install.sh
 ```
 
+On NixOS, `./install.sh` runs `nix/apply.sh` where other Linux machines run `apt update`: it prints the diff from `/etc/nixos/configuration.nix` to `nix/configuration.nix`, keeps the old file as `/etc/nixos/configuration.nix.bak` when the two differ (an older `.bak` is replaced), copies the file to `/etc/nixos/`, and runs `sudo nixos-rebuild switch`. `nix/configuration.nix` is written for one machine: when a `/dev/disk/` device that it names, such as the encrypted swap, does not exist, for example on another machine or after a reinstall, `nix/apply.sh` changes nothing and exits 1. Adapt the file to the machine, then run it again. That configuration provides mise, so `./install.sh` does not install mise there, even when `nix/apply.sh` fails.
+
 ### Install (excluding devtools)
 ```console
 NO_DEV=1 ./install.sh
@@ -52,7 +54,7 @@ NO_DEV=1 ./install.sh
 
 Rust stays with rustup. On NixOS, `nix/configuration.nix` installs mise but not the tools that mise installs on Linux, so `gh`, `jq`, tmux, Python, Node.js, and the other `[tools]` entries come only from mise there.
 
-`./install.sh` installs mise and runs `mise/apply.sh`. On a machine that is already set up, or on NixOS (where `nix/configuration.nix` provides mise), run:
+`./install.sh` installs mise, except on NixOS, where `nix/configuration.nix` provides it, and runs `mise/apply.sh`. On a machine that is already set up, run:
 ```console
 mise/apply.sh
 ```
@@ -82,21 +84,21 @@ nix/apply.sh
 tmux plugins update through TPM. Catppuccin is pinned to a tag in `tmux/.tmux.conf`: to upgrade it, change the tag, remove `~/.tmux/plugins/tmux` and press `prefix + I`.
 
 ## Zsh, tmux, Vim, and VS Code
-`./install.sh` runs `link.sh`. On a machine that is already set up, or on NixOS, run:
+`./install.sh` runs `link.sh`. On a machine that is already set up, run:
 ```console
 ./link.sh
 ```
 
 It links `zsh/.zshrc` to `~/.zshrc`, `tmux/.tmux.conf` to `~/.tmux.conf`, and `vim/.vimrc` to `~/.vimrc`. On macOS it also links `.vscode/settings.json` to the user settings of VS Code, `~/Library/Application Support/Code/User/settings.json`. The programs read the files through the links, so a change in the checkout, for example from `git pull`, needs no copy step: open a new shell, press `prefix + r` in tmux, or start Vim again. Writes go through the links too: a program that appends to `~/.zshrc` changes `zsh/.zshrc`, and a setting that you change in VS Code changes `.vscode/settings.json`. `git status` shows these changes.
 
-For VSCodium and Alacritty, which `nix/configuration.nix` installs, two more scripts link in the same way: `.vscode/apply_vscodium.sh` links `.vscode/settings.json` to `~/.config/VSCodium/User/settings.json`, and `alacritty/apply.sh` links `alacritty/alacritty.toml` to `~/.config/alacritty/alacritty.toml`.
+For VSCodium, which `nix/configuration.nix` installs, `.vscode/apply_vscodium.sh` links `.vscode/settings.json` to `~/.config/VSCodium/User/settings.json` in the same way. On NixOS, `./install.sh` runs it after `link.sh`.
 
 A file that is already at one of the paths and is a copy of the repo file becomes the link. A file that differs moves to `<path>.bak` first. When that `.bak` already exists, the script changes neither file, links the other files, and exits 1: move one of them away and run it again. A path that already is the repo file, through `ZDOTDIR` or a linked directory, stays as it is.
 
-The links point into the checkout that runs the script, so run it from the main checkout: each script refuses to run from a worktree. The config follows the branch of that checkout. After you move the checkout to another directory, run `./link.sh`, `mise/apply.sh`, and `ghostty/apply.sh` again from the new directory, and on NixOS also the two scripts above: until then the links are broken, and a new shell starts without the zsh config.
+The links point into the checkout that runs the script, so run it from the main checkout: each script refuses to run from a worktree. The config follows the branch of that checkout. After you move the checkout to another directory, run `./link.sh`, `mise/apply.sh`, and `ghostty/apply.sh` again from the new directory, and on NixOS also `.vscode/apply_vscodium.sh`: until then the links are broken, and a new shell starts without the zsh config.
 
 ## Ghostty
-`./install.sh` runs `ghostty/apply.sh`. On a machine that is already set up, or on NixOS, run:
+`./install.sh` runs `ghostty/apply.sh`. On a machine that is already set up, run:
 ```console
 ghostty/apply.sh
 ```
@@ -108,7 +110,7 @@ It links `ghostty/config.ghostty` to `~/.config/ghostty/config.ghostty`, and the
 The links point into the checkout that runs `ghostty/apply.sh`, so run it from the main checkout: it refuses to run from a worktree. On a branch without `ghostty/`, Ghostty starts with its defaults.
 
 ## Claude Code statusline
-`./install.sh` sets it up. On a machine that is already set up, or on NixOS, run:
+`./install.sh` sets it up. On a machine that is already set up, run:
 ```console
 claude/install-statusline.sh
 ```
@@ -118,7 +120,7 @@ It copies `claude/statusline.sh` to `~/.claude/statusline.sh`, installs the pinn
 To upgrade `ccusage`, run `npm install --prefix claude --save-exact ccusage@<version>` and commit `claude/package.json` and `claude/package-lock.json`.
 
 ## herdr
-[herdr](https://herdr.dev) runs coding agents in terminal panes that a background server keeps alive, and its sidebar shows which agents are working, blocked, or idle. mise installs it from `mise/global.toml`, and `./install.sh` sets it up. On a machine that is already set up, or on NixOS, run:
+[herdr](https://herdr.dev) runs coding agents in terminal panes that a background server keeps alive, and its sidebar shows which agents are working, blocked, or idle. mise installs it from `mise/global.toml`, and `./install.sh` sets it up. On a machine that is already set up, run:
 ```console
 herdr/apply.sh
 ```

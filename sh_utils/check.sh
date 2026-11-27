@@ -20,6 +20,10 @@ check_os() {
   fi
 }
 
+check_nixos() {
+  check_exist /etc/NIXOS || (. /etc/os-release 2>/dev/null && [[ "$ID" == nixos ]])
+}
+
 #######################################
 # Check is a variable set or not.
 # Arguments:

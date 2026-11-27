@@ -47,7 +47,7 @@ update_pkgmanager() {
     # List outdated packages for manual upgrade
     warn "Outdated packages"
     brew outdated --greedy
-  elif check_exist /etc/NIXOS; then
+  elif check_nixos; then
     # Update the nixos channel and rebuild
     "$ROOT_PATH/nix/apply.sh" --upgrade
   elif check_os $OS_LINUX; then

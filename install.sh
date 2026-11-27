@@ -29,12 +29,20 @@ main() {
   setup_git
   setup_gh
 
+  if check_set "$NIX_APPLY_FAILED"; then
+    warn "nix/apply.sh failed: fix the errors it printed and run it again"
+    exit 1
+  fi
   if check_set $MISE_APPLY_FAILED; then
     warn "mise/apply.sh failed: fix the errors it printed and run it again"
     exit 1
   fi
   if check_set "$LINK_FAILED"; then
     warn "link.sh failed: fix the errors it printed and run it again"
+    exit 1
+  fi
+  if check_set "$VSCODIUM_APPLY_FAILED"; then
+    warn ".vscode/apply_vscodium.sh failed: fix the errors it printed and run it again"
     exit 1
   fi
   if check_set "$GHOSTTY_APPLY_FAILED"; then
@@ -50,11 +58,15 @@ main() {
 install_pkgmanager() {
   if check_os $OS_MAC; then
     export PATH="/opt/homebrew/bin:$PATH"
+  elif check_nixos; then
+    if ! "$ROOT_PATH/nix/apply.sh"; then
+      NIX_APPLY_FAILED=1
+    fi
   elif check_os $OS_LINUX; then
     sudo apt update
   fi
 
-  if ! check_cmd mise; then
+  if ! check_cmd mise && ! check_nixos; then
     info "Install mise"
     curl -fsSL https://mise.run | sh
     export PATH="$HOME/.local/bin:$PATH"
@@ -107,6 +119,9 @@ link_configs() {
   info "Link the config files"
   if ! "$ROOT_PATH/link.sh"; then
     LINK_FAILED=1
+  fi
+  if check_nixos && ! "$ROOT_PATH/.vscode/apply_vscodium.sh"; then
+    VSCODIUM_APPLY_FAILED=1
   fi
 }
 
