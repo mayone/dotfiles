@@ -19,6 +19,7 @@ main() {
 
   info "Apply configuration.nix"
   diff -u /etc/nixos/configuration.nix "$NIX_DIR/configuration.nix" || true
+  backup_config
   sudo cp "$NIX_DIR/configuration.nix" /etc/nixos/
   sudo nixos-rebuild switch "$@"
 
@@ -47,6 +48,13 @@ require_devices() {
   if check_set "$missing"; then
     warn "Did not apply nix/configuration.nix: it is written for another machine or an earlier install. Adapt it to this machine and run nix/apply.sh again"
     exit 1
+  fi
+}
+
+backup_config() {
+  if [[ -e /etc/nixos/configuration.nix ]] && ! cmp -s /etc/nixos/configuration.nix "$NIX_DIR/configuration.nix"; then
+    sudo cp /etc/nixos/configuration.nix /etc/nixos/configuration.nix.bak
+    info "Saved /etc/nixos/configuration.nix to /etc/nixos/configuration.nix.bak"
   fi
 }
 
