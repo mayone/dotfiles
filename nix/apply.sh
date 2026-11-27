@@ -12,6 +12,8 @@ NIX_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd -
 source "$NIX_DIR/../sh_utils/index.sh"
 
 main() {
+  require_devices
+
   local old_version new_version
   old_version="$(nixos-version)"
 
@@ -29,6 +31,22 @@ main() {
 
   if [[ "$(readlink -f /run/booted-system/kernel)" != "$(readlink -f /run/current-system/kernel)" ]]; then
     warn "Kernel changed, reboot to apply"
+  fi
+}
+
+require_devices() {
+  local device missing=""
+
+  while read -r device; do
+    if [[ ! -e "$device" ]]; then
+      warn "nix/configuration.nix names $device, which this machine does not have"
+      missing=1
+    fi
+  done < <(grep -v '^[[:space:]]*#' "$NIX_DIR/configuration.nix" | grep -o '/dev/disk/[^"]*')
+
+  if check_set "$missing"; then
+    warn "Did not apply nix/configuration.nix: it is written for another machine or an earlier install. Adapt it to this machine and run nix/apply.sh again"
+    exit 1
   fi
 }
 
