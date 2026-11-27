@@ -1,5 +1,10 @@
 # Linked to ~/.config/mise/conf.d/dev.toml by mise/apply.sh, unless NO_DEV is set
 
+[settings]
+# Let a rust-toolchain.toml pick the toolchain of its project, such as a pinned
+# nightly: mise sets RUSTUP_TOOLCHAIN, which rustup ranks above that file
+idiomatic_version_file_enable_tools = ["rust"]
+
 [tools]
 node = "lts"
 pnpm = "latest"
@@ -16,6 +21,16 @@ kubens = "latest"
 colima = { version = "latest", os = ["macos"] }
 docker-cli = { version = "latest", os = ["macos"] }
 lima = { version = "latest", os = ["macos"] }
+
+# mise installs rustup without a default toolchain. The default keeps cargo
+# working where mise does not set RUSTUP_TOOLCHAIN, such as in VS Code started
+# from the desktop
+[tools.rust]
+version = "stable"
+profile = "minimal"
+components = ["clippy", "rustfmt"]
+targets = ["wasm32-unknown-unknown"]
+postinstall = "rustup default stable"
 
 # The postinstall links put the Compose and Buildx plugins where the docker CLI
 # looks for them, and every `mise install` repairs them. The docker CLI reads

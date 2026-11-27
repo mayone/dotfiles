@@ -15,10 +15,6 @@ main() {
   install_essentials
   install_packages
 
-  if ! check_set $NO_DEV; then
-    install_languages
-  fi
-
   link_configs
   install_shell
   install_terminal
@@ -93,25 +89,6 @@ install_packages() {
   fi
   if check_cmd mise; then
     eval "$(mise activate bash --shims)"
-  fi
-}
-
-install_languages() {
-  # Install Rust
-  if ! check_cmd rustup; then
-    info "Install Rust"
-    curl https://sh.rustup.rs -sSf | sh -s -- -y
-    source ~/.cargo/env
-    rustup default stable
-    rustup toolchain install nightly
-
-    # lints
-    rustup component add clippy
-
-    # Cross-compilation
-    # rustup target add aarch64-apple-ios x86_64-apple-ios aarch64-apple-darwin
-    # rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
-    rustup target add wasm32-unknown-unknown
   fi
 }
 
