@@ -10,7 +10,7 @@
 ./install.sh
 ```
 
-On NixOS, `./install.sh` runs `nix/apply.sh` where other Linux machines run `apt update`: it prints the diff from `/etc/nixos/configuration.nix` to `nix/configuration.nix`, copies the file to `/etc/nixos/`, and runs `sudo nixos-rebuild switch`. That configuration provides mise, so `./install.sh` does not install mise there.
+On NixOS, `./install.sh` runs `nix/apply.sh` where other Linux machines run `apt update`: it prints the diff from `/etc/nixos/configuration.nix` to `nix/configuration.nix`, keeps the old file as `/etc/nixos/configuration.nix.bak` when the two differ (an older `.bak` is replaced), copies the file to `/etc/nixos/`, and runs `sudo nixos-rebuild switch`. `nix/configuration.nix` is written for one machine: when a `/dev/disk/` device that it names, such as the encrypted swap, does not exist, for example on another machine or after a reinstall, `nix/apply.sh` changes nothing and exits 1. Adapt the file to the machine, then run it again. That configuration provides mise, so `./install.sh` does not install mise there, even when `nix/apply.sh` fails.
 
 ### Install (excluding devtools)
 ```console
