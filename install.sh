@@ -66,7 +66,7 @@ install_pkgmanager() {
     sudo apt update
   fi
 
-  if ! check_cmd mise; then
+  if ! check_cmd mise && ! check_nixos; then
     info "Install mise"
     curl -fsSL https://mise.run | sh
     export PATH="$HOME/.local/bin:$PATH"
